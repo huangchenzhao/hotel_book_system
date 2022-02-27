@@ -19,7 +19,7 @@
                     </el-row>
                     <el-row class="choice">
                         <el-radio v-model="radio" label="1">用户登录</el-radio>
-                        <el-radio v-model="radio" label="2">管理员登陆</el-radio>
+                        <el-radio v-model="radio" label="0">管理员登陆</el-radio>
                     </el-row>
                     <el-row>
                         <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     login: function () {
-      let myuser = {username: this.userName, password: this.pwd}
+      let myuser = {username: this.userName, password: this.pwd, radio: this.radio}
       user(myuser).then(res => {
         this.$router.push({path: '/userlist'})
       })
@@ -101,7 +101,7 @@ export default {
         }
       })
     }
-  },
+  }
 }
 </script>
 
