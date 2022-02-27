@@ -9,7 +9,7 @@
         </div></el-col>
     </el-row>
 </template>
-<!--注释-->
+
 <script>
 export default {
   name: 'register'

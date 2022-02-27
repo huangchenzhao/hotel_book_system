@@ -3,7 +3,7 @@
     <div  style="width: 100%">
         <el-row class="card-form">
             <el-col><div class="grid-content bg-purple">
-                <el-card class="login-card">
+                <el-card class="login-card" shadow="always">
                     <div slot="header" class="clearfix" >
                         <span class="login-title">微旅——您身边的酒店预订系统</span>
                     </div>
@@ -22,8 +22,24 @@
                         <el-radio v-model="radio" label="2">管理员登陆</el-radio>
                     </el-row>
                     <el-row>
-                        <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
-                        <el-button type="primary" plain class="reg-btn">注册一个</el-button>
+                        <el-button type="primary" class="login-btn">确认登陆</el-button>
+                        <el-button type="primary" plain class="reg-btn" @click="dialogFormVisible = true">注册一个</el-button>
+                        <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true">
+                            <el-form :model="form">
+                                <el-form-item label="用户名" :label-width="formLabelWidth" prop="regUserName">
+                                    <el-input v-model="regUserName" autocomplete="off"></el-input>
+                                </el-form-item>
+                                <el-form-item label="密码" :label-width="formLabelWidth" prop="regPwd">
+                                    <el-input placeholder="请选择活动区域">
+                                        <el-input v-model="regPwd" autocomplete="off"></el-input>
+                                    </el-input>
+                                </el-form-item>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="handleSave" >确 定</el-button>
+                            </div>
+                        </el-dialog>
                     </el-row>
                 </el-card>
             </div></el-col>
@@ -32,7 +48,6 @@
 </template>
 
 <script>
-import {userLogin} from '@/api/api'
 
 export default {
   name: 'login',
@@ -40,17 +55,53 @@ export default {
     return {
       title: '登陆',
       userName: '',
-      pwd: ''
+      pwd: '',
+      radio: 1,
+      regUserName: '',
+      regPwd: ''
     }
   },
   methods: {
     login: function () {
-      let myuser = {username: this.userName, password: this.pwd}
-      userLogin(myuser).then(res => {
-        // this.$router.push({path: '/userlist'})
+
+    },
+    handleClose () {
+      this.$refs.ruleForm.resetFields()
+      this.form = {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      }
+    },
+    handleSave () {
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          console.log('输入正确')
+          this.dialogFormVisible = false
+        } else {
+          console.log('输入错误')
+        }
       })
     }
   },
+  dialogTableVisible: false,
+  dialogFormVisible: false,
+  form: {
+    name: '',
+    region: '',
+    date1: '',
+    date2: '',
+    delivery: false,
+    type: [],
+    resource: '',
+    desc: ''
+  },
+  formLabelWidth: '120px'
 }
 </script>
 
