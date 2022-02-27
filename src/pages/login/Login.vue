@@ -75,7 +75,7 @@ export default {
     login: function () {
       let myuser = {username: this.userName, password: this.pwd, radio: this.radio}
       user(myuser).then(res => {
-        this.$router.push({path: '/userlist'})
+        this.$router.push({path: '/userPage'})
       })
     },
     handleClose () {
