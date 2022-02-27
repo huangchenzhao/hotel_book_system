@@ -22,7 +22,7 @@
                         <el-radio v-model="radio" label="2">管理员登陆</el-radio>
                     </el-row>
                     <el-row>
-                        <el-button type="primary" class="login-btn">确认登陆</el-button>
+                        <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
                         <el-button type="primary" plain class="reg-btn" @click="dialogFormVisible = true">注册一个</el-button>
                         <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true">
                             <el-form :model="form">
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import {user} from '@/api/api'
 
 export default {
   name: 'login',
@@ -63,7 +64,10 @@ export default {
   },
   methods: {
     login: function () {
-
+      let myuser = {username: this.userName, password: this.pwd}
+      user(myuser).then(res => {
+        this.$router.push({path: '/userlist'})
+      })
     },
     handleClose () {
       this.$refs.ruleForm.resetFields()
