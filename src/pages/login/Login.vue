@@ -9,22 +9,17 @@
                     </div>
                     <el-row>
                         <div class="input_userName">
-                            <el-input placeholder="请输入账号" v-model="userName"></el-input>
+                            <el-input placeholder="请输入账号" v-model="userName" prefix-icon="el-icon-mobile-phone"></el-input>
                         </div>
                     </el-row>
                     <el-row>
                         <div class="input_pwd">
-                            <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
+                            <el-input placeholder="请输入密码" v-model="pwd" show-password prefix-icon="el-icon-lock"></el-input>
                         </div>
                     </el-row>
-                    <el-row type="flex" class="row-bg" justify="center">
-                        <el-col :span="6"><div class="grid-content bg-purple">
-                            <el-button type="primary" plain class="login-btn">确认登陆</el-button>
-                        </div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple">
-                            <el-button type="primary" plain class="login-btn">注册一个</el-button>
-                        </div></el-col>
+                    <el-row>
+                        <el-button type="primary" class="login-btn">确认登陆</el-button>
+                        <el-button type="primary" plain class="reg-btn">注册一个</el-button>
                     </el-row>
                 </el-card>
             </div></el-col>
@@ -72,6 +67,7 @@ export default {
     .login-card {
         width: 580px;
         margin: auto;
+        vertical-align: center;
     }
     .clearfix {
 text-align: center;
@@ -82,5 +78,23 @@ text-align: center;
         font-size:20px;
         text-align: center;
         margin-top: -20px;
+    }
+    .input_userName {
+        margin-bottom: 20px;
+        width: 300px;
+        margin-left: 125px;
+    }
+    .input_pwd {
+        margin-bottom: 20px;
+        width: 300px;
+        margin-left: 125px;
+    }
+    .login-btn{
+        margin-left: 150px;
+        margin-bottom: 20px;
+    }
+    .reg-btn{
+        margin-left: 51px;
+        margin-bottom: 20px;
     }
 </style>
