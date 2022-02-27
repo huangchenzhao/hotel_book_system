@@ -85,6 +85,7 @@ public class UserController {
 //        User user = userMapper.selectLogin(username,password,usertype);
 //        return JsonResponse.success(user);
 //    }
+    ///test
     @GetMapping("/login")
     @ResponseBody
     public JsonResponse login(User a) {
