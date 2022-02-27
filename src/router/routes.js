@@ -10,12 +10,6 @@ const loginPage = [
       import(/* webpackChunkName: "Login" */ '../pages/login/Login')
   },
   {
-    path: '/register',
-    name: 'register',
-    component: () =>
-      import(/* webpackChunkName: "Login" */ '../pages/register/register')
-  },
-  {
     path: '/userPage',
     name: 'userPage',
     component: () =>
