@@ -1,8 +1,8 @@
 <template xmlns:text-align="http://www.w3.org/1999/xhtml">
 <!--        <canvas class="cavs" width="100%" height="100%"></canvas>-->
     <div  style="width: 100%">
-        <el-row :gutter="20" class="card-form">
-            <el-col :span="12" :offset="6"><div class="grid-content bg-purple">
+        <el-row class="card-form">
+            <el-col><div class="grid-content bg-purple">
                 <el-card class="login-card">
                     <div slot="header" class="clearfix" >
                         <span class="login-title">微旅——您身边的酒店预订系统</span>
@@ -47,7 +47,7 @@ export default {
     login: function () {
 
     }
-  }
+  },
 }
 </script>
 
