@@ -1,5 +1,9 @@
 const loginPage = [
   {
+    path: '/',
+    redirect: '/login'
+  },
+  {
     path: '/login',
     name: 'login',
     component: () =>
@@ -8,10 +12,6 @@ const loginPage = [
 ]
 
 const mainPage = [
-  {
-    path: '/',
-    redirect: '/main'
-  },
   {
     path: '/main',
     name: 'main',

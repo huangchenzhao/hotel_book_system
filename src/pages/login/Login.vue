@@ -22,7 +22,7 @@
                         <el-radio v-model="radio" label="2">管理员登陆</el-radio>
                     </el-row>
                     <el-row>
-                        <el-button type="primary" class="login-btn">确认登陆</el-button>
+                        <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
                         <el-button type="primary" plain class="reg-btn">注册一个</el-button>
                     </el-row>
                 </el-card>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import {userLogin} from '@/api/api'
 
 export default {
   name: 'login',
@@ -39,13 +40,15 @@ export default {
     return {
       title: '登陆',
       userName: '',
-      pwd: '',
-      radio: 1
+      pwd: ''
     }
   },
   methods: {
     login: function () {
-
+      let myuser = {username: this.userName, password: this.pwd}
+      userLogin(myuser).then(res => {
+        // this.$router.push({path: '/userlist'})
+      })
     }
   },
 }
