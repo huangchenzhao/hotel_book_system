@@ -1,0 +1,16 @@
+.fade-enter, .fade-enter-to, .fade-leave, .fade-leave-to {
+  display: none !important;
+}
+// 过渡动画 横向渐变
+.fade-transverse-leave-active,
+.fade-transverse-enter-active {
+  transition: all .5s;
+}
+.fade-transverse-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transverse-leave {
+  opacity: 0;
+  transform: translateX(30px);
+}

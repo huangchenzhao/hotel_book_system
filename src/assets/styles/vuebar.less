@@ -1,0 +1,47 @@
+.vb > .vb-dragger {
+  z-index: 5;
+  width: 12px;
+  right: 0;
+}
+
+.vb > .vb-dragger > .vb-dragger-styler {
+  backface-visibility: hidden;
+  transform: rotate3d(0,0,0,0);
+  transition:
+    background-color 100ms ease-out,
+    margin 100ms ease-out,
+    height 100ms ease-out;
+  background-color: hsla(220,4%,58%,.3);
+  margin: 5px 5px 5px 0;
+  border-radius: 20px;
+  height: calc(~'100% - 10px');
+  display: block;
+}
+
+.vb.vb-scrolling-phantom > .vb-dragger > .vb-dragger-styler {
+  background-color: hsla(220,4%,58%,.3);
+}
+
+.vb > .vb-dragger:hover > .vb-dragger-styler {
+  background-color: hsla(220,4%,58%,.5);
+  margin: 0;
+  height: 100%;
+}
+
+.vb.vb-dragging > .vb-dragger > .vb-dragger-styler {
+  background-color: hsla(220,4%,58%,.5);
+  margin: 0;
+  height: 100%;
+}
+
+.vb.vb-dragging-phantom > .vb-dragger > .vb-dragger-styler {
+  background-color: hsla(220,4%,58%,.5);
+}
+.sidebarScroll  {
+  & > .vb-dragger > .vb-dragger-styler {
+    margin: 5px 0 5px;
+  }
+  & > .vb-dragger {
+    width: 5px;
+  }
+}

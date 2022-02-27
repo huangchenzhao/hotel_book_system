@@ -1,0 +1,13 @@
+{
+  "/api/test": {
+    "get": {
+      "data": {
+        "status": true,
+        "message": 1,
+        "data": {
+          "text": "这是一个ge"
+        }
+      }
+    }
+  }
+}

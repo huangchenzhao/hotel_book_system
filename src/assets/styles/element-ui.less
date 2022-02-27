@@ -1,0 +1,145 @@
+/**
+ * Created by zhongyuan on 2018/3/8.
+ */
+@import "var";
+
+/* button */
+.mixin(@bc) {
+  color: @fcf;
+  background-color: @bc;
+  border-color: @bc;
+}
+
+@etagInfo: rgba(144, 147, 153, .1);
+.mixin(light;@color;@percent) {
+  background: lighten(@color, @percent);
+  border-color: lighten(@color, @percent);
+}
+@switch: light;
+.el-button--primary, .el-tag {
+  .mixin(@dc);
+  &:active, &:focus, &:hover {
+    .mixin(@dch);
+  }
+  .el-tag__close {
+    color: @fcf;
+  }
+}
+
+.el-tag--info {
+  color: @fc0;
+  .mixin(@switch;@etagInfo;0);
+  &:active, &:focus, &:hover {
+    color: @fc0;
+    .mixin(@switch;@etagInfo;10%);
+  }
+  .el-tag__close {
+    color: @fc0;
+  }
+}
+
+.el-button--success, .el-tag--success {
+  .mixin(@sc);
+  &:active, &:focus, &:hover {
+    .mixin(@sch);
+  }
+  .el-tag__close {
+    color: @fcf;
+  }
+}
+
+.el-button--danger, .el-tag--danger {
+  .mixin(@ec);
+  &:active, &:focus, &:hover {
+    .mixin(@ech);
+  }
+  .el-tag__close {
+    color: @fcf;
+  }
+}
+
+.el-button--warning, .el-tag--warning {
+  .mixin(@wc);
+  &:active, &:focus, &:hover {
+    .mixin(@wch);
+  }
+  .el-tag__close {
+    color: @fcf;
+  }
+}
+
+.el-button--danger.is-disabled {
+  .mixin(@ecd);
+  &:active, &:focus, &:hover {
+    .mixin(@ecd);
+  }
+}
+
+.el-button--success.is-disabled {
+  .mixin(@scd);
+  &:active, &:focus, &:hover {
+    .mixin(@scd);
+  }
+}
+
+.el-button--primary.is-disabled {
+  .mixin(@dcd);
+  &:active, &:focus, &:hover {
+    .mixin(@dcd);
+  }
+}
+
+/* 单选框、复选框 */
+.el-radio__input.is-checked .el-radio__inner, .el-checkbox__input.is-checked .el-checkbox__inner {
+  border-color: @radioBorder;
+  background: @radioback;
+}
+
+.el-radio__inner::after {
+  width: 6px;
+  height: 6px;
+  background: @colocBlu;
+}
+
+.el-radio__input.is-checked + .el-radio__label, .el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #606266;
+}
+
+.el-checkbox__inner:after {
+  border: 2px solid @colocBlu;
+  border-top: none;
+  border-left: none;
+}
+
+/* 数字输入框 */
+.el-input-number__decrease {
+  right: 41px;
+  left: inherit;
+  border-radius: 0;
+  border-left: 1px solid #dcdfe6;
+  border-right: none;
+}
+
+.el-input-number .el-input__inner {
+  padding-right: 80px;
+  padding-left: 0;
+}
+
+.el-input-number--small {
+  .el-input__inner {
+    padding-right: 60px;
+  }
+  .el-input-number__decrease {
+    right: 33px;
+  }
+}
+
+.el-input-number--mini {
+  .el-input-number__decrease {
+    right: 30px;
+  }
+  .el-input__inner {
+    padding-right: 55px;
+  }
+}
+
