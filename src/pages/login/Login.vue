@@ -1,7 +1,7 @@
 <template xmlns:text-align="http://www.w3.org/1999/xhtml">
 <!--        <canvas class="cavs" width="100%" height="100%"></canvas>-->
     <div  style="width: 100%">
-        <el-row :gutter="20">
+        <el-row :gutter="20" class="card-form">
             <el-col :span="12" :offset="6"><div class="grid-content bg-purple">
                 <el-card class="login-card">
                     <div slot="header" class="clearfix" >
@@ -16,6 +16,10 @@
                         <div class="input_pwd">
                             <el-input placeholder="请输入密码" v-model="pwd" show-password prefix-icon="el-icon-lock"></el-input>
                         </div>
+                    </el-row>
+                    <el-row class="choice">
+                        <el-radio v-model="radio" label="1">用户登录</el-radio>
+                        <el-radio v-model="radio" label="2">管理员登陆</el-radio>
                     </el-row>
                     <el-row>
                         <el-button type="primary" class="login-btn">确认登陆</el-button>
@@ -35,7 +39,8 @@ export default {
     return {
       title: '登陆',
       userName: '',
-      pwd: ''
+      pwd: '',
+      radio: 1
     }
   },
   methods: {
@@ -95,6 +100,13 @@ text-align: center;
     }
     .reg-btn{
         margin-left: 51px;
+        margin-bottom: 20px;
+    }
+    .card-form{
+        margin-top: 200px;
+    }
+    .choice{
+        text-align: center;
         margin-bottom: 20px;
     }
 </style>
