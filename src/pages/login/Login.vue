@@ -62,7 +62,7 @@ export default {
       title: '登陆',
       userName: '',
       pwd: '',
-      radio: 1,
+      radio: '1',
       regUserName: '',
       regPwd: '',
       regMail: '',
