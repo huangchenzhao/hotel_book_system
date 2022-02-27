@@ -24,14 +24,19 @@
                     <el-row>
                         <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
                         <el-button type="primary" plain class="reg-btn" @click="dialogFormVisible = true">注册一个</el-button>
-                        <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true">
-                            <el-form :model="form">
+                        <el-dialog title="注册" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true" center>
+                            <el-form :model="form" label-width="180px">
                                 <el-form-item label="用户名" :label-width="formLabelWidth" prop="regUserName">
-                                    <el-input v-model="regUserName" autocomplete="off"></el-input>
+                                    <el-input v-model="regUserName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
                                 </el-form-item>
                                 <el-form-item label="密码" :label-width="formLabelWidth" prop="regPwd">
-                                    <el-input placeholder="请选择活动区域">
+                                    <el-input placeholder="请输入密码" show-password prefix-icon="el-icon-lock">
                                         <el-input v-model="regPwd" autocomplete="off"></el-input>
+                                    </el-input>
+                                </el-form-item>
+                                <el-form-item label="邮箱" :label-width="formLabelWidth" prop="regMail">
+                                    <el-input placeholder="请输入qq邮箱" prefix-icon="el-icon-message">
+                                        <el-input v-model="regMail" autocomplete="off"></el-input>
                                     </el-input>
                                 </el-form-item>
                             </el-form>
@@ -59,7 +64,11 @@ export default {
       pwd: '',
       radio: 1,
       regUserName: '',
-      regPwd: ''
+      regPwd: '',
+      regMail: '',
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      formLabelWidth: '120px'
     }
   },
   methods: {
@@ -93,19 +102,6 @@ export default {
       })
     }
   },
-  dialogTableVisible: false,
-  dialogFormVisible: false,
-  form: {
-    name: '',
-    region: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [],
-    resource: '',
-    desc: ''
-  },
-  formLabelWidth: '120px'
 }
 </script>
 
