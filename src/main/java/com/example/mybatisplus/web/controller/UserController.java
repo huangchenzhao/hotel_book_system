@@ -11,42 +11,40 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.model.domain.User;
 
+import java.util.List;
+
 
 /**
- *
- *  前端控制器
- *
+ * 前端控制器
  *
  * @author gzx
- * @since 2022-02-27
  * @version v1.0
+ * @since 2022-02-27
  */
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final Logger logger = LoggerFactory.getLogger( UserController.class );
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
-    @Autowired(required=false)
+    @Autowired(required = false)
     private UserMapper userMapper;
 
     /**
-    * 描述：根据Id 查询
-    *
-    */
+     * 描述：根据Id 查询
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse getById(@PathVariable("id") Long id)throws Exception {
-        User  user =  userService.getById(id);
+    public JsonResponse getById(@PathVariable("id") Long id) throws Exception {
+        User user = userService.getById(id);
         return JsonResponse.success(user);
     }
 
     /**
-    * 描述：根据Id删除
-    *
-    */
+     * 描述：根据Id删除
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JsonResponse deleteById(@PathVariable("id") Long id) throws Exception {
@@ -56,24 +54,22 @@ public class UserController {
 
 
     /**
-    * 描述：根据Id 更新
-    *
-    */
+     * 描述：根据Id 更新
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public JsonResponse updateUser(@PathVariable("id") Long  id,User  user) throws Exception {
+    public JsonResponse updateUser(@PathVariable("id") Long id, User user) throws Exception {
         userService.updateById(user);
         return JsonResponse.success(null);
     }
 
 
     /**
-    * 描述:创建User
-    *
-    */
+     * 描述:创建User
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResponse create(User  user) throws Exception {
+    public JsonResponse create(User user) throws Exception {
         userService.save(user);
         return JsonResponse.success(null);
     }
@@ -93,12 +89,23 @@ public class UserController {
         return JsonResponse.success(user);
     }
 
-    //注册
+    //register by hcz
     @GetMapping("/register")
     @ResponseBody
-    public JsonResponse register(User a){
-        userService.save(a);
-        return JsonResponse.success(null);
+    public JsonResponse register(User a) {
+        List<User> userList = userService.list();
+        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
+        for (User tempUser : userList) {
+            if (tempUser.getUsername().equals(a.getUsername())) {
+                flag = 1;
+            }
+        }
+        if (flag==1) {
+            return JsonResponse.success(null);  //如果存在该用户名则不存入数据库，返回null
+        } else {
+            userService.save(a); //如果不存在该用户名则注册成功，写入数据库
+            return JsonResponse.success(a);
+        }
     }
 }
 
