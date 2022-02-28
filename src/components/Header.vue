@@ -34,7 +34,7 @@ export default {
     /*    left: 10px;*/
     /*}*/
     #logo-wrap {
-        background: url(https://i.imgur.com/AaMlZXK.png);
+        background: url('../assets/images/header.png');
         background-size: cover;
     }
     #logo-bar {

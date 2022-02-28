@@ -10,10 +10,7 @@
                             <el-input v-model="selectForm.hotelName" style="width: 100%" prefix-icon="el-icon-school"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col span="4">
-                        <div class="place"></div>
-                    </el-col>
-                    <el-col :span="10">
+                    <el-col :span="10" :offset="2">
                         <el-form-item label="入住地点" prop="cityValue">
                             <el-row>
                                 <el-cascader
@@ -41,10 +38,7 @@
                             </div>
                         </el-form-item>
                     </el-col>
-                    <el-col span="4">
-                        <div class="place"></div>
-                    </el-col>
-                    <el-col :span="10">
+                    <el-col :span="10" :offset="2">
                         <el-form-item label="房型" prop="room">
                             <el-select v-model="selectForm.room" placeholder="请选择" style="width: 100%" prefix-icon="el-icon-house">
                                 <el-option
