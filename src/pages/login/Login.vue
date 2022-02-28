@@ -1,6 +1,6 @@
 <template xmlns:text-align="http://www.w3.org/1999/xhtml">
 <!--        <canvas class="cavs" width="100%" height="100%"></canvas>-->
-    <div>
+    <div class="home">
         <el-container>
             <el-header></el-header>
             <el-main>
@@ -8,13 +8,13 @@
                     <div slot="header" class="clearfix">
                         <span>微旅——您身边的酒店预订系统</span>
                     </div>
-                    <el-form class="loginForm">
+                    <el-form class="loginForm" :model="loginForm">
                         <el-row>
                             <el-col :span="18" :offset="2"><div class="grid-content bg-purple">
                                 <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur'}
     ]">
-                                    <el-input v-model="userName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
+                                    <el-input v-model="loginForm.userName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
@@ -23,15 +23,15 @@
                                 <el-form-item label="密码" :label-width="formLabelWidth" prop="pwd" :rules="[
       { required: true, message: '请输入密码', trigger: 'blur' }
     ]">
-                                    <el-input v-model="pwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
+                                    <el-input v-model="loginForm.pwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
                         <el-row>
                             <el-col span="12" offset="8"><div class="grid-content bg-purple">
                                 <el-form-item>
-                                    <el-radio v-model="radio" label="1">用户登录</el-radio>
-                                    <el-radio v-model="radio" label="2">管理员登陆</el-radio>
+                                    <el-radio v-model="loginForm.radio" label="1">用户登录</el-radio>
+                                    <el-radio v-model="loginForm.radio" label="2">管理员登陆</el-radio>
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
@@ -45,28 +45,28 @@
                         </el-row>
                     </el-form>
                     <el-dialog title="注册" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true" center>
-                        <el-form :model="form" label-width="180px">
+                        <el-form :model="regForm" label-width="180px">
                             <el-form-item label="用户名" :label-width="formLabelWidth" prop="regUserName" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur' }
     ]">
-                                <el-input v-model="regUserName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
+                                <el-input v-model="regForm.regUserName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
                             </el-form-item>
                             <el-form-item label="密码" :label-width="formLabelWidth" prop="regPwd" :rules="[
       { required: true, message: '请输入密码', trigger: 'blur' }
     ]">
-                                <el-input v-model="regPwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
+                                <el-input v-model="regForm.regPwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
                             </el-form-item>
                             <el-form-item label="邮箱" :label-width="formLabelWidth" prop="regMail" :rules="[
       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ]">
-                                <el-input v-model="regMail" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-message"></el-input>
+                                <el-input v-model="regForm.regMail" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-message"></el-input>
                             </el-form-item>
                             <el-form-item label="验证码" :label-width="formLabelWidth" prop="regUserName" :rules="[
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
-                                    <el-input type="text" max="6" v-model="regCheck" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    <el-input type="text" max="6" v-model="regForm.regCheck" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                         <template slot="append">
                                             <el-button type="primary" plain @click="getCode">发送验证码</el-button>
                                         </template>
@@ -92,14 +92,18 @@ export default {
   name: 'login',
   data () {
     return {
+      loginForm: {
+        userName: '',
+        pwd: '',
+        radio: '1'
+      },
+      regForm: {
+        regUserName: '',
+        regPwd: '',
+        regMail: '',
+        regCheck: ''
+      },
       title: '登陆',
-      userName: '',
-      pwd: '',
-      radio: '1',
-      regUserName: '',
-      regPwd: '',
-      regMail: '',
-      regCheck: '',
       dialogTableVisible: false,
       dialogFormVisible: false,
       formLabelWidth: '120px'
@@ -130,6 +134,7 @@ export default {
         width: 580px;
         margin-top: 25%;
         height: 50%;
+        box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
     }
     .clearfix {
 text-align: center;
@@ -137,5 +142,10 @@ text-align: center;
         font-size: 20px;
         font-weight: bold;
     }
-
+    .home {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background-color: #658ea9 !important;
+    }
 </style>
