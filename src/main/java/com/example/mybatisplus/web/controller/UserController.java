@@ -22,7 +22,7 @@ import com.example.mybatisplus.model.domain.User;
  * @version v1.0
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger( UserController.class );
@@ -91,6 +91,14 @@ public class UserController {
     public JsonResponse login(User a) {
         User user = userService.login(a);
         return JsonResponse.success(user);
+    }
+
+    //注册
+    @GetMapping("/register")
+    @ResponseBody
+    public JsonResponse register(User a){
+        userService.save(a);
+        return JsonResponse.success(null);
     }
 }
 
