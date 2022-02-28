@@ -14,6 +14,12 @@ const loginPage = [
     name: 'userPage',
     component: () =>
       import(/* webpackChunkName: "Login" */ '../pages/main/routes/user/userPage')
+  },
+  {
+    path: '/searchResult',
+    name: 'searchResult',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../pages/main/routes/user/searchResult')
   }
 ]
 

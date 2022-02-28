@@ -11,6 +11,7 @@ import App from './App'
 import '@/assets/iconfont-default'
 import router from './router/'
 import store from './store/'
+import Header from './components/Header.vue'
 
 Vue.use(Vuebar)
 Vue.use(ElementUI)
@@ -21,6 +22,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: { App, Header },
   template: '<App/>'
 })

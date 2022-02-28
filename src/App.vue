@@ -3,7 +3,6 @@
     <keep-alive :include="keepAliveComponents">
       <router-view />
     </keep-alive>
-
   </div>
 </template>
 
