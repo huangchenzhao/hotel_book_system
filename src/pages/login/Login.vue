@@ -31,7 +31,7 @@
                             <el-col span="12" offset="8"><div class="grid-content bg-purple">
                                 <el-form-item>
                                     <el-radio v-model="loginForm.radio" label="1">用户登录</el-radio>
-                                    <el-radio v-model="loginForm.radio" label="2">管理员登陆</el-radio>
+                                    <el-radio v-model="loginForm.radio" label="0">管理员登陆</el-radio>
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
@@ -95,36 +95,47 @@ export default {
       loginForm: {
         userName: '',
         pwd: '',
-        radio: '1'
+        radio: '1',
+        logReturn: {}
       },
       regForm: {
         regUserName: '',
         regPwd: '',
         regMail: '',
-        regCheck: ''
+        regCheck: '',
+        regReturn: {}
       },
       title: '登陆',
       dialogTableVisible: false,
       dialogFormVisible: false,
-      formLabelWidth: '120px',
-      regReturn: {}
+      formLabelWidth: '120px'
     }
   },
   methods: {
     login: function () {
-      let myUser = {username: this.userName, password: this.pwd, usertype: this.radio}
+      let myUser = {username: this.loginForm.userName, password: this.loginForm.pwd, usertype: this.loginForm.radio}
       user(myUser).then(res => {
-        this.$router.push({path: '/userPage'})
+        this.loginForm.logReturn = res
+        if (this.loginForm.logReturn.data === null) {
+          this.$message.error({message: '登陆失败，用户名或密码输入错误哦~', center: true})
+        } else {
+          this.$router.push({path: '/userPage'})
+        }
       })
     },
     handleSave: function () {
-      let newUser = {username: this.regUserName, password: this.regPwd, usertype: '1'}
+      let newUser = {username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
       regUser(newUser).then(res => {
-        this.regReturn = res
-        if (this.regReturn.data === null) {
-          console.info('null!!')
+        this.regForm.regReturn = res
+        if (this.regForm.regReturn.data === null) {
+          this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
         } else {
-          console.info('not null!!')
+          this.$message({
+            message: '恭喜您，注册成功~',
+            type: 'success',
+            center: true
+          })
+          this.dialogFormVisible = false
         }
       })
     }
