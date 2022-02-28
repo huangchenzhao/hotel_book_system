@@ -131,7 +131,7 @@ export default {
           this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
         } else {
           this.$message({
-            message: '恭喜您，注册成功~',
+            message: '注册成功，请登陆~',
             type: 'success',
             center: true
           })
