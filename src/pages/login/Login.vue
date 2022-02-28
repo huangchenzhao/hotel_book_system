@@ -102,7 +102,8 @@ export default {
       regCheck: '',
       dialogTableVisible: false,
       dialogFormVisible: false,
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      regReturn: {}
     }
   },
   methods: {
@@ -115,7 +116,12 @@ export default {
     handleSave: function () {
       let newUser = {username: this.regUserName, password: this.regPwd, usertype: '1'}
       regUser(newUser).then(res => {
-        this.$router.push({path: '/userPage'})
+        this.regReturn = res
+        if (this.regReturn.data === null) {
+          console.info('null!!')
+        } else {
+          console.info('not null!!')
+        }
       })
     }
   }
