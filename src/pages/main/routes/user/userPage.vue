@@ -10,15 +10,14 @@
                             <el-input v-model="selectForm.hotelName" style="width: 100%" prefix-icon="el-icon-school"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="10" :offset="2">
+                    <el-col :span="10" :offset="1">
                         <el-form-item label="入住地点" prop="cityValue">
                             <el-row>
                                 <el-cascader
-                                        :options="city.options"
-                                        :props="props"
-                                        v-model="selectForm.cityValue"
-                                        @active-item-change="handleItemChange"
-                                        @change="cityChange" style="width: 100%" prefix-icon="el-icon-map-location">
+                                        size="large"
+                                        :options="selectForm.options"
+                                        v-model="selectForm.selectedOptions"
+                                        @change="handleChange" style="width: 100%">
                                 </el-cascader>
                             </el-row>
                         </el-form-item>
@@ -38,7 +37,7 @@
                             </div>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="10" :offset="2">
+                    <el-col :span="10" :offset="1">
                         <el-form-item label="房型" prop="room">
                             <el-select v-model="selectForm.room" placeholder="请选择" style="width: 100%" prefix-icon="el-icon-house">
                                 <el-option
@@ -104,6 +103,7 @@
 
 <script>
 import Header from '../../../../components/Header'
+import { regionData, CodeToText } from 'element-china-area-data'
 export default {
   name: 'userPage',
   components: {Header},
@@ -121,7 +121,9 @@ export default {
         hotelName: '',
         cityValue: [],
         room: '',
-        mydate: ''
+        mydate: '',
+        selectedOptions: [],
+        options: regionData
       },
       options: [{
         value: '选项1',
@@ -138,47 +140,7 @@ export default {
       }, {
         value: '选项5',
         label: '总统套房'
-      }],
-      // 所在省市
-      city: {
-        obj: {},
-        options: [{
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }]
-      },
-      props: { // 级联选择器的属性配置
-        value: 'value',
-        children: 'cities',
-        checkStrictly: true
-      }
+      }]
     }
   },
   computed: {
@@ -189,25 +151,12 @@ export default {
   mounted () {
   },
   methods: {
-    _initData () {
-      this.$http({
-        method: 'get',
-        url: this.API.province + '/156' // 中国
-      }).then(res => {
-        this.city.options = res.data.body.map(item => { // 所在省市
-          return {
-            value: item.provinceCode,
-            label: item.provinceName,
-            cities: []
-          }
-        })
-      })
-    },
-    cellStyle ({row, column, rowIndex, columnIndex}) {
-      return 'text-align:center'
-    },
-    rowClass ({row, rowIndex}) {
-      return 'text-align:center'
+    handleChange () {
+      var loc = ''
+      for (let i = 0; i < this.selectedOptions.length; i++) {
+        loc += CodeToText[this.selectedOptions[i]]
+      }
+      alert(loc)
     },
     getCodeByAreaCode (code) {
       if (code === undefined) return false
