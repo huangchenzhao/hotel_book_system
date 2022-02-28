@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import {user} from '@/api/api'
+import {user, regUser} from '@/api/api'
 
 export default {
   name: 'login',
@@ -107,8 +107,14 @@ export default {
   },
   methods: {
     login: function () {
-      let myuser = {username: this.userName, password: this.pwd, radio: this.radio}
-      user(myuser).then(res => {
+      let myUser = {username: this.userName, password: this.pwd, usertype: this.radio}
+      user(myUser).then(res => {
+        this.$router.push({path: '/userPage'})
+      })
+    },
+    handleSave: function () {
+      let newUser = {username: this.regUserName, password: this.regPwd, usertype: '1'}
+      regUser(newUser).then(res => {
         this.$router.push({path: '/userPage'})
       })
     }
