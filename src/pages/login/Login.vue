@@ -1,6 +1,7 @@
 <template xmlns:text-align="http://www.w3.org/1999/xhtml">
 <!--        <canvas class="cavs" width="100%" height="100%"></canvas>-->
     <div class="home">
+        <Header></Header>
         <el-container>
             <el-header></el-header>
             <el-main>
@@ -87,9 +88,11 @@
 
 <script>
 import {user, regUser} from '@/api/api'
+import Header from '../../components/Header'
 
 export default {
   name: 'login',
+  components: {Header},
   data () {
     return {
       loginForm: {
@@ -157,7 +160,7 @@ export default {
         width: 580px;
         margin-top: 25%;
         height: 50%;
-        box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
+        /*box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);*/
     }
     .clearfix {
 text-align: center;
@@ -169,6 +172,6 @@ text-align: center;
         position: fixed;
         height: 100%;
         width: 100%;
-        background-color: #658ea9 !important;
+        /*background-color: #003399 !important;*/
     }
 </style>
