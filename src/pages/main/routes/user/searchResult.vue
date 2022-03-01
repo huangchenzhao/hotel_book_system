@@ -69,8 +69,11 @@ export default {
     deleteRow (index, rows) {
       rows.splice(index, 1)
     },
-    getHotel: function (obj) {
-      hotel(obj)
+    getHotel: function () {
+      let hotelmsg = {name: '如家'}
+      hotel(hotelmsg).then(res => {
+        this.hotels = res.data
+      })
     }
   },
   data () {

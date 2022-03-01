@@ -95,7 +95,72 @@
                 </el-col>
             </el-row>
         </el-tab-pane>
-        <el-tab-pane label="我的账户">配置管理</el-tab-pane>
+        <el-tab-pane label="我的账户">
+            <el-card class="user-card" style="margin: auto">
+                <el-descriptions class="des-user" :column="2" border :size="size" title="账户信息">
+                    <template slot="extra">
+                        <el-button type="primary" @click="centerDialogVisible = true">修改头像</el-button>
+                        <el-dialog
+                                title="上传头像"
+                                :visible.sync="centerDialogVisible"
+                                width="30%"
+                                center>
+                            <span>
+                                <el-upload
+                                        class="avatar-uploader"
+                                        action="/api/file/upload"
+                                        :show-file-list="false"
+                                        :http-request="uploadImg"
+                                        :on-success="handleAvatarSuccess"
+                                        :before-upload="beforeAvatarUpload">
+  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
+                            </span>
+                            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+  </span>
+                        </el-dialog>
+                    </template>
+                    <el-descriptions-item>
+                        <template slot="label">
+                            <i class="el-icon-user"></i>
+                            用户名
+                        </template>
+                        kooriookami
+                    </el-descriptions-item>
+                    <el-descriptions-item>
+                        <template slot="label">
+                            <i class="el-icon-mobile-phone"></i>
+                            密码
+                        </template>
+                        xiaoming
+                    </el-descriptions-item>
+                    <el-descriptions-item>
+                        <template slot="label">
+                            <i class="el-icon-location-outline"></i>
+                            邮箱
+                        </template>
+                        543892034@qq.com
+                    </el-descriptions-item>
+                    <el-descriptions-item>
+                        <template slot="label">
+                            <i class="el-icon-tickets"></i>
+                            备注
+                        </template>
+                        <el-tag size="small">用户</el-tag>
+                    </el-descriptions-item>
+                    <el-descriptions-item>
+                        <template slot="label">
+                            <i class="el-icon-office-building"></i>
+                            头像
+                        </template>
+                        <img src="../../../../assets/images/user2.jpeg" alt="">
+                    </el-descriptions-item>
+                </el-descriptions>
+            </el-card>
+        </el-tab-pane>
         <el-tab-pane label="我的订单">角色管理</el-tab-pane>
     </el-tabs>
 </div>
@@ -132,7 +197,8 @@ export default {
       }, {
         value: '总统套房',
         label: '总统套房'
-      }]
+      }],
+      centerDialogVisible: false
     }
   },
   methods: {
@@ -149,6 +215,21 @@ export default {
       console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
       console.log(this.selectForm.mydate)
       console.log(this.selectForm.room)
+    },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -175,5 +256,36 @@ export default {
     .button {
         padding: 0;
         float: right;
+    }
+    .user-card {
+        width: 700px;
+    }
+    .avatar-uploader {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+    .avatar-uploader{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
