@@ -126,19 +126,19 @@ export default {
         options: regionData
       },
       options: [{
-        value: '选项1',
+        value: '标准间',
         label: '标准间'
       }, {
-        value: '选项2',
+        value: '双人房',
         label: '双人房'
       }, {
-        value: '选项3',
+        value: '大床房',
         label: '大床房'
       }, {
-        value: '选项4',
+        value: '亲子房',
         label: '亲子房'
       }, {
-        value: '选项5',
+        value: '总统套房',
         label: '总统套房'
       }]
     }
@@ -149,10 +149,14 @@ export default {
       for (let i = 0; i < this.selectForm.selectedOptions.length; i++) {
         loc += CodeToText[this.selectForm.selectedOptions[i]]
       }
-      alert(loc)
+      console.info(loc)
+      // console.info(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
     },
     onSubmit () {
-      console.log('submit!')
+      console.log(this.selectForm.hotelName)
+      console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
+      console.log(this.selectForm.mydate)
+      console.log(this.selectForm.room)
     }
   }
 }
