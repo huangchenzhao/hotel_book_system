@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Address">
         <id column="a_id" property="aId" />
-        <result column="country" property="country" />
+        <result column="code" property="code" />
         <result column="province" property="province" />
         <result column="city" property="city" />
         <result column="district" property="district" />

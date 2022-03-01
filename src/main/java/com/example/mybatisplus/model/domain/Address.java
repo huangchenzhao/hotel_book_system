@@ -26,7 +26,7 @@ public class Address extends Model<Address> {
 
     private Long aId;
 
-    private String country;
+    private Integer code;
 
     private String province;
 

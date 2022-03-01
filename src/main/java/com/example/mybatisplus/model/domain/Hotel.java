@@ -46,6 +46,10 @@ public class Hotel extends Model<Hotel> {
     @TableField(exist=false)
     private Room room;
 
+    @TableField(exist=false)
+    private Userorder userOrder;
+
+
 
     @Override
     protected Serializable pkVal() {

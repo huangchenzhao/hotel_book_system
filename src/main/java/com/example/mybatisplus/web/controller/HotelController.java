@@ -79,13 +79,20 @@ public class HotelController {
         return JsonResponse.success(null);
     }
 
+    //搜索酒店
+    //从前端接受key为name checkin checkout code roomtype的变量
+    //返回hotel.* address.* room.price(酒店房间最低价格）photo.photo_url(酒店图片）
+    //返回的数据中会统计当天酒店的所有房间剩余量，仅当房间剩余总和大于0才返回
+    //如果用户输入了房型则是该房型有剩余才返回
+    //酒店名称采用%hoetelname%形式的模糊搜索
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse create(@RequestParam(value="name") String hotelName, @RequestParam(value="checkin")Date checkIn,
-                               @RequestParam(value="checkout") Date checkOut, @RequestParam(value="roomtype")String roomType) throws Exception {
+    public JsonResponse search(@RequestParam(value="name",required=false) String hotelName, @RequestParam(value="checkin",required=false)Date checkIn,
+                               @RequestParam(value="checkout",required=false) Date checkOut, @RequestParam(value="code",required=false) Integer code,
+                               @RequestParam(value="roomtype",required=false)String roomType) throws Exception {
 //        hotelService.save();
-        List<Hotel> hotel =  hotelService.searchResult(hotelName,checkIn,checkOut,roomType);
-        return JsonResponse.success(hotel);
+        List<Hotel> hotel1 =  hotelService.searchResult(hotelName,checkIn,checkOut,code,roomType);
+        return JsonResponse.success(hotel1);
     }
     //酒店推荐
     //gzx
