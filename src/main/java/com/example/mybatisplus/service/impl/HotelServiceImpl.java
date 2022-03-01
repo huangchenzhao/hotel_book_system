@@ -48,7 +48,21 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         List<Hotel> hotel = hotelMapper.searchResult(hotelName, checkInSql, checkOutSql, code, roomType);
         //返回查询数据
         return hotel;
-    }
 
+
+
+    }
+    @Override
+    public List<Hotel> detail(Long hId) {
+        List<Hotel> hoteldetail = hotelMapper.showDetails(hId);
+
+        return  hoteldetail;
+    }
+    @Override
+    public List<Hotel> detail2(Long hId) {
+        List<Hotel> hoteldetail2 = hotelMapper.showDetails2(hId);
+
+        return  hoteldetail2;
+    }
 
 }

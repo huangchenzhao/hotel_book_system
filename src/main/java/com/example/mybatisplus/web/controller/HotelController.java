@@ -102,5 +102,20 @@ public class HotelController {
         List<Hotel> hotelList = hotelService.listrem();
         return JsonResponse.success(hotelList);
     }
+    //酒店详情
+    //gzx
+    @GetMapping("/detail")
+    @ResponseBody
+    public JsonResponse detail(Long hId) throws Exception {
+        List<Hotel> hotel = hotelService.detail(hId);
+        List<Hotel> hotel2=hotelService.detail2(hId);
+        for(Hotel h:hotel2){
+            hotel.add(h);
+        }
+        return JsonResponse.success(hotel);
+    }
+
+
+
 }
 

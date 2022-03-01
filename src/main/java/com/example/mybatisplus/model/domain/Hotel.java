@@ -49,6 +49,9 @@ public class Hotel extends Model<Hotel> {
     @TableField(exist=false)
     private Userorder userOrder;
 
+    @TableField(exist=false)
+    private Detail detail;
+
 
 
     @Override

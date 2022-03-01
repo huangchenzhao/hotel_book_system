@@ -19,4 +19,6 @@ public interface HotelMapper extends BaseMapper<Hotel> {
 
     List<Hotel> searchResult(String hotelName, Date checkIn, Date checkOut, Integer code, String roomType);
     List<Hotel> getrem();
+    List<Hotel> showDetails(Long hId);
+    List<Hotel> showDetails2(Long hId);
 }
