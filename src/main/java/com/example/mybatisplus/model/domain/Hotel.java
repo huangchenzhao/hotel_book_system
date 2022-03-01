@@ -1,5 +1,6 @@
 package com.example.mybatisplus.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -35,6 +36,15 @@ public class Hotel extends Model<Hotel> {
     private Integer star;
 
     private String name;
+
+    @TableField(exist=false)
+    private Address address;
+
+    @TableField(exist=false)
+    private Photo photo;
+
+    @TableField(exist=false)
+    private Room room;
 
 
     @Override
