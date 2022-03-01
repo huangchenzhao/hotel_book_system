@@ -61,7 +61,7 @@
             </el-form>
             <el-row type="flex" justify="space-around">
                 <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }">
+                    <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend1.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
                             <span>如家连锁酒店</span>
@@ -72,7 +72,7 @@
                     </el-card>
                 </el-col>
                 <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }">
+                    <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend2.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
                             <span>希尔顿酒店</span>
@@ -83,7 +83,7 @@
                     </el-card>
                 </el-col>
                 <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }">
+                    <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend3.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
                             <span>学生旅社</span>
@@ -158,107 +158,9 @@ export default {
       }
       alert(loc)
     },
-    getCodeByAreaCode (code) {
-      if (code === undefined) return false
-      this.$http({
-        method: 'get',
-        url: this.API.addressCode + '/' + code
-      })
-        .then(res => {
-          if (res.data.code === this.API.SUCCESS) {
-            let provinceCode = res.data.body.provinceCode
-            let cityCode = res.data.body.cityCode
-            let areaCode = res.data.body.areaCode
-            this.cityValue = [provinceCode, cityCode, areaCode]
-            this.handleItemChange([provinceCode, cityCode])
-          }
-        })
-        .finally(res => {
-        })
-    },
-    handleItemChange (value) {
-      let a = (item) => {
-        this.$http({
-          method: 'get',
-          url: this.API.city + '/' + value[0]
-        }).then(res => {
-          item.cities = res.data.body.map(ite => {
-            return {
-              value: ite.cityCode,
-              label: ite.cityName,
-              cities: []
-            }
-          })
-          if (value.length === 2) { // 如果传入的value.length===2 && 先执行的a()，说明是传入了areaCode，需要初始化多选框
-            b(item)
-          }
-        }).finally(_ => {
-        })
-      }
-      let b = (item) => {
-        if (value.length === 2) {
-          item.cities.find(ite => {
-            if (ite.value === value[1]) {
-              if (!ite.cities.length) {
-                this.$http({
-                  method: 'get',
-                  url: this.API.area + '/' + value[1]
-                }).then(res => {
-                  ite.cities = res.data.body.map(ite => {
-                    return {
-                      value: ite.areaCode,
-                      label: ite.areaName
-                    }
-                  })
-                }).finally(_ => {
-                })
-              }
-            }
-          })
-        }
-      }
-      this.city.options.find(item => {
-        if (item.value === value[0]) {
-          if (item.cities.length) {
-            b(item)
-          } else {
-            a(item)
-          }
-          return true
-        }
-      })
-    },
-    getCityCode () {
-      return this.cityValue[2]
-    },
-    reset () {
-      this.cityValue = []
-    },
-    cityChange (value) {
-      if (value.length === 3) {
-        this.$emit('cityChange', value[2])
-      } else {
-        this.$emit('cityChange', null)
-      }
+    onSubmit () {
+      console.log('submit!')
     }
-  },
-  watch: {
-    areaCode: {
-      deep: true,
-      immediate: true,
-      handler (newVal) {
-        if (newVal) {
-          this.getCodeByAreaCode(newVal)
-        } else {
-          this.$nextTick(() => {
-            this.reset()
-          })
-        }
-      }
-    }
-  },
-  onSubmit () {
-    console.log('submit!')
   }
 }
 </script>
