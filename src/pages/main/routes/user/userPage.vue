@@ -182,7 +182,12 @@ export default {
         mydate: '',
         selectedOptions: [],
         options: regionData,
-        searchReturn: {}
+        searchReturn: {
+          hotelName: [],
+          imgUrl: [],
+          site: [],
+          lowestPrice: []
+        }
       },
       options: [{
         value: '标准间',
@@ -213,19 +218,18 @@ export default {
       console.info(loc)
     },
     onSubmit () {
-      /* console.log(this.selectForm.hotelName)
-      console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
-      console.log(this.selectForm.mydate[0])
-      console.log(this.selectForm.room) */
-      console.log(CodeToText[this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]])
-      console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
       let myHotel = {name: this.selectForm.hotelName, checkin: this.selectForm.mydate[0], checkout: this.selectForm.mydate[1], roomtype: this.selectForm.room, code: this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]}
       searchHotel(myHotel).then(res => {
-        this.selectForm.searchReturn = res
+        this.selectForm.searchReturn.hotelName = res.data[0].name
+        this.selectForm.searchReturn.imgUrl = res.data[0].photo.photoUrl
+        this.selectForm.searchReturn.site = res.data[0].address.province + res.data[0].address.city + res.data[0].address.district
+        this.selectForm.searchReturn.lowestPrice = res.data[0].room.price
+        console.info(this.selectForm.searchReturn.hotelName)
+        console.info(this.selectForm.searchReturn.imgUrl)
+        console.info(this.selectForm.searchReturn.site)
+        console.info(this.selectForm.searchReturn.lowestPrice)
         this.$router.push({path: '/searchResult'})
       })
-      console.log(this.selectForm.mydate)
-      console.log(this.selectForm.room)
     },
     handleAvatarSuccess (res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)

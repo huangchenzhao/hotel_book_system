@@ -60,7 +60,6 @@
 
 <script>
 import Header from '../../../../components/Header'
-import {hotel} from '../../../../api/api'
 
 export default {
   name: 'searchResult',
@@ -68,12 +67,6 @@ export default {
   methods: {
     deleteRow (index, rows) {
       rows.splice(index, 1)
-    },
-    getHotel: function () {
-      let hotelmsg = {name: '如家'}
-      hotel(hotelmsg).then(res => {
-        this.hotels = res.data
-      })
     }
   },
   data () {
