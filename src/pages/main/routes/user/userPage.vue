@@ -143,18 +143,11 @@ export default {
       }]
     }
   },
-  computed: {
-  },
-  created () {
-    this._initData()
-  },
-  mounted () {
-  },
   methods: {
     handleChange () {
-      var loc = ''
-      for (let i = 0; i < this.selectedOptions.length; i++) {
-        loc += CodeToText[this.selectedOptions[i]]
+      let loc = ''
+      for (let i = 0; i < this.selectForm.selectedOptions.length; i++) {
+        loc += CodeToText[this.selectForm.selectedOptions[i]]
       }
       alert(loc)
     },
