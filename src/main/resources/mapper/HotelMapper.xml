@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Hotel">
         <id column="h_id" property="hId" />
-        <result column="ha_id" property="aId" />
+        <result column="a_id" property="aId" />
         <result column="longitude" property="longitude" />
         <result column="latitude" property="latitude" />
         <result column="star" property="star" />
@@ -64,5 +64,41 @@
         </if>
         </where>
     </select>
+    <!-- 酒店推荐三表联查映射结果 -->
+
+    <resultMap id="RemMap" type="com.example.mybatisplus.model.domain.Hotel">
+        <id column="id" property="Id" />
+        <result column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
+        <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
+            <id column="aid" property="aId" />
+            <result column="country" property="country" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+        </association>
+        <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
+            <id column="p_id" property="pId" />
+            <result column="r_id" property="rId" />
+            <result column="hid" property="hId" />
+            <result column="photo_url" property="photoUrl" />
+        </association>
+    </resultMap>
+    <select id="getrem" resultMap="RemMap">
+        SELECT
+            *,address.a_id as aid,photo.h_id as hid
+        FROM
+            hotel
+                INNER JOIN photo ON photo.h_id = hotel.h_id
+                INNER JOIN address ON hotel.a_id = address.a_id
+        WHERE
+            (hotel.h_id = 1 AND
+             photo.r_id is NULL)
+    </select>
+
 
 </mapper>

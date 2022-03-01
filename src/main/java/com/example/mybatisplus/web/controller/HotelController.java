@@ -88,5 +88,13 @@ public class HotelController {
         List<Hotel> hotel =  hotelService.searchResult(hotelName,checkIn,checkOut,roomType);
         return JsonResponse.success(hotel);
     }
+    //酒店推荐
+    //gzx
+    @GetMapping("/recommend")
+    @ResponseBody
+    public JsonResponse recommend()throws Exception {
+        List<Hotel> hotelList = hotelService.listrem();
+        return JsonResponse.success(hotelList);
+    }
 }
 

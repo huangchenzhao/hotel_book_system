@@ -1,5 +1,6 @@
 package com.example.mybatisplus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.model.domain.Hotel;
 import com.example.mybatisplus.mapper.HotelMapper;
 import com.example.mybatisplus.service.HotelService;
@@ -24,6 +25,12 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Autowired(required=false)
     private HotelMapper hotelMapper;
+
+    public List<Hotel> listrem() {
+        return hotelMapper.getrem();
+    }
+
+
 
     @Override
     public List<Hotel> searchResult(String hotelName, Date checkIn, Date checkOut, String roomType) {

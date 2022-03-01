@@ -14,5 +14,12 @@
     <select id="selectLogin" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where username = #{username} and password = #{password} and usertype = #{usertype}
     </select>
-
+    <resultMap id="myMap" type="com.example.mybatisplus.model.domain.User">
+        <id column="u_id" property="uId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="photo_url" property="photoUrl" />
+        <result column="mail" property="mail" />
+        <result column="usertype" property="usertype" />
+    </resultMap>
 </mapper>
