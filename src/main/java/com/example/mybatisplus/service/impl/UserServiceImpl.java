@@ -30,16 +30,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User login(User a) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(User::getPassword,a.getPassword())
+        /*wrapper.lambda().eq(User::getPassword,a.getPassword())
                 .eq(User::getUsername,a.getUsername())
-                .eq(User::getUsertype,a.getUsertype());
+                .eq(User::getUsertype,a.getUsertype());*/
+        wrapper.eq("username",a.getUsername())
+                .eq("password", a.getPassword())
+                .eq("usertype",a.getUsertype());
         return userMapper.selectOne(wrapper);
     }
 
     @Override
     public User register(User a) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(User::getUsername,a.getUsername());
+        //wrapper.lambda().eq(User::getUsername,a.getUsername());
+        wrapper.eq("username",a.getUsername());
         User result = userMapper.selectOne(wrapper);
         if(result!=null){//存在用户则返回空
             return null;
