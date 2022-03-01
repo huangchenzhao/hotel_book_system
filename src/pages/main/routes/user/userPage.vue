@@ -198,7 +198,8 @@ export default {
         value: '总统套房',
         label: '总统套房'
       }],
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      imageUrl: ''
     }
   },
   methods: {
