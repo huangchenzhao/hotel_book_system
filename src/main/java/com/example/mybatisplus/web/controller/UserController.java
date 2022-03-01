@@ -96,19 +96,20 @@ public class UserController {
     @GetMapping("/register")
     @ResponseBody
     public JsonResponse register(User a) {
-        List<User> userList = userService.list();
-        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
-        for (User tempUser : userList) {
-            if (tempUser.getUsername().equals(a.getUsername())) {
-                flag = 1;
-            }
-        }
-        if (flag==1) {
-            return JsonResponse.success(null);  //如果存在该用户名则不存入数据库，返回null
-        } else {
-            userService.save(a); //如果不存在该用户名则注册成功，写入数据库
-            return JsonResponse.success(a);
-        }
+//        List<User> userList = userService.list();
+//        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
+//        for (User tempUser : userList) {
+//            if (tempUser.getUsername().equals(a.getUsername())) {
+//                flag = 1;
+//            }
+//        }
+//        if (flag==1) {
+//            return JsonResponse.success(null);  //如果存在该用户名则不存入数据库，返回null
+//        } else {
+//            userService.save(a); //如果不存在该用户名则注册成功，写入数据库
+//            return JsonResponse.success(a);
+//        }
+        return JsonResponse.success(userService.register(a));
     }
 }
 
