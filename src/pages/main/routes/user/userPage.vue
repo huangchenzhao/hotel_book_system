@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import {searchHotel} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 export default {
@@ -115,7 +116,8 @@ export default {
         room: '',
         mydate: '',
         selectedOptions: [],
-        options: regionData
+        options: regionData,
+        searchReturn: {}
       },
       options: [{
         value: '标准间',
@@ -142,13 +144,19 @@ export default {
         loc += CodeToText[this.selectForm.selectedOptions[i]]
       }
       console.info(loc)
-      // console.info(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
     },
     onSubmit () {
-      console.log(this.selectForm.hotelName)
+      /* console.log(this.selectForm.hotelName)
       console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
-      console.log(this.selectForm.mydate)
-      console.log(this.selectForm.room)
+      console.log(this.selectForm.mydate[0])
+      console.log(this.selectForm.room) */
+      console.log(CodeToText[this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]])
+      console.log(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
+      let myHotel = {name: this.selectForm.hotelName, checkin: this.selectForm.mydate[0], checkout: this.selectForm.mydate[1], roomtype: this.selectForm.room, code: this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]}
+      searchHotel(myHotel).then(res => {
+        this.selectForm.searchReturn = res
+        this.$router.push({path: '/searchResult'})
+      })
     }
   }
 }
