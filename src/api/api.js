@@ -5,3 +5,5 @@ export const userList = (obj) => http.GET('/api/book/list', obj)
 export const user = (obj) => http.GET('/api/user/login', obj)
 // 用户注册
 export const regUser = (obj) => http.GET('/api/user/register', obj)
+// 搜索酒店
+export const hotel = (obj) => http.GET('/api/user/register', obj)

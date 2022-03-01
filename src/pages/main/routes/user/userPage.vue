@@ -107,14 +107,6 @@ import { regionData, CodeToText } from 'element-china-area-data'
 export default {
   name: 'userPage',
   components: {Header},
-  props: {
-    areaCode: null
-  },
-  model: {
-    prop: 'areaCode',
-    event: 'cityChange'
-  },
-
   data () {
     return {
       selectForm: {
@@ -153,10 +145,10 @@ export default {
   methods: {
     handleChange () {
       var loc = ''
-      for (let i = 0; i < this.selectedOptions.length; i++) {
-        loc += CodeToText[this.selectedOptions[i]]
+      for (let i = 0; i < this.selectForm.selectedOptions.length; i++) {
+        loc += CodeToText[this.selectForm.selectedOptions[i]]
       }
-      alert(loc)
+      console.info(loc)
     },
     onSubmit () {
       console.log('submit!')

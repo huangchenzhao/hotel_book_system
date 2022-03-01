@@ -4,51 +4,51 @@
     <el-tabs type="border-card">
         <el-tab-pane label="搜索结果">
             <el-table
-                    :data="tableData"
+                    :data="hotel"
                     style="width: 100%"
                     max-height="510">
                 <el-table-column
-                        prop="date"
-                        label="日期"
+                        prop="id"
+                        label="序号"
                         width="150">
                 </el-table-column>
                 <el-table-column
                         prop="name"
-                        label="姓名"
-                        width="120">
+                        label="名称"
+                        width="250">
                 </el-table-column>
                 <el-table-column
-                        prop="province"
-                        label="省份"
-                        width="120">
-                </el-table-column>
-                <el-table-column
-                        prop="city"
-                        label="市区"
-                        width="120">
+                        prop="photo"
+                        label="图片"
+                        width="200">
                 </el-table-column>
                 <el-table-column
                         prop="address"
                         label="地址"
-                        width="300">
+                        width="250">
                 </el-table-column>
                 <el-table-column
-                        prop="zip"
-                        label="邮编"
-                        width="120">
+                        prop="price"
+                        label="最低价格"
+                        width="200">
                 </el-table-column>
                 <el-table-column
                         fixed="right"
                         label="操作"
                         width="120">
-                    <template slot-scope="scope">
-                        <el-button
-                                @click.native.prevent="deleteRow(scope.$index, tableData)"
-                                type="text"
-                                size="small">
-                            查看详情
-                        </el-button>
-                    </template>
+                    <el-button
+                            @click.native.prevent="deleteRow(scope.$index, hotelData)"
+                            type="text"
+                            size="small" @click="dialogTableVisible = true">
+                        查看详情
+                    </el-button>
+                    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+                        <el-table :data="room">
+                            <el-table-column property="date" label="日期" width="150"></el-table-column>
+                            <el-table-column property="name" label="姓名" width="200"></el-table-column>
+                            <el-table-column property="address" label="地址"></el-table-column>
+                        </el-table>
+                    </el-dialog>
                 </el-table-column>
             </el-table>
         </el-tab-pane>
@@ -60,80 +60,24 @@
 
 <script>
 import Header from '../../../../components/Header'
+import {hotel} from '../../../../api/api'
+
 export default {
   name: 'searchResult',
   components: {Header},
   methods: {
     deleteRow (index, rows) {
       rows.splice(index, 1)
+    },
+    getHotel: function (obj) {
+      hotel(obj)
     }
   },
   data () {
     return {
-      tableData: [{
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-08',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-06',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-07',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }]
+      hotel: [],
+      room: [],
+      dialogTableVisible: false
     }
   }
 }

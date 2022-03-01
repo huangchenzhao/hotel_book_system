@@ -11,7 +11,7 @@
         <el-card class="container">
         </el-card>
         <el-table
-                :data="tableData"
+                :data="hotelData"
                 style="width: 100%"
                 max-height="250">
             <el-table-column
@@ -51,7 +51,7 @@
                     width="120">
                 <template slot-scope="scope">
                     <el-button
-                            @click.native.prevent="deleteRow(scope.$index, tableData)"
+                            @click.native.prevent="deleteRow(scope.$index, hotelData)"
                             type="text"
                             size="small">
                         移除
