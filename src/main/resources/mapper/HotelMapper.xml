@@ -43,8 +43,11 @@
                 INNER JOIN photo ON photo.h_id = hotel.h_id
                 INNER JOIN address ON hotel.a_id = address.a_id
         WHERE
-            (hotel.h_id = 1 AND
-             photo.r_id is NULL)
+             photo.r_id is NULL
+        group by hotel.h_id
+        ORDER BY
+            hotel.star DESC
+        LIMIT 3
     </select>
 
 
