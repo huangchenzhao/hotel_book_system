@@ -13,7 +13,7 @@
     </resultMap>
     <resultMap id="SearchResultMap" type="com.example.mybatisplus.model.domain.Hotel">
         <id column="h_id" property="hId" />
-        <result column="ha_id" property="aId" />
+        <result column="a_id" property="aId" />
         <result column="longitude" property="longitude" />
         <result column="latitude" property="latitude" />
         <result column="star" property="star" />

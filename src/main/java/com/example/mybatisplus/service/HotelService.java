@@ -15,6 +15,7 @@ import java.util.List;
  * @since 2022-02-28
  */
 public interface HotelService extends IService<Hotel> {
+    List<Hotel> listrem();
     List<Hotel> searchResult(String hotelName, Date checkIN, Date checkOut, String roomType);
     List<Hotel> listrem();
 }

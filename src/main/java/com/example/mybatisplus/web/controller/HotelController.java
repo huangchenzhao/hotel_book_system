@@ -1,6 +1,5 @@
 package com.example.mybatisplus.web.controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;

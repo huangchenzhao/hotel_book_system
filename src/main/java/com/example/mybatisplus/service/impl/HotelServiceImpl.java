@@ -39,4 +39,9 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         List<Hotel> hotel = hotelMapper.searchResult(hotelName, checkInSql, checkOutSql, roomType);
         return hotel;
     }
+
+    public List<Hotel> listrem() {
+        return hotelMapper.getrem();
+    }
+
 }
