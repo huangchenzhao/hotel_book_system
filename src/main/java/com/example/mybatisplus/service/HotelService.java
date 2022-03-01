@@ -3,6 +3,7 @@ package com.example.mybatisplus.service;
 import com.example.mybatisplus.model.domain.Hotel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ import java.util.List;
  */
 public interface HotelService extends IService<Hotel> {
     List<Hotel> listrem();
+    List<Hotel> searchResult(String hotelName, Date checkIN, Date checkOut, String roomType);
+
 }

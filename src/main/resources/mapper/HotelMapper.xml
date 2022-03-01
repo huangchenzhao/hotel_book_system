@@ -11,6 +11,59 @@
         <result column="star" property="star" />
         <result column="name" property="name" />
     </resultMap>
+    <resultMap id="SearchResultMap" type="com.example.mybatisplus.model.domain.Hotel">
+        <id column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
+        <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
+            <id column="a_id" property="aId" />
+            <result column="country" property="country" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+        </association>
+        <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
+            <id column="p_id" property="pId" />
+            <result column="pr_id" property="rId" />
+            <result column="ph_id" property="hId" />
+            <result column="photo_url" property="photoUrl" />
+        </association>
+        <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
+            <id column="r_id" property="rId" />
+            <result column="rh_id" property="hId" />
+            <result column="price" property="price" />
+            <result column="roomtype" property="roomtype" />
+            <result column="amount" property="amount" />
+            <result column="max_people" property="maxPeople" />
+        </association>
+    </resultMap>
+    <select id="searchResult" resultMap="SearchResultMap">
+        SELECT hotel.*,address.*,
+        photo.photo_url,room.price  FROM
+        hotel
+        INNER JOIN photo ON photo.h_id = hotel.h_id
+        INNER JOIN address ON hotel.a_id = address.a_id
+        INNER JOIN ((SELECT min(price) AS price,hotel.h_id,room.roomtype,room.r_id FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
+        GROUP BY hotel.h_id)AS room)  ON  room.h_id=hotel.h_id
+        INNER JOIN detail ON detail.r_id=room.r_id
+        <where>
+        <if test="hotelName != null and hotelName!=''">
+            and hotel.name=#{hotelName}
+        </if>
+        <if test="checkIn != null">
+            and detail.r_date=#{checkIn} and remain>0
+        </if>
+        <if test="roomType != null and roomType!=''">
+            and room.roomtype=#{roomType}
+        </if>
+        <if test="true" >
+            and 1
+        </if>
+        </where>
+    </select>
     <!-- 酒店推荐三表联查映射结果 -->
 
     <resultMap id="RemMap" type="com.example.mybatisplus.model.domain.Hotel">

@@ -5,6 +5,9 @@ import com.example.mybatisplus.model.domain.Hotel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.MapKey;
 
+
+
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,5 +19,7 @@ import java.util.List;
  * @since 2022-02-28
  */
 public interface HotelMapper extends BaseMapper<Hotel> {
+
+    List<Hotel> searchResult(String hotelName, Date checkIn, Date checkOut, String roomType);
     List<Hotel> getrem();
 }

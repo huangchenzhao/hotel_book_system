@@ -10,6 +10,7 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.HotelService;
 import com.example.mybatisplus.model.domain.Hotel;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -76,6 +77,15 @@ public class HotelController {
     public JsonResponse create(Hotel  hotel) throws Exception {
         hotelService.save(hotel);
         return JsonResponse.success(null);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse create(@RequestParam(value="name") String hotelName, @RequestParam(value="checkin")Date checkIn,
+                               @RequestParam(value="checkout") Date checkOut, @RequestParam(value="roomtype")String roomType) throws Exception {
+//        hotelService.save();
+        List<Hotel> hotel =  hotelService.searchResult(hotelName,checkIn,checkOut,roomType);
+        return JsonResponse.success(hotel);
     }
     //酒店推荐
     //gzx

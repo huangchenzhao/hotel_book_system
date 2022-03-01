@@ -8,6 +8,12 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <!-- 日期转换 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="com.gwd.shopping.core.web.CustomDate"/>
+        </property>
+    </bean>
     <groupId>com.example</groupId>
     <artifactId>mybatisplus</artifactId>
     <version>0.0.1-SNAPSHOT</version>

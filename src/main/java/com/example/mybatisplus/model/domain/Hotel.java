@@ -37,11 +37,14 @@ public class Hotel extends Model<Hotel> {
 
     private String name;
 
-    @TableField(exist = false) //该注解修饰表示这个字段不参与表结构
-    private Address address;//创建地址
+    @TableField(exist=false)
+    private Address address;
 
-    @TableField(exist = false) //该注解修饰表示这个字段不参与表结构
-    private Photo photo;//创建图片
+    @TableField(exist=false)
+    private Photo photo;
+
+    @TableField(exist=false)
+    private Room room;
 
 
     @Override
