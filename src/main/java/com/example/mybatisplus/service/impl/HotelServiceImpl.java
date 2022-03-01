@@ -30,8 +30,6 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         return hotelMapper.getrem();
     }
 
-
-
     @Override
     public List<Hotel> searchResult(String hotelName, Date checkIn, Date checkOut, String roomType) {
         java.sql.Date checkInSql= new java.sql.Date(checkIn.getTime());
@@ -40,8 +38,5 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         return hotel;
     }
 
-    public List<Hotel> listrem() {
-        return hotelMapper.getrem();
-    }
 
 }
