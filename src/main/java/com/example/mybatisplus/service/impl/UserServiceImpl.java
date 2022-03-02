@@ -52,4 +52,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return a;
         }
     }
+
+    @Override
+    public User showdetail(Long uid){
+        User curruser = userMapper.selectById(uid);
+        System.out.println(curruser);
+        System.out.println(curruser);
+        return curruser;
+    }
 }

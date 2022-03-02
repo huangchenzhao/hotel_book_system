@@ -130,5 +130,16 @@ public class UserController {
 //        }
         return JsonResponse.success(userService.register(a));
     }
+
+
+
+    //拿到当前登录用户的user表信息
+    @GetMapping("/detail")
+    @ResponseBody
+    public JsonResponse details(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long uid = (Long)session.getAttribute("uId");
+        return JsonResponse.success(userService.showdetail(uid));
+    }
 }
 
