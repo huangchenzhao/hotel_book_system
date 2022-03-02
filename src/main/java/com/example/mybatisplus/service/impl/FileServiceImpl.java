@@ -1,8 +1,13 @@
 package com.example.mybatisplus.service.impl;
 
-
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.example.mybatisplus.model.domain.User;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.mybatisplus.mapper.UserMapper;
 import com.example.mybatisplus.service.FileService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -14,14 +19,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
+
+
+
 public class FileServiceImpl implements FileService {
+
+    @Autowired(required=false)
+    private UserMapper userMapper;
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMM");
 
@@ -29,8 +37,13 @@ public class FileServiceImpl implements FileService {
     private String fileUploadPath;
 
     @Override
-    public Map upload(MultipartFile file) throws IOException {
+    public Map upload(MultipartFile file, Long uid) throws IOException {
+
         Map<String, String> map = storeFile(file,Paths.get(fileUploadPath,"image").toString());
+        System.out.println("123456"+map);
+        String picurl = map.get("url");
+        userMapper.updatePic(uid,picurl);
+
         return map;
     }
 

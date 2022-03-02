@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,9 @@ public class FileController {
             map.put("message", "请登录后重试");
             return ResponseEntity.badRequest().body(map);
         }
-        map = fileService.upload(file);
+        HttpSession session = request.getSession();
+        Long uid = (Long)session.getAttribute("uId");
+        map = fileService.upload(file,uid);
         System.out.println(map);
         return ResponseEntity.ok().body(map);
     }

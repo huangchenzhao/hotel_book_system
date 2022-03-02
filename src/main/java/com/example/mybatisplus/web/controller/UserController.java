@@ -99,7 +99,17 @@ public class UserController {
         }
         return JsonResponse.success(user);
     }
+    @GetMapping("/logintest")
+    @ResponseBody
+    public JsonResponse logintest(HttpServletRequest request, User a) {
+//        User user = userService.login(a);
 
+            HttpSession session = request.getSession();
+//            session.setAttribute("",456);
+            Long id = (Long)session.getAttribute("uId");
+            System.out.println(id);
+        return JsonResponse.success(null);
+    }
 
     //register by hcz
     @GetMapping("/register")
