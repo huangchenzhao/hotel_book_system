@@ -18,6 +18,13 @@ module.exports = {
           "^/api": "/api"
         }
       },
+      '/image': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/image": "/image"
+        }
+      },
     },
 
     // Various Dev Server settings

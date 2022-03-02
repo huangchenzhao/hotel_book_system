@@ -156,12 +156,36 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user2.jpeg" alt="">
+                        <img src="../../../../assets/images/user2.jpeg" alt="" id="imgid">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
         </el-tab-pane>
-        <el-tab-pane label="我的订单">角色管理</el-tab-pane>
+        <el-tab-pane label="我的订单">
+            <el-table
+                    :data="orderData"
+                    stripe
+                    style="width: 100%">
+                <el-table-column
+                        type="index"
+                        width="50">
+                </el-table-column>
+                <el-table-column
+                        prop=""
+                        label="日期"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="name"
+                        label="姓名"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="address"
+                        label="地址">
+                </el-table-column>
+            </el-table>
+        </el-tab-pane>
     </el-tabs>
 </div>
 </template>
@@ -201,7 +225,9 @@ export default {
         label: '总统套房'
       }],
       centerDialogVisible: false,
-      imageUrl: ''
+      imageUrl: '',
+      imgReturn: '',
+      orderData: []
     }
   },
   methods: {
@@ -229,6 +255,9 @@ export default {
     },
     handleAvatarSuccess (res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      console.info(this.imgReturn)
+      document.setElementById('imgid').setAttribute('src', this.imgReturn)
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
@@ -272,7 +301,7 @@ export default {
         width: 700px;
     }
     .avatar-uploader {
-        border: 1px dashed #d9d9d9;
+        border: 1px dashed #6b9bce;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
