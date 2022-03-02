@@ -17,7 +17,7 @@
                         prop="photo.photoUrl"
                         label="图片"
                         width="300" align="center" header-align="center" >
-                    <template v-slot="scope">
+                    <template slot-scope="scope">
                         <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
                     </template>
                 </el-table-column>
@@ -34,42 +34,36 @@
                 </el-table-column>
               <el-table-column
                   prop="star"
-                  label="星级"
+                  label="得分"
                   sortable
                   width="200" align="center" header-align="center" >
                   <template slot-scope="scope" >
-                      <el-rate v-model="scope.row.star" :allow-half="true"  disabled text-color="#ff9900"></el-rate>
+                      <el-rate v-model="scope.row.star" :allow-half="true" show-score disabled text-color="#ff9900"></el-rate>
                   </template>
               </el-table-column>
                 <el-table-column
                         label="操作"
                         align="center" header-align="center" >
-                    <el-button
-                            type="text" @click="dialogTableVisible1 = true" class="button">
-                        查看详情
-                    </el-button>
-                    <el-dialog title="希尔顿酒店" :visible.sync="dialogTableVisible1" :append-to-body="true" @close='closeDialog'>
-                        <el-table :data="roomData">
-                            <el-table-column property="photo" label="图片" width="250"></el-table-column>
-                            <el-table-column property="type" label="房型" width="150"></el-table-column>
-                            <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>
-                            <el-table-column property="price" label="价格"></el-table-column>
-                        </el-table>
-                    </el-dialog>
-                  <el-button
-                      type="text" @click="centerDialogVisible1 = true">
-                    查看地图
-                  </el-button>
-                    <el-dialog
-                            title="提示"
-                            :visible.sync="centerDialogVisible1"
-                            width="30%"
-                            center append-to-body="true">
-                        <span>需要注意的是内容是默认不居中的</span>
-                        <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible1 = false">确 定</el-button>
-  </span>
+                    <template slot-scope="scope">
+                        <el-button
+                                type="text" @click="handleClick(scope.row)">
+                            查看详情
+                        </el-button>
+                    </template>
+                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
+                        <el-row>
+                            <el-col :span="12">
+                                <el-image></el-image>
+                            </el-col>
+                            <el-col :span="12">
+                                <el-table :data="room">
+                                    <el-table-column property="latitude" label="房型" width="100"></el-table-column>
+                                    <el-table-column property="star" label="图片" width="200"></el-table-column>
+                                    <el-table-column property="name" label="价格" width="100"></el-table-column>
+                                    <el-table-column property="longitude" label="数量"></el-table-column>
+                                </el-table>
+                            </el-col>
+                        </el-row>
                     </el-dialog>
                 </el-table-column>
             </el-table>
@@ -179,10 +173,8 @@ export default {
     return {
       hotel: [],
       room: [],
-      dialogTableVisible1: false,
-      dialogTableVisible2: false,
+      dialogVisible: false,
       centerDialogVisible: false,
-      centerDialogVisible1: false,
       imageUrl: '',
       imgReturn: '',
       orderData: [],
@@ -196,8 +188,10 @@ export default {
     this.hotel = this.$route.params.returnData
   },
   methods: {
-    closeDialog () {
-      this.dialogCode = false
+    handleClick (row) {
+      this.dialogVisible = true
+      this.room = row
+      alert(JSON.stringify(row))
     }
   }
 }
