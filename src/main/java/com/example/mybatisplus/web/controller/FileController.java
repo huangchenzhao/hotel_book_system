@@ -41,6 +41,7 @@ public class FileController {
             return ResponseEntity.badRequest().body(map);
         }
         map = fileService.upload(file);
+        System.out.println(map);
         return ResponseEntity.ok().body(map);
     }
 
