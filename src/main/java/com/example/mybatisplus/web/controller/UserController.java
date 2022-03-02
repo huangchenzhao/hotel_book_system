@@ -11,6 +11,10 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.model.domain.User;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -87,10 +91,15 @@ public class UserController {
     ///test
     @GetMapping("/login")
     @ResponseBody
-    public JsonResponse login(User a) {
+    public JsonResponse login(HttpServletRequest request, User a) {
         User user = userService.login(a);
+        if (user != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("uId",user.getuId());
+        }
         return JsonResponse.success(user);
     }
+
 
     //register by hcz
     @GetMapping("/register")
