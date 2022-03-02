@@ -24,7 +24,7 @@ import java.util.List;
  * @version v1.0
  */
 @Controller
-@RequestMapping("/hotel")
+@RequestMapping("/api/hotel")
 public class HotelController {
 
     private final Logger logger = LoggerFactory.getLogger( HotelController.class );
