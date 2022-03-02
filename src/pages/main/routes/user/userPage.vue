@@ -67,9 +67,9 @@
                             <span>如家连锁酒店</span>
                             <div class="bottom clearfix">
                                 <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible = true">查看详情</el-button>
+                                <el-button type="text" class="button" @click="dialogTableVisible1 = true">查看详情</el-button>
                             </div>
-                            <el-dialog title="如家连锁酒店" :visible.sync="dialogTableVisible">
+                            <el-dialog title="如家连锁酒店" :visible.sync="dialogTableVisible1">
                                         <el-table :data="roomData">
                                             <el-table-column property="photo" label="图片" width="250"></el-table-column>
                                             <el-table-column property="type" label="房型" width="150"></el-table-column>
@@ -87,9 +87,9 @@
                             <span>希尔顿酒店</span>
                             <div class="bottom clearfix">
                                 <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible = true">查看详情</el-button>
+                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>
                             </div>
-                            <el-dialog title="希尔顿酒店" :visible.sync="dialogTableVisible">
+                            <el-dialog title="希尔顿酒店" :visible.sync="dialogTableVisible2">
                                 <el-table :data="roomData">
                                     <el-table-column property="photo" label="图片" width="250"></el-table-column>
                                     <el-table-column property="type" label="房型" width="150"></el-table-column>
@@ -107,9 +107,9 @@
                             <span>学生旅社</span>
                             <div class="bottom clearfix">
                                 <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible = true">查看详情</el-button>
+                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>
                             </div>
-                            <el-dialog title="学生旅社" :visible.sync="dialogTableVisible">
+                            <el-dialog title="学生旅社" :visible.sync="dialogTableVisible3">
                                 <el-table :data="roomData">
                                     <el-table-column property="photo" label="图片" width="250"></el-table-column>
                                     <el-table-column property="type" label="房型" width="150"></el-table-column>
@@ -260,7 +260,9 @@ export default {
       imageUrl: '',
       imgReturn: '',
       orderData: [],
-      dialogTableVisible: false,
+      dialogTableVisible1: false,
+      dialogTableVisible2: false,
+      dialogTableVisible3: false,
       roomData: []
     }
   },

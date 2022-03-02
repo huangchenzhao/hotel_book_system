@@ -45,23 +45,31 @@
                         label="操作"
                         align="center" header-align="center" >
                     <el-button
-                            @click.native.prevent="deleteRow(scope.$index, hotelData)"
-                            type="text"
-                            size="small" @click="dialogTableVisible = true">
+                            type="text" @click="dialogTableVisible1 = true" class="button">
                         查看详情
                     </el-button>
+                    <el-dialog title="希尔顿酒店" :visible.sync="dialogTableVisible1" :append-to-body="true" @close='closeDialog'>
+                        <el-table :data="roomData">
+                            <el-table-column property="photo" label="图片" width="250"></el-table-column>
+                            <el-table-column property="type" label="房型" width="150"></el-table-column>
+                            <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>
+                            <el-table-column property="price" label="价格"></el-table-column>
+                        </el-table>
+                    </el-dialog>
                   <el-button
-                      @click.native.prevent="deleteRow(scope.$index, hotelData)"
-                      type="text"
-                      size="small" @click="dialogTableVisible = true">
+                      type="text" @click="centerDialogVisible1 = true">
                     查看地图
                   </el-button>
-                    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-                        <el-table :data="room">
-                            <el-table-column property="date" label="日期" width="150"></el-table-column>
-                            <el-table-column property="name" label="姓名" width="200"></el-table-column>
-                            <el-table-column property="address" label="地址"></el-table-column>
-                        </el-table>
+                    <el-dialog
+                            title="提示"
+                            :visible.sync="centerDialogVisible1"
+                            width="30%"
+                            center append-to-body="true">
+                        <span>需要注意的是内容是默认不居中的</span>
+                        <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="centerDialogVisible1 = false">确 定</el-button>
+  </span>
                     </el-dialog>
                 </el-table-column>
             </el-table>
@@ -171,16 +179,14 @@ export default {
     return {
       hotel: [],
       room: [],
-      dialogTableVisible: false,
+      dialogTableVisible1: false,
+      dialogTableVisible2: false,
       centerDialogVisible: false,
+      centerDialogVisible1: false,
       imageUrl: '',
       imgReturn: '',
-      orderData: []
-    }
-  },
-  methods: {
-    deleteRow (index, rows) {
-      rows.splice(index, 1)
+      orderData: [],
+      roomData: []
     }
   },
   created () {
@@ -188,6 +194,11 @@ export default {
     /* console.info(this.$route.params.hotelName) */
     console.info(this.$route.params.returnData)
     this.hotel = this.$route.params.returnData
+  },
+  methods: {
+    closeDialog () {
+      this.dialogCode = false
+    }
   }
 }
 </script>
