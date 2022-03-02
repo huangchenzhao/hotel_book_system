@@ -32,7 +32,7 @@
                                         type="daterange"
                                         range-separator="至"
                                         start-placeholder="开始日期"
-                                        end-placeholder="结束日期" style="width: 100%">
+                                        end-placeholder="结束日期" style="width: 100%" :clearable="false" :picker-options="pickerOptions">
                                 </el-date-picker>
                             </div>
                         </el-form-item>
@@ -224,8 +224,13 @@ import { regionData, CodeToText } from 'element-china-area-data'
 export default {
   name: 'userPage',
   components: {Header},
-  data () {
+  data: function () {
     return {
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() < Date.now() - 24 * 60 * 60 * 1000
+        }
+      },
       selectForm: {
         hotelName: '',
         cityValue: [],
@@ -265,6 +270,19 @@ export default {
       dialogTableVisible3: false,
       roomData: []
     }
+  },
+  created () {
+    let date = new Date()
+    let year = date.getFullYear().toString()
+    let month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString()
+    let da = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate().toString()
+    let day3 = new Date()
+    day3.setTime(day3.getTime() + 24 * 60 * 60 * 1000)
+    let s3 = day3.getFullYear() + '-' + (day3.getMonth() + 1) + '-' + day3.getDate()
+    let tomorrow = s3.toString()
+    let beg = year + '-' + month + '-' + da
+    let end = tomorrow
+    this.selectForm.mydate = [beg, end]
   },
   methods: {
     handleChange () {

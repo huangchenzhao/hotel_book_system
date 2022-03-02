@@ -67,11 +67,12 @@
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
-                                    <el-input type="text" max="6" v-model="regForm.regCheck" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
-                                        <template slot="append">
-                                            <el-button type="primary" plain @click="getCode">发送验证码</el-button>
-                                        </template>
+                                    <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 415px" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                     </el-input>
+                                    <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
+                                        <span v-show="show">获取验证码</span>
+                                        <span v-show="!show" class="count">{{count}} s</span>
+                                    </el-button>
                                 </div>
                             </el-form-item>
                         </el-form>
@@ -89,7 +90,7 @@
 <script>
 import {user, regUser} from '@/api/api'
 import Header from '../../components/Header'
-
+const TIME_COUNT = 60
 export default {
   name: 'login',
   components: {Header},
@@ -111,7 +112,10 @@ export default {
       title: '登陆',
       dialogTableVisible: false,
       dialogFormVisible: false,
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      show: true,
+      count: '',
+      timer: null
     }
   },
   methods: {
@@ -125,6 +129,21 @@ export default {
           this.$router.push({path: '/userPage'})
         }
       })
+    },
+    send () {
+      if (!this.timer) {
+        this.count = TIME_COUNT
+        this.show = false
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--
+          } else {
+            this.show = true
+            clearInterval(this.timer)
+            this.timer = null
+          }
+        }, 1000)
+      }
     },
     handleSave: function () {
       let newUser = {username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
