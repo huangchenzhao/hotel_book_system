@@ -64,17 +64,21 @@ import Header from '../../../../components/Header'
 export default {
   name: 'searchResult',
   components: {Header},
-  methods: {
-    deleteRow (index, rows) {
-      rows.splice(index, 1)
-    }
-  },
   data () {
     return {
       hotel: [],
       room: [],
       dialogTableVisible: false
     }
+  },
+  methods: {
+    deleteRow (index, rows) {
+      rows.splice(index, 1)
+    }
+  },
+  created () {
+    // this.hotel = this.$route.params.hotelName
+    console.info(this.$route.params.hotelName)
   }
 }
 </script>
