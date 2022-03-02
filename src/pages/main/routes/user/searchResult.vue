@@ -182,8 +182,6 @@ export default {
       hotel: [],
       room: [],
       dialogTableVisible: false,
-      value: 3.7
-      dialogTableVisible: false,
       centerDialogVisible: false,
       imageUrl: '',
       imgReturn: '',
