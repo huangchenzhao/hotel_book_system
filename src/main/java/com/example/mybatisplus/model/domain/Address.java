@@ -34,6 +34,8 @@ public class Address extends Model<Address> {
 
     private String district;
 
+    private String detail;
+
 
     @Override
     protected Serializable pkVal() {

@@ -9,6 +9,7 @@
         <result column="province" property="province" />
         <result column="city" property="city" />
         <result column="district" property="district" />
+        <result column="detail" property="detail" />
     </resultMap>
 
 </mapper>

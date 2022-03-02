@@ -24,6 +24,7 @@
             <result column="province" property="province" />
             <result column="city" property="city" />
             <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
             <id column="p_id" property="pId" />
@@ -86,6 +87,7 @@
             <result column="province" property="province" />
             <result column="city" property="city" />
             <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
             <id column="p_id" property="pId" />
@@ -122,6 +124,7 @@
             <result column="province" property="province" />
             <result column="city" property="city" />
             <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
             <id column="p_id" property="pId" />
