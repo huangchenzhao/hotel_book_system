@@ -23,6 +23,7 @@
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
     "vue": "^2.5.2",
+    "vue-baidu-map": "^0.21.22",
     "vue-router": "^3.0.1",
     "vuebar": "^0.0.18",
     "vuex": "^3.0.1"

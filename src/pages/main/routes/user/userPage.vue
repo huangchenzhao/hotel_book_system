@@ -279,7 +279,7 @@ export default {
         this.selectForm.searchReturn.imgUrl = res.data[0].photo.photoUrl
         this.selectForm.searchReturn.site = res.data[0].address.province + res.data[0].address.city + res.data[0].address.district
         this.selectForm.searchReturn.lowestPrice = res.data[0].room.price */
-        // console.info(res.data)
+        console.info(res.data)
         /* this.$router.push({name: 'searchResult',
           params: {hotelName: res.data[0].name,
             imgUrl: res.data[0].photo.photoUrl,

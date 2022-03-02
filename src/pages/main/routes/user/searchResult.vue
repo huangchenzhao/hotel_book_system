@@ -23,21 +23,11 @@
                         label="图片"
                         width="200">
                 </el-table-column>
-              <el-table-column label="地址">
-                <el-table-column
-                        prop="address.province"
-                        label="省"
-                        width="90">
-                </el-table-column><el-table-column
-                        prop="address.city"
-                        label="市"
-                        width="90">
-                </el-table-column><el-table-column
-                        prop="address.district"
-                        label="区"
-                        width="90">
+              <el-table-column
+                        prop="address.detail"
+                        label="详细地址"
+                        width="200">
                 </el-table-column>
-              </el-table-column>
                 <el-table-column
                         prop="room.price"
                         label="最低价格"
