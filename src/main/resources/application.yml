@@ -24,3 +24,8 @@ logging:
   level:
     com.example.mybatisplus.mapper: debug
 file-upload-path: ./file
+
+#security:
+#  user:
+#    name: user
+#    password: user

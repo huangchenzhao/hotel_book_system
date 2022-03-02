@@ -11,6 +11,10 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.model.domain.User;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -87,7 +91,8 @@ public class UserController {
     ///test
     @GetMapping("/login")
     @ResponseBody
-    public JsonResponse login(User a) {
+    public JsonResponse login(HttpServletRequest request,User a) {
+        HttpSession session = request.getSession();
         User user = userService.login(a);
         return JsonResponse.success(user);
     }
@@ -110,6 +115,40 @@ public class UserController {
 //            return JsonResponse.success(a);
 //        }
         return JsonResponse.success(userService.register(a));
+    }
+    //发送验证码
+    //接收用户email需要xxxx.qq.com这样的全名，如果不是一个可用的邮箱则返回null
+    //如果成功发出邮件则返回字符串true，否则返回null
+    @RequestMapping(value="/sendEmail",method=RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse sendMessage(HttpServletRequest request,@RequestParam(value="email",required=false) String account)throws Exception{
+        HttpSession session =request.getSession();
+        String result=userService.sendVerification(session,account);
+        System.out.println(session.getAttribute("email"));
+        System.out.println(session.getAttribute("code"));
+        System.out.println(session.getId());
+        return JsonResponse.success(result);
+    }
+    //邮箱验证函数，接收用户email和验证码、
+    //email必须为全名且匹配接受邮件的邮箱
+    //如果邮箱更改或者验证码不正确则返回null
+    //验证正确无误则返回字符串true
+    @RequestMapping(value="/verify",method=RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse logintest(HttpServletRequest request,String email,@RequestParam(value="code") String code){
+         String str=userService.verify(request.getSession(),email,code);
+//        System.out.println(session.getId());
+//        System.out.println(session.getAttribute("username"));
+//        Cookie cookie = new Cookie("account",name);
+        HttpSession session =request.getSession();
+        System.out.println(session.getAttribute("email"));
+        System.out.println(session.getAttribute("code"));
+        System.out.println(session.getId());
+        System.out.println(str);
+        if(str!=null){
+            return JsonResponse.success("true");
+        }
+        return JsonResponse.success(null);
     }
 }
 

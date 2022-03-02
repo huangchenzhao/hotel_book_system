@@ -1,7 +1,7 @@
 package com.example.mybatisplus.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -73,14 +73,14 @@ public class AdminController {
     * 描述:创建Admin
     *
     */
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    @ResponseBody
-    public JsonResponse create(Admin  admin) throws Exception {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        admin.setPassword(encoder.encode(admin.getPassword()));
-        adminService.save(admin);
-        return JsonResponse.success(null);
-    }
+//    @RequestMapping(value = "", method = RequestMethod.POST)
+//    @ResponseBody
+//    public JsonResponse create(Admin  admin) throws Exception {
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        admin.setPassword(encoder.encode(admin.getPassword()));
+//        adminService.save(admin);
+//        return JsonResponse.success(null);
+//    }
     @RequestMapping("/list")
     @ResponseBody
     public JsonResponse list(Model model,

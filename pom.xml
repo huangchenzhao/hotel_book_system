@@ -9,11 +9,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <!-- 日期转换 -->
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="webBindingInitializer">
-            <bean class="com.gwd.shopping.core.web.CustomDate"/>
-        </property>
-    </bean>
     <groupId>com.example</groupId>
     <artifactId>mybatisplus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -70,15 +65,22 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-crypto</artifactId>-->
+            <!--<version>5.2.1.RELEASE</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-            <version>5.2.1.RELEASE</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>1.6.5</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
@@ -101,7 +103,10 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>
