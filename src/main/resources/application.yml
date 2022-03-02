@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/hotelbook?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: root
-    password: admin
+    password: 123
   mvc:
     format:
       date: yyyy-MM-dd
@@ -11,6 +11,8 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,c;asspath:/public/,file:${file-upload-path}
 server:
   servlet:
     encoding:
