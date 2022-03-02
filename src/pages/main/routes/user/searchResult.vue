@@ -2,6 +2,7 @@
 <div>
     <Header></Header>
     <el-tabs type="border-card">
+
         <el-tab-pane label="搜索结果">
             <el-table
                     :data="hotel"
@@ -56,16 +57,17 @@
                             <el-table-column property="price" label="价格"></el-table-column>
                         </el-table>
                     </el-dialog>
-                  <el-button
-                      type="text" @click="centerDialogVisible1 = true">
-                    查看地图
-                  </el-button>
+                  <template slot-scope="scope">
+                    <el-button type="text" @click="my(scope.row)">查看地图</el-button>
+                  </template>
                     <el-dialog
                             title="提示"
                             :visible.sync="centerDialogVisible1"
                             width="30%"
                             center append-to-body="true">
                         <span>需要注意的是内容是默认不居中的</span>
+                      <baidu-map class="bm-view" :center="center" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
+                      </baidu-map>
                         <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible1 = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible1 = false">确 定</el-button>
@@ -171,12 +173,15 @@
 
 <script>
 import Header from '../../../../components/Header'
+import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 
 export default {
   name: 'searchResult',
-  components: {Header},
+  components: {Header, BaiduMap},
   data () {
     return {
+      center: {lng: 0, lat: 0},
+      zoom: 3,
       hotel: [],
       room: [],
       dialogTableVisible1: false,
@@ -198,6 +203,15 @@ export default {
   methods: {
     closeDialog () {
       this.dialogCode = false
+    },
+    handler ({BMap, map}) {
+      console.log(BMap, map)
+      this.center.lng = this.$route.params.returnData[0].longitude
+      this.center.lat = this.$route.params.returnData[0].latitude
+      this.zoom = 15
+    },
+    my (e) {
+      alert(JSON.stringify(e))
     }
   }
 }
@@ -234,5 +248,9 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .bm-view {
+      width: 100%;
+      height: 300px;
     }
 </style>

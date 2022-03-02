@@ -273,6 +273,7 @@ export default {
         loc += CodeToText[this.selectForm.selectedOptions[i]]
       }
       console.info(loc)
+      console.info(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
     },
     onSubmit () {
       let myHotel = {name: this.selectForm.hotelName, checkin: this.selectForm.mydate[0], checkout: this.selectForm.mydate[1], roomtype: this.selectForm.room, code: this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]}
