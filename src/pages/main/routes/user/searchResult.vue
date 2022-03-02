@@ -53,7 +53,8 @@
                     <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
                         <el-row>
                             <el-col :span="12">
-                                <el-image></el-image>
+                              <baidu-map class="bm-view" :center="center" :zoom="zoom" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
+                              </baidu-map>
                             </el-col>
                             <el-col :span="12">
                                 <el-table :data="room">
@@ -195,17 +196,12 @@ export default {
       this.dialogVisible = true
       this.room = row
       alert(JSON.stringify(row))
-    closeDialog () {
-      this.dialogCode = false
     },
     handler ({BMap, map}) {
       console.log(BMap, map)
       this.center.lng = this.$route.params.returnData[0].longitude
       this.center.lat = this.$route.params.returnData[0].latitude
       this.zoom = 15
-    },
-    my (e) {
-      alert(JSON.stringify(e))
     }
   }
 }
