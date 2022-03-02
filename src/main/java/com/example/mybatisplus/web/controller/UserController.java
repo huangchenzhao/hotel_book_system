@@ -91,10 +91,24 @@ public class UserController {
     ///test
     @GetMapping("/login")
     @ResponseBody
-    public JsonResponse login(HttpServletRequest request,User a) {
-        HttpSession session = request.getSession();
+    public JsonResponse login(HttpServletRequest request, User a) {
         User user = userService.login(a);
+        if (user != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("uId",user.getuId());
+        }
         return JsonResponse.success(user);
+    }
+    @GetMapping("/logintest")
+    @ResponseBody
+    public JsonResponse logintest(HttpServletRequest request, User a) {
+//        User user = userService.login(a);
+
+            HttpSession session = request.getSession();
+//            session.setAttribute("",456);
+            Long id = (Long)session.getAttribute("uId");
+            System.out.println(id);
+        return JsonResponse.success(null);
     }
 
     //register by hcz
@@ -149,6 +163,17 @@ public class UserController {
             return JsonResponse.success("true");
         }
         return JsonResponse.success(null);
+    }
+
+
+
+    //拿到当前登录用户的user表信息
+    @GetMapping("/detail")
+    @ResponseBody
+    public JsonResponse details(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Long uid = (Long)session.getAttribute("uId");
+        return JsonResponse.success(userService.showdetail(uid));
     }
 }
 

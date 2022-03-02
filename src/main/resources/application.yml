@@ -11,6 +11,8 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,c;asspath:/public/,file:${file-upload-path}
 server:
   servlet:
     encoding:

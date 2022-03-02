@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface FileService {
 
-    Map upload(MultipartFile file) throws IOException;
+    Map upload(MultipartFile file, Long uid) throws IOException;
 
 }
