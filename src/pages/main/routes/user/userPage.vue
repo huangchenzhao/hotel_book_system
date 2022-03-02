@@ -250,11 +250,13 @@ export default {
         this.selectForm.searchReturn.imgUrl = res.data[0].photo.photoUrl
         this.selectForm.searchReturn.site = res.data[0].address.province + res.data[0].address.city + res.data[0].address.district
         this.selectForm.searchReturn.lowestPrice = res.data[0].room.price */
-        this.$router.push({name: 'searchResult',
+        // console.info(res.data)
+        /* this.$router.push({name: 'searchResult',
           params: {hotelName: res.data[0].name,
             imgUrl: res.data[0].photo.photoUrl,
             site: res.data[0].address.province + res.data[0].address.city + res.data[0].address.district,
-            lowestPrice: res.data[0].room.price}})
+            lowestPrice: res.data[0].room.price}}) */
+        this.$router.push({name: 'searchResult', params: {returnData: res.data}})
       })
     },
     handleAvatarSuccess (res, file) {
