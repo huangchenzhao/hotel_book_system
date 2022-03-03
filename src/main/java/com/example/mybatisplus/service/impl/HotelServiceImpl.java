@@ -2,11 +2,13 @@ package com.example.mybatisplus.service.impl;
 
 import com.example.mybatisplus.model.domain.Hotel;
 import com.example.mybatisplus.mapper.HotelMapper;
+import com.example.mybatisplus.model.domain.Userorder;
 import com.example.mybatisplus.service.HotelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -75,5 +77,11 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 //
 //        return  hoteldetail2;
 //    }
-
+//@Override
+//public List<Userorder> placeOrder(HttpSession session, Long roomId) {
+//    java.sql.Date checkIn = new java.sql.Date(((java.util.Date)session.getAttribute("checkin")).getTime());
+//    java.sql.Date checkOut = new java.sql.Date(((java.util.Date)session.getAttribute("checkout")).getTime());
+//    Long hotelId = (Long)session.getAttribute("hId");
+//    return hotelMapper.placeOrder(hotelId,roomId,checkIn,checkOut);
+//}
 }

@@ -1,5 +1,6 @@
 package com.example.mybatisplus.model.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
 import java.io.Serializable;
@@ -45,6 +46,17 @@ public class Userorder extends Model<Userorder> {
 
     private String comment;
 
+    @TableField(exist=false)
+    private Address address;
+
+    @TableField(exist=false)
+    private Room room;
+
+    @TableField(exist=false)
+    private Detail detail;
+
+    @TableField(exist=false)
+    private Hotel hotel;
 
     @Override
     protected Serializable pkVal() {
