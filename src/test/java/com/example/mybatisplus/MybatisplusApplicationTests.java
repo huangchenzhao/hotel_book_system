@@ -27,11 +27,11 @@ class MybatisplusApplicationTests {
     @Autowired(required=false)
     private HotelMapper hotelMapper;
 
-    @Test
-     void test(){
-        List<Hotel> abc =hotelMapper.showDetails(1L);
-        System.out.println(abc);
-    }
+//    @Test
+//     void test(){
+//        List<Hotel> abc =hotelMapper.showDetails(1L);
+//        System.out.println(abc);
+//    }
 //    @Test
 //    void test1()throws Exception{
 //        userService.sendVerification("2468038761");

@@ -146,34 +146,33 @@
             <result column="remain" property="remain" />
         </association>
     </resultMap>
-    <select id="showDetails" resultMap="HotelDetailMap">
-        SELECT
-            *
-        FROM
-            hotel
-                RIGHT JOIN room ON room.h_id = hotel.h_id
-                INNER JOIN photo ON photo.r_id = room.r_id
-                INNER JOIN detail ON detail.r_id = room.r_id
-                INNER JOIN address ON hotel.a_id = address.a_id
-        where
-            hotel.h_id = #{hId}
-        GROUP BY
-            room.r_id
+    <!--<select id="showDetails" resultMap="HotelDetailMap">-->
+        <!--SELECT-->
+            <!--*-->
+        <!--FROM-->
+            <!--room-->
+                <!--INNER JOIN detail ON detail.r_id = room.r_id-->
+                <!--INNER JOIN photo ON photo.r_id = room.r_id-->
+                <!--INNER JOIN hotel ON room.h_id = hotel.h_id-->
+        <!--WHERE-->
+                <!--detail.remain in(select min(detail.remain) from detail where detail.r_id=detail.r_id GROUP BY detail.r_id)-->
+        <!--ORDER BY-->
+            <!--room.r_id ASC-->
 
-    </select>
-    <select id="showDetails2" resultMap="HotelDetailMap">
-        SELECT
-            *
-        FROM
-            hotel
-                INNER JOIN address ON hotel.a_id = address.a_id
-                INNER JOIN photo ON photo.h_id = hotel.h_id
-        WHERE
-            hotel.h_id = #{hId} and
-            photo.r_id IS NULL
-        ORDER BY
-            photo.p_id ASC
-    </select>
+    <!--</select>-->
+    <!--<select id="showDetails2" resultMap="HotelDetailMap">-->
+        <!--SELECT-->
+            <!--*-->
+        <!--FROM-->
+            <!--hotel-->
+                <!--INNER JOIN address ON hotel.a_id = address.a_id-->
+                <!--INNER JOIN photo ON photo.h_id = hotel.h_id-->
+        <!--WHERE-->
+            <!--hotel.h_id = #{hId} and-->
+            <!--photo.r_id IS NULL-->
+        <!--ORDER BY-->
+            <!--photo.p_id ASC-->
+    <!--</select>-->
 
 
 </mapper>

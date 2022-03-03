@@ -40,9 +40,8 @@ public class FileServiceImpl implements FileService {
     public Map upload(MultipartFile file, Long uid) throws IOException {
 
         Map<String, String> map = storeFile(file,Paths.get(fileUploadPath,"image").toString());
-        System.out.println("123456"+map);
-        String picurl = map.get("url");
-        userMapper.updatePic(uid,picurl);
+//        String picurl = map.get("url");
+//        userMapper.updatePic(uid,picurl);
 
         return map;
     }
@@ -104,5 +103,11 @@ public class FileServiceImpl implements FileService {
     private static String suffix(String fileName) {
         int i = fileName.lastIndexOf('.');
         return i == -1 ? "" : fileName.substring(i);
+    }
+
+
+    @Override
+    public void yesupdate(Long uid, String userpicurl) {
+        userMapper.updatePic(uid,userpicurl);
     }
 }
