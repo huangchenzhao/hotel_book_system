@@ -40,36 +40,49 @@
             <result column="amount" property="amount" />
             <result column="max_people" property="maxPeople" />
         </association>
+        <association property="detail" javaType="com.example.mybatisplus.model.domain.Detail">
+            <id column="r_date" property="rDate"/>
+            <result column="dr_id" property="rId"/>
+            <result column="remain" property="remain"/>
+        </association>
     </resultMap>
 
     <!--搜索功能sql语句-->
     <select id="searchResult" resultMap="SearchResultMap">
-        SELECT hotel.*,address.*,
-        photo.photo_url,datas.price,remain  FROM
+        SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain FROM
         hotel
         INNER JOIN photo ON photo.h_id = hotel.h_id
         INNER JOIN address ON hotel.a_id = address.a_id
-        INNER JOIN ((SELECT min(price) AS price,sum(remain) as remain,hotel.h_id,room.roomtype,detail.r_date
-          FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
-          INNER JOIN detail on room.r_id = detail.r_id
-          GROUP BY hotel.h_id,r_date,roomtype)AS datas)  ON  datas.h_id=hotel.h_id
+        INNER JOIN ((SELECT min(price) AS price,hotel.h_id,room.roomtype
+        FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
         <where>
-        <if test="hotelName != null and hotelName!=''">
-            and hotel.name like '%${hotelName}%'
-        </if>
-        <if test="checkIn != null">
-            and datas.r_date=#{checkIn} and remain>0
-        </if>
-        <if test="roomType != null and roomType!=''">
-            and datas.roomtype=#{roomType}
-        </if>
-        <if test="code!=null" >
-             and address.code=#{code}
-        </if>
-        <if test="true" >
-            and 1
-        </if>
+            <if test="roomType != null and roomType!=''">
+                and roomtype=#{roomType}
+            </if>
         </where>
+        group by hotel.h_id) as horoom) on horoom.h_id=hotel.h_id
+        INNER JOIN ((select room.h_id,min(remain)as remain from detail inner join room on room.r_id = detail.r_id
+        <where>
+            <if test="checkIn != null">
+                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt;= #{checkOut}
+            </if>
+            <if test="roomType != null and roomType!=''">
+                and roomtype=#{roomType}
+            </if>
+        </where>
+        group by room.r_id)AS deroom)
+        ON deroom.h_id=hotel.h_id
+        <where>
+            <if test="hotelName != null and hotelName!=''">
+                and hotel.name like '%${hotelName}%'
+            </if>
+            <if test="code!=null">
+                and address.code=#{code}
+            </if>
+
+        </where>
+        group by hotel.h_id
+        having sum(remain)>0
     </select>
     <!-- 酒店推荐三表联查映射结果 -->
 
@@ -97,18 +110,16 @@
         </association>
     </resultMap>
     <select id="getrem" resultMap="RemMap">
-        SELECT
-            *,address.a_id as aid,photo.h_id as hid
-        FROM
-            hotel
-                INNER JOIN photo ON photo.h_id = hotel.h_id
-                INNER JOIN address ON hotel.a_id = address.a_id
-        WHERE
-             photo.r_id is NULL
+        SELECT *,
+               address.a_id as aid,
+               photo.h_id   as hid
+        FROM hotel
+                 INNER JOIN photo ON photo.h_id = hotel.h_id
+                 INNER JOIN address ON hotel.a_id = address.a_id
+        WHERE photo.r_id is NULL
         group by hotel.h_id
-        ORDER BY
-            hotel.star DESC
-        LIMIT 3
+        ORDER BY hotel.star DESC
+            LIMIT 3
     </select>
 
     <resultMap id="HotelDetailMap" type="com.example.mybatisplus.model.domain.Hotel">

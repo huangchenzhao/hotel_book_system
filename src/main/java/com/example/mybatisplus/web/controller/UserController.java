@@ -24,9 +24,6 @@ import java.util.List;
  * @author gzx
  * @version v1.0
  * @since 2022-02-27
- *
- *
- *
  */
 @Controller
 @RequestMapping("/api/user")
@@ -93,28 +90,33 @@ public class UserController {
     @ResponseBody
     public JsonResponse login(HttpServletRequest request, User a) {
         User user = userService.login(a);
-        if (user != null){
+        if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("uId",user.getuId());
+            session.setAttribute("uId", user.getuId());
         }
         return JsonResponse.success(user);
     }
+
     @GetMapping("/logintest")
     @ResponseBody
     public JsonResponse logintest(HttpServletRequest request, User a) {
 //        User user = userService.login(a);
 
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 //            session.setAttribute("",456);
-            Long id = (Long)session.getAttribute("uId");
-            System.out.println(id);
+        Long id = (Long) session.getAttribute("uId");
+        System.out.println(id);
         return JsonResponse.success(null);
     }
 
     //register by hcz
+    //完善了register方法，加入session并在内部调用了verify函数验证邮箱验证码
+    //增加了几个不同的返回值供前端使用
+    //增加需要前端传递的email，code参数
     @GetMapping("/register")
     @ResponseBody
-    public JsonResponse register(User a) {
+    public JsonResponse register(HttpServletRequest request, @RequestParam(value = "email", required = false) String email,
+                                 @RequestParam(value = "code", required = false) String code, User a) {
 //        List<User> userList = userService.list();
 //        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
 //        for (User tempUser : userList) {
@@ -128,53 +130,56 @@ public class UserController {
 //            userService.save(a); //如果不存在该用户名则注册成功，写入数据库
 //            return JsonResponse.success(a);
 //        }
-        return JsonResponse.success(userService.register(a));
+        HttpSession session = request.getSession();
+        String result = userService.register(session, email, code, a);
+        return JsonResponse.success(result);
     }
+
     //发送验证码
     //接收用户email需要xxxx.qq.com这样的全名，如果不是一个可用的邮箱则返回null
     //如果成功发出邮件则返回字符串true，否则返回null
-    @RequestMapping(value="/sendEmail",method=RequestMethod.GET)
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse sendMessage(HttpServletRequest request,@RequestParam(value="email",required=false) String account)throws Exception{
-        HttpSession session =request.getSession();
-        String result=userService.sendVerification(session,account);
-        System.out.println(session.getAttribute("email"));
+    public JsonResponse sendMessage(HttpServletRequest request, @RequestParam(value = "email", required = false) String account) throws Exception {
+        HttpSession session = request.getSession();
+        String result = userService.sendVerification(session, account);
         System.out.println(session.getAttribute("code"));
-        System.out.println(session.getId());
+//      System.out.println(session.getAttribute("email"));
+//      System.out.println(session.getId());
         return JsonResponse.success(result);
     }
+
     //邮箱验证函数，接收用户email和验证码、
     //email必须为全名且匹配接受邮件的邮箱
     //如果邮箱更改或者验证码不正确则返回null
     //验证正确无误则返回字符串true
-    @RequestMapping(value="/verify",method=RequestMethod.GET)
+    @RequestMapping(value = "/verify", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse verify(HttpServletRequest request,@RequestParam(value="email" ,required=false) String email,@RequestParam(value="code",required=false) String code){
-         String str=userService.verify(request.getSession(),email,code);
+    public JsonResponse verify(HttpServletRequest request, @RequestParam(value = "email", required = false) String email, @RequestParam(value = "code", required = false) String code) {
+        String str = userService.verify(request.getSession(), email, code);
 //        System.out.println(session.getId());
 //        System.out.println(session.getAttribute("username"));
 //        Cookie cookie = new Cookie("account",name);
-        HttpSession session =request.getSession();
-        System.out.println(session.getAttribute("email"));
-        System.out.println(email);
-        System.out.println(session.getAttribute("code"));
-        System.out.println(code);
-        System.out.println(session.getId());
-        System.out.println(str);
-        if(str!=null){
+        HttpSession session = request.getSession();
+//        System.out.println(session.getAttribute("email"));
+//        System.out.println(email);
+//        System.out.println(session.getAttribute("code"));
+//        System.out.println(code);
+//        System.out.println(session.getId());
+//        System.out.println(str);
+        if (str != null) {
             return JsonResponse.success("true");
         }
         return JsonResponse.success(null);
     }
 
 
-
     //拿到当前登录用户的user表信息
     @GetMapping("/detail")
     @ResponseBody
-    public JsonResponse details(HttpServletRequest request){
+    public JsonResponse details(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Long uid = (Long)session.getAttribute("uId");
+        Long uid = (Long) session.getAttribute("uId");
         return JsonResponse.success(userService.showdetail(uid));
     }
 

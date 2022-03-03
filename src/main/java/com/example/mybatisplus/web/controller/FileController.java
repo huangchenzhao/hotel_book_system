@@ -56,17 +56,15 @@ public class FileController {
     //点击确定后将图片url写入数据库
     @GetMapping("/yesurl")
     @ResponseBody
-    public boolean yesurl(HttpServletRequest request){
+    public JsonResponse yesurl(HttpServletRequest request){
         HttpSession session = request.getSession();
         Long uid = (Long)session.getAttribute("uId");
         String userpicurl =(String)session.getAttribute("userPicurl");
         if (userpicurl != null){
             fileService.yesupdate(uid,userpicurl);
-            return true;
+
         }
-        else {
-            return false;
-        }
+        return JsonResponse.success(null);
     }
 
 }
