@@ -64,7 +64,7 @@
         INNER JOIN ((select room.h_id,min(remain)as remain from detail inner join room on room.r_id = detail.r_id
         <where>
             <if test="checkIn != null and checkOut != null">
-                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt;= #{checkOut}
+                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt; #{checkOut}
             </if>
             <if test="roomType != null and roomType!=''">
                 and roomtype=#{roomType}
@@ -168,7 +168,7 @@
         INNER JOIN address ON hotel.a_id = address.a_id
         INNER JOIN photo ON photo.r_id = room.r_id
         where
-        detail.remain in(select min(detail.remain) from detail where detail.r_date &gt;= #{checkinSql} AND detail.r_date &lt;= #{checkoutSql} group by detail.r_id)
+        detail.remain in(select min(detail.remain) from detail where detail.r_date &gt;= #{checkinSql} AND detail.r_date &lt; #{checkoutSql} group by detail.r_id)
         AND hotel.h_id = #{hId}
 
     </select>
@@ -177,7 +177,7 @@
         ((select room.*,min(remain)as remain from detail inner join room on room.r_id = detail.r_id
         <where>
             <if test="checkIn != null and checkOut!=null">
-                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt;= #{checkOut}
+                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt; #{checkOut}
             </if>
             <if test="roomId != null ">
                 and room.r_id=#{roomId}
