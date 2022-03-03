@@ -67,7 +67,7 @@
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
-                                    <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 415px" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    <el-input type="text" max="6" v-model="checkcode" style="width: 415px" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                     </el-input>
                                     <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
                                         <span v-show="show">获取验证码</span>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import {user, regUser} from '@/api/api'
+import {user, regUser, sendEmail, verifyCode} from '@/api/api'
 import Header from '../../components/Header'
 const TIME_COUNT = 60
 export default {
@@ -115,7 +115,8 @@ export default {
       formLabelWidth: '120px',
       show: true,
       count: '',
-      timer: null
+      timer: null,
+      checkcode: ''
     }
   },
   methods: {
@@ -123,10 +124,11 @@ export default {
       let myUser = {username: this.loginForm.userName, password: this.loginForm.pwd, usertype: this.loginForm.radio}
       user(myUser).then(res => {
         this.loginForm.logReturn = res
+        console.info(res.data)
         if (this.loginForm.logReturn.data === null) {
           this.$message.error({message: '登陆失败，用户名或密码输入错误哦~', center: true})
         } else {
-          this.$router.push({path: '/userPage'})
+          this.$router.push({name: 'userPage', params: {userInfo: this.loginForm.logReturn.data}})
         }
       })
     },
@@ -144,6 +146,10 @@ export default {
           }
         }, 1000)
       }
+      let myEmail = {email: this.regForm.regMail}
+      sendEmail(myEmail).then(res => {
+        console.info(res.data)
+      })
     },
     handleSave: function () {
       let newUser = {username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
@@ -152,12 +158,20 @@ export default {
         if (this.regForm.regReturn.data === null) {
           this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
         } else {
-          this.$message({
-            message: '注册成功，请登陆~',
-            type: 'success',
-            center: true
+          let newCode = {code: this.checkcode}
+          console.info(this.checkcode)
+          verifyCode(newCode).then(res => {
+            if (res.data === null) {
+              this.$message.error({message: '注册失败，验证码不正确哦~', center: true})
+            } else {
+              this.$message({
+                message: '注册成功，请登陆~',
+                type: 'success',
+                center: true
+              })
+              this.dialogFormVisible = false
+            }
           })
-          this.dialogFormVisible = false
         }
       })
     }

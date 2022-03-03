@@ -155,21 +155,21 @@
                             <i class="el-icon-user"></i>
                             用户名
                         </template>
-                        kooriookami
+                      {{this.$route.params.userInfo.username}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-mobile-phone"></i>
                             密码
                         </template>
-                        xiaoming
+                      {{this.$route.params.userInfo.password}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-location-outline"></i>
                             邮箱
                         </template>
-                        543892034@qq.com
+                      {{this.$route.params.userInfo.mail}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">

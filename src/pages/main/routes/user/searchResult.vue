@@ -54,6 +54,9 @@
                         <el-row>
                             <el-col :span="12">
                               <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
+                                <bm-marker :position="center" :dragging="false">
+                                   <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
+                                </bm-marker>
                               </baidu-map>
                             </el-col>
                             <el-col :span="12">
@@ -185,7 +188,8 @@ export default {
       roomData: [],
       latitude: 0,
       longitude: 0,
-      mykey: 0
+      mykey: 0,
+      addressName: ''
     }
   },
   created () {
@@ -200,6 +204,7 @@ export default {
       this.room = row
       this.longitude = row.longitude
       this.latitude = row.latitude
+      this.addressName = row.address.detail
       alert(JSON.stringify(row))
       this.mykey += 1
     },
