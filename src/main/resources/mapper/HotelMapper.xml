@@ -110,6 +110,7 @@
             hotel.star DESC
         LIMIT 3
     </select>
+
     <resultMap id="HotelDetailMap" type="com.example.mybatisplus.model.domain.Hotel">
         <id column="id" property="Id" />
         <result column="h_id" property="hId" />
@@ -146,18 +147,20 @@
             <result column="remain" property="remain" />
         </association>
     </resultMap>
-    <!--<select id="showDetails" resultMap="HotelDetailMap">-->
-        <!--SELECT-->
-            <!--*-->
-        <!--FROM-->
-            <!--room-->
-                <!--INNER JOIN detail ON detail.r_id = room.r_id-->
-                <!--INNER JOIN photo ON photo.r_id = room.r_id-->
-                <!--INNER JOIN hotel ON room.h_id = hotel.h_id-->
-        <!--WHERE-->
-                <!--detail.remain in(select min(detail.remain) from detail where detail.r_id=detail.r_id GROUP BY detail.r_id)-->
-        <!--ORDER BY-->
-            <!--room.r_id ASC-->
+    <select id="showDetails" resultMap="HotelDetailMap">
+        SELECT
+        *
+        FROM
+        detail
+        INNER JOIN room ON detail.r_id = room.r_id
+        INNER JOIN hotel ON room.h_id = hotel.h_id
+        INNER JOIN address ON hotel.a_id = address.a_id
+        INNER JOIN photo ON photo.r_id = room.r_id
+        where
+        detail.remain in(select min(detail.remain) from detail where detail.r_date &gt;= #{checkinSql} AND detail.r_date &lt;= #{checkoutSql} group by detail.r_id)
+        AND hotel.h_id = #{hId}
+
+    </select>
 
     <!--</select>-->
     <!--<select id="showDetails2" resultMap="HotelDetailMap">-->

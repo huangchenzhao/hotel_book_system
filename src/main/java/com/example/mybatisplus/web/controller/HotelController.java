@@ -109,19 +109,19 @@ public class HotelController {
     }
     //酒店详情
     //gzx
-//    @GetMapping("/detail")
-//    @ResponseBody
-//    public JsonResponse detail(HttpServletRequest request, Long hId) throws Exception {
-//        HttpSession session = request.getSession();
-//        Date checkin = (Date) session.getAttribute("checkin");
-//        Date checkout = (Date) session.getAttribute("checkout");
-//        List<Hotel> hotel = hotelService.detail(hId,checkin,checkout);
-////        List<Hotel> hotel2=hotelService.detail2(hId);
-////        for(Hotel h:hotel2){
-////            hotel.add(h);
-////        }
-//        return JsonResponse.success(hotel);
-//    }
+    @GetMapping("/detail")
+    @ResponseBody
+    public JsonResponse detail(HttpServletRequest request, Long hId) throws Exception {
+        HttpSession session = request.getSession();
+        Date checkin = (Date) session.getAttribute("checkin");
+        Date checkout = (Date) session.getAttribute("checkout");
+        List<Hotel> hotel = hotelService.detail(hId,checkin,checkout);
+//        List<Hotel> hotel2=hotelService.detail2(hId);
+//        for(Hotel h:hotel2){
+//            hotel.add(h);
+//        }
+        return JsonResponse.success(hotel);
+    }
 
 
 
