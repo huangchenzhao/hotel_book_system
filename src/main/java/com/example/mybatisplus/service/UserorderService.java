@@ -17,4 +17,5 @@ import java.util.List;
  */
 public interface UserorderService extends IService<Userorder> {
     List<Hotel> placeOrder(HttpSession session, Long roomId);
+    Userorder showorderdetail(Long uid);
 }

@@ -15,6 +15,53 @@
         <result column="state" property="state"/>
         <result column="comment" property="comment"/>
     </resultMap>
+    <resultMap id="userorderMap" type="com.example.mybatisplus.model.domain.Userorder">
+        <id column="o_id" property="oId" />
+        <result column="r_id" property="rId" />
+        <result column="u_id" property="uId" />
+        <result column="h_id" property="hId" />
+        <result column="check_in" property="checkIn" />
+        <result column="check_out" property="checkOut" />
+        <result column="totalprice" property="totalprice" />
+        <result column="quantity" property="quantity" />
+        <result column="state" property="state" />
+        <result column="comment" property="comment" />
+        <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
+            <id column="hid" property="hId" />
+            <result column="aid" property="aId" />
+            <result column="longitude" property="longitude" />
+            <result column="latitude" property="latitude" />
+            <result column="star" property="star" />
+            <result column="name" property="name" />
+        </association>
+        <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
+            <id column="a_id" property="aId" />
+            <result column="code" property="code" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+            <result column="detail" property="detail" />
+        </association>
+        <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
+            <id column="rid" property="rId" />
+            <result column="rh_id" property="hId" />
+            <result column="price" property="price" />
+            <result column="roomtype" property="roomtype" />
+            <result column="amount" property="amount" />
+            <result column="max_people" property="maxPeople" />
+        </association>
+    </resultMap>
+    <select id="selectId" resultMap="userorderMap">
+        SELECT
+            *
+        FROM
+            userorder
+                INNER JOIN hotel ON userorder.h_id = hotel.h_id
+                INNER JOIN address ON hotel.a_id = address.a_id
+                INNER JOIN room ON userorder.r_id = room.r_id
+        WHERE
+            userorder.u_id = #{uId}
+    </select>
     <resultMap id="PlaceOrder" type="com.example.mybatisplus.model.domain.Userorder" >
         <id column="id" property="oId"/>
         <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">

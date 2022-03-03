@@ -15,5 +15,6 @@ import java.util.List;
  * @since 2022-02-28
  */
 public interface UserorderMapper extends BaseMapper<Userorder> {
+    Userorder selectId(Long uid);
      List<Userorder> placeOrder(Long hotelId, Long roomId, Date checkIn, Date checkOut);
 }

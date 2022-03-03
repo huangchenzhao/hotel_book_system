@@ -93,5 +93,15 @@ public class UserorderController {
         return JsonResponse.success(result);
     }
 
+
+    //显示当前用户所有订单
+    //gzx
+    @GetMapping("/orderdetail")
+    @ResponseBody
+    public JsonResponse orderdetails(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long uid = (Long) session.getAttribute("uId");
+        return JsonResponse.success(userorderService.showorderdetail(uid));
+    }
 }
 
