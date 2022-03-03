@@ -162,12 +162,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //       失败之后重新注册
         if (email == null || email.isEmpty()) {
             return null;
-        } else if (!code.equals(codeInput)) {
+        } else if (!(email.equals(account)&&code.equals(codeInput))) {
             return null;
         }
-
+        System.out.println((account));
+        System.out.println(codeInput);
 //        保存数据
-        return "1";
+        return "true";
     }
 
     @Override

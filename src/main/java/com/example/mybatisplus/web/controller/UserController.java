@@ -149,14 +149,16 @@ public class UserController {
     //验证正确无误则返回字符串true
     @RequestMapping(value="/verify",method=RequestMethod.GET)
     @ResponseBody
-    public JsonResponse logintest(HttpServletRequest request,String email,@RequestParam(value="code") String code){
+    public JsonResponse verify(HttpServletRequest request,@RequestParam(value="email" ,required=false) String email,@RequestParam(value="code",required=false) String code){
          String str=userService.verify(request.getSession(),email,code);
 //        System.out.println(session.getId());
 //        System.out.println(session.getAttribute("username"));
 //        Cookie cookie = new Cookie("account",name);
         HttpSession session =request.getSession();
         System.out.println(session.getAttribute("email"));
+        System.out.println(email);
         System.out.println(session.getAttribute("code"));
+        System.out.println(code);
         System.out.println(session.getId());
         System.out.println(str);
         if(str!=null){
