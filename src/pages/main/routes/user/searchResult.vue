@@ -105,21 +105,21 @@
                             <i class="el-icon-user"></i>
                             用户名
                         </template>
-                        kooriookami
+                      {{this.$route.params.userInfo.username}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-mobile-phone"></i>
                             密码
                         </template>
-                        xiaoming
+                      {{this.$route.params.userInfo.password}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-location-outline"></i>
                             邮箱
                         </template>
-                        543892034@qq.com
+                      {{this.$route.params.userInfo.mail}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
@@ -170,6 +170,7 @@
 <script>
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
+import {getDetail} from '@/api/api'
 
 export default {
   name: 'searchResult',
@@ -189,7 +190,8 @@ export default {
       latitude: 0,
       longitude: 0,
       mykey: 0,
-      addressName: ''
+      addressName: '',
+      returnDetail: []
     }
   },
   created () {
@@ -205,7 +207,10 @@ export default {
       this.longitude = row.longitude
       this.latitude = row.latitude
       this.addressName = row.address.detail
-      alert(JSON.stringify(row))
+      let myDetail = {hid: row.hid}
+      getDetail(myDetail).then(res => {
+        this.returnDetail = res.data
+      })
       this.mykey += 1
     },
     handler ({BMap, map}) {

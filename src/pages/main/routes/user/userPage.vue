@@ -306,7 +306,7 @@ export default {
             imgUrl: res.data[0].photo.photoUrl,
             site: res.data[0].address.province + res.data[0].address.city + res.data[0].address.district,
             lowestPrice: res.data[0].room.price}}) */
-        this.$router.push({name: 'searchResult', params: {returnData: res.data}})
+        this.$router.push({name: 'searchResult', params: {returnData: res.data, userInfo: this.$route.params.userInfo}})
       })
     },
     handleAvatarSuccess (res, file) {
