@@ -4,7 +4,7 @@
     <el-tabs type="border-card">
         <el-tab-pane label="搜索结果">
             <el-table
-                    :data="hotel"
+                    :data="hotel.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                     style="width: 100%"
                     max-height="510">
                 <el-table-column
@@ -71,6 +71,14 @@
                     </el-dialog>
                 </el-table-column>
             </el-table>
+            <el-col :span="24" class="toolbar" style="text-align:center">
+                <el-pagination
+                        @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page="currentPage"
+                        layout="total, prev, pager, next"
+                        :page-size="pageSize"
+                        :total="this.hotel.length"
+                ></el-pagination>
+            </el-col>
         </el-tab-pane>
         <el-tab-pane label="我的账户">
             <el-card class="user-card" style="margin: auto">
@@ -133,7 +141,7 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user2.jpeg" alt="" id="imgid">
+                        <img src="../../../../assets/images/user3.jpeg" alt="" id="imgid" class="userPhoto">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -191,6 +199,8 @@ export default {
       longitude: 0,
       mykey: 0,
       addressName: '',
+      pageSize: 3,
+      currentPage: 1,
       returnDetail: []
     }
   },
@@ -213,11 +223,17 @@ export default {
       })
       this.mykey += 1
     },
+    handleCurrentChange (currentPage) {
+      this.currentPage = currentPage
+    },
     handler ({BMap, map}) {
       console.log(BMap, map)
       this.center.lng = this.longitude
       this.center.lat = this.latitude
       this.zoom = 15
+    },
+    handleSizeChange (val) {
+      this.pageSize = val
     }
   }
 }
@@ -258,5 +274,11 @@ export default {
     .bm-view {
       width: 100%;
       height: 300px;
+    }
+    .userPhoto {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 </style>

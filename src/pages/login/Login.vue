@@ -67,11 +67,11 @@
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
-                                    <el-input type="text" max="6" v-model="checkcode" style="width: 415px" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    <el-input type="text" max="6" v-model="checkcode" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                     </el-input>
                                     <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
                                         <span v-show="show">获取验证码</span>
-                                        <span v-show="!show" class="count">{{count}} s</span>
+                                        <span v-show="!show" class="count">{{count}}s后再试</span>
                                     </el-button>
                                 </div>
                             </el-form-item>
