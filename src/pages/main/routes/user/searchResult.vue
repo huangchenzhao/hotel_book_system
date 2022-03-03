@@ -104,7 +104,7 @@
                             </span>
                             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="changePhoto">确 定</el-button>
   </span>
                         </el-dialog>
                     </template>
@@ -238,7 +238,7 @@
 <script>
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-import {getDetail, getUserInfo} from '@/api/api'
+import {getDetail, getUserInfo, getTempPhoto} from '@/api/api'
 
 export default {
   name: 'searchResult',
@@ -258,6 +258,7 @@ export default {
       latitude: 0,
       longitude: 0,
       mykey: 0,
+      mykeyPhoto: 0,
       addressName: '',
       pageSize: 3,
       currentPage: 1,
@@ -314,8 +315,35 @@ export default {
       this.center.lat = this.latitude
       this.zoom = 15
     },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      console.info(this.imgReturn)
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
     handleSizeChange (val) {
       this.pageSize = val
+    },
+    changePhoto () {
+      getTempPhoto().then(res => {
+      })
+      getUserInfo().then(res => {
+        this.userInfo.photoUrl = res.data.photoUrl
+      })
+      this.centerDialogVisible = false
+      this.mykeyPhoto += 1
     }
   }
 }
