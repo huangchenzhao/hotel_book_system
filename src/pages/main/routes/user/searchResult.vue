@@ -4,7 +4,7 @@
     <el-tabs type="border-card">
         <el-tab-pane label="搜索结果">
             <el-table
-                    :data="hotel"
+                    :data="hotel.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                     style="width: 100%"
                     max-height="510">
                 <el-table-column
@@ -71,6 +71,14 @@
                     </el-dialog>
                 </el-table-column>
             </el-table>
+            <el-col :span="24" class="toolbar" style="text-align:center">
+                <el-pagination
+                        @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page="currentPage"
+                        layout="total, prev, pager, next"
+                        :page-size="pageSize"
+                        :total="this.hotel.length"
+                ></el-pagination>
+            </el-col>
         </el-tab-pane>
         <el-tab-pane label="我的账户">
             <el-card class="user-card" style="margin: auto">
@@ -189,7 +197,9 @@ export default {
       latitude: 0,
       longitude: 0,
       mykey: 0,
-      addressName: ''
+      addressName: '',
+      pageSize: 3,
+      currentPage: 1
     }
   },
   created () {
@@ -205,14 +215,19 @@ export default {
       this.longitude = row.longitude
       this.latitude = row.latitude
       this.addressName = row.address.detail
-      alert(JSON.stringify(row))
       this.mykey += 1
+    },
+    handleCurrentChange (currentPage) {
+      this.currentPage = currentPage
     },
     handler ({BMap, map}) {
       console.log(BMap, map)
       this.center.lng = this.longitude
       this.center.lat = this.latitude
       this.zoom = 15
+    },
+    handleSizeChange (val) {
+      this.pageSize = val
     }
   }
 }

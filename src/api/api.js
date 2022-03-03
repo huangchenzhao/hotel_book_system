@@ -11,3 +11,4 @@ export const searchHotel = (obj) => http.GET('/api/hotel/search', obj)
 export const sendEmail = (obj) => http.GET('/api/user/sendEmail', obj)
 // 验证码是否正确
 export const verifyCode = (obj) => http.GET('/api/user/verify', obj)
+
