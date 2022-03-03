@@ -63,7 +63,7 @@
     ]">
                                 <el-input v-model="regForm.regMail" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-message"></el-input>
                             </el-form-item>
-                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="regUserName" :rules="[
+                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="regCheck" :rules="[
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
@@ -157,9 +157,8 @@ export default {
         if (this.regForm.regReturn.data === null) {
           this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
         } else {
-          let newCode = {code: this.checkcode}
-          console.info(this.checkcode)
-          verifyCode(newCode).then(res => {
+          let regMsg = {email: this.regForm.regMail, code: this.checkcode}
+          verifyCode(regMsg).then(res => {
             if (res.data === null) {
               this.$message.error({message: '注册失败，验证码不正确哦~', center: true})
             } else {
