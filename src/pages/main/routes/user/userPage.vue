@@ -122,7 +122,7 @@
                 </el-col>
             </el-row>
         </el-tab-pane>
-        <el-tab-pane label="我的账户">
+        <el-tab-pane label="我的账户" :key="mykey">
             <el-card class="user-card" style="margin: auto">
                 <el-descriptions class="des-user" :column="2" border :size="size" title="账户信息">
                     <template slot="extra">
@@ -178,12 +178,12 @@
                         </template>
                         <el-tag size="small">用户</el-tag>
                     </el-descriptions-item>
-                    <el-descriptions-item :key="mykey">
+                    <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img :src="this.userInfo.photoUrl" alt="" id="imgid">
+                        <img :src="this.userInfo.photoUrl" alt="" id="imgid" class="userPhoto">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -326,7 +326,7 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw)
       this.imgReturn = res.url.slice(1)
       console.info(this.imgReturn)
-      document.setElementById('imgid').setAttribute('src', this.imgReturn)
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
@@ -342,13 +342,12 @@ export default {
     },
     changePhoto () {
       getTempPhoto().then(res => {
-        console.info(res.data)
       })
       getUserInfo().then(res => {
         this.userInfo.photoUrl = res.data.photoUrl
       })
-      this.mykey += 1
       this.centerDialogVisible = false
+      this.mykey += 1
     }
   }
 }
