@@ -52,8 +52,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String register(HttpSession session,String email,String code,User a) {
-        System.out.println(email);
-        System.out.println(code);
         if(a.getUsername().equals("")||a.getPassword().equals(""))
         {
             return "用户名和密码不可为空";
