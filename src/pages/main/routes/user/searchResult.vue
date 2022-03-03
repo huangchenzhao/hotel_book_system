@@ -11,7 +11,7 @@
                         prop="name"
                         label="名称"
                         sortable
-                        width="150" align="center" header-align="center" >
+                        width="200" align="center" header-align="center" >
                 </el-table-column>
                 <el-table-column
                         prop="photo.photoUrl"
@@ -24,13 +24,13 @@
               <el-table-column
                         prop="address.detail"
                         label="详细地址"
-                        width="200" align="center" header-align="center">
+                        width="300" align="center" header-align="center">
                 </el-table-column>
                 <el-table-column
                         prop="room.price"
                         label="最低价格"
                         sortable
-                        width="150" align="center" header-align="center" >
+                        width="200" align="center" header-align="center" >
                 </el-table-column>
               <el-table-column
                   prop="star"
@@ -50,7 +50,7 @@
                             查看详情
                         </el-button>
                     </template>
-                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
+                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="90%">
                         <el-row :gutter="20">
                             <el-col :span="12">
                               <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
@@ -170,12 +170,17 @@
                 <el-table-column
                         prop="name"
                         label="酒店名称"
-                        width="200" align="center" header-align="center" >
+                        width="150" align="center" header-align="center" >
+                </el-table-column>
+                <el-table-column
+                        prop="address"
+                        label="酒店地址"
+                        width="150" align="center" header-align="center" >
                 </el-table-column>
                 <el-table-column
                         prop="roomType"
                         label="房型"
-                        width="150" align="center" header-align="center" >
+                        width="100" align="center" header-align="center" >
                     <template slot-scope="scope">
                         <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
                     </template>
@@ -183,7 +188,7 @@
                 <el-table-column
                         prop="quantity"
                         label="数量"
-                        width="150" align="center" header-align="center">
+                        width="100" align="center" header-align="center">
                 </el-table-column>
                 <el-table-column
                         prop="totalPrice"
@@ -209,33 +214,12 @@
                 <el-table-column
                         label="评分"
                         align="center" header-align="center" >
-<!--                    <template slot-scope="scope">-->
                         <el-rate
                                 v-model="score"
                                 :icon-classes="iconClasses"
                                 void-icon-class="icon-rate-face-off"
                                 :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                         </el-rate>
-<!--                    </template>-->
-<!--                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
-                        <el-row :gutter="20">
-                            <el-col :span="12">
-                                <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
-                                    <bm-marker :position="center" :dragging="false">
-                                        <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
-                                    </bm-marker>
-                                </baidu-map>
-                            </el-col>
-                            <el-col :span="12">
-                                <el-table :data="room">
-                                    <el-table-column property="latitude" label="房型" width="100" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="star" label="图片" width="200" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="name" label="价格" width="100" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="longitude" label="数量" align="center" header-align="center"></el-table-column>
-                                </el-table>
-                            </el-col>
-                        </el-row>
-                    </el-dialog>-->
                 </el-table-column>
             </el-table>
             <el-col :span="24" class="toolbar" style="text-align:center">
@@ -312,11 +296,10 @@ export default {
       let myDetail = {hId: row.hid}
       getDetail(myDetail).then(res => {
         this.returnDetail = res.data
-        console.info(this.returnDetail)
-        console.info(this.returnDetail)
-        console.info(this.returnDetail)
       })
       this.mykey += 1
+    },
+    getOne (row) {
     },
     handleCurrentChange (currentPage) {
       this.currentPage = currentPage

@@ -20,6 +20,12 @@ const loginPage = [
     name: 'searchResult',
     component: () =>
       import(/* webpackChunkName: "Login" */ '../pages/main/routes/user/searchResult')
+  },
+  {
+    path: '/userOrder',
+    name: 'userOrder',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../pages/main/routes/user/userOrder')
   }
 ]
 
