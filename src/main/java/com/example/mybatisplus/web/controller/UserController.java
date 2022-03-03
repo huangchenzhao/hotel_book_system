@@ -115,8 +115,12 @@ public class UserController {
     //增加需要前端传递的email，code参数
     @GetMapping("/register")
     @ResponseBody
-    public JsonResponse register(HttpServletRequest request, @RequestParam(value = "email", required = false) String email,
-                                 @RequestParam(value = "code", required = false) String code, User a) {
+    public JsonResponse register(HttpServletRequest request,
+                                 @RequestParam(value = "email") String email,
+                                 @RequestParam(value = "code") String code,
+                                 @RequestParam(value="username") String username,
+                                 @RequestParam(value="password") String password,
+                                 @RequestParam(value="usertype") String usertype) {
 //        List<User> userList = userService.list();
 //        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
 //        for (User tempUser : userList) {
@@ -130,6 +134,11 @@ public class UserController {
 //            userService.save(a); //如果不存在该用户名则注册成功，写入数据库
 //            return JsonResponse.success(a);
 //        }
+        User a=new User();
+        a.setUsername(username);
+        a.setPassword(password);
+        a.setUsertype(Integer.valueOf(usertype));
+        System.out.println(a);
         HttpSession session = request.getSession();
         String result = userService.register(session, email, code, a);
         return JsonResponse.success(result);

@@ -52,7 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String register(HttpSession session,String email,String code,User a) {
-        if(a.getUsername()==null||a.getPassword()==null)
+        System.out.println(email);
+        System.out.println(code);
+        if(a.getUsername().equals("")||a.getPassword().equals(""))
         {
             return "用户名和密码不可为空";
         }
@@ -161,7 +163,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public String verify(HttpSession session, String account, String codeInput) {
         String email = (String) session.getAttribute("email");
         String code = (String) session.getAttribute("code");
-
+        System.out.println(email);
+        System.out.println(code);
 //       失败之后重新注册
         if (email == null || email.isEmpty()) {
             return null;
