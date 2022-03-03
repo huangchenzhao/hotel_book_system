@@ -183,7 +183,7 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user2.jpeg" alt="" id="imgid">
+                        <img src="../../../../assets/images/cat.jpeg" alt="" id="imgid" class="userPhoto">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -383,5 +383,11 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    .userPhoto {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 </style>

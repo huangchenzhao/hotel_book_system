@@ -141,7 +141,7 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user2.jpeg" alt="" id="imgid">
+                        <img src="../../../../assets/images/user3.jpeg" alt="" id="imgid" class="userPhoto">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -268,5 +268,11 @@ export default {
     .bm-view {
       width: 100%;
       height: 300px;
+    }
+    .userPhoto {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
     }
 </style>
