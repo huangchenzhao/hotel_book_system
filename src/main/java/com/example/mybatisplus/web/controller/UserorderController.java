@@ -1,5 +1,6 @@
 package com.example.mybatisplus.web.controller;
 
+import com.example.mybatisplus.model.domain.Hotel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -9,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.UserorderService;
 import com.example.mybatisplus.model.domain.Userorder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
@@ -74,6 +79,29 @@ public class UserorderController {
     public JsonResponse create(Userorder  userorder) throws Exception {
         userorderService.save(userorder);
         return JsonResponse.success(null);
+    }
+
+    //用户下单
+    //接收前端一个roomid
+    //返回前端对应时间段内该房间最少剩余量，酒店名称，房型，详细地址等信息
+    //入住时间和退房时间分别存入checkIn和checkOut
+    @RequestMapping(value="/placeOrder",method=RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse placeOrder(HttpServletRequest request, @RequestParam(value="roomId", required=false)Long roomId){
+        HttpSession session = request.getSession();
+        List<Hotel> result = userorderService.placeOrder(session,roomId);
+        return JsonResponse.success(result);
+    }
+
+
+    //显示当前用户所有订单
+    //gzx
+    @GetMapping("/orderdetail")
+    @ResponseBody
+    public JsonResponse orderdetails(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long uid = (Long) session.getAttribute("uId");
+        return JsonResponse.success(userorderService.showorderdetail(uid));
     }
 }
 

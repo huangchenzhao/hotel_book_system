@@ -3,6 +3,8 @@ package com.example.mybatisplus.model.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
+import java.sql.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -51,6 +53,12 @@ public class Hotel extends Model<Hotel> {
 
     @TableField(exist=false)
     private Detail detail;
+
+    @TableField(exist=false)
+    private Date checkIn;
+
+    @TableField(exist=false)
+    private Date checkOut;
 
 
 

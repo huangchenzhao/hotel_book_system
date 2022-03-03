@@ -123,6 +123,7 @@ public class HotelController {
         HttpSession session = request.getSession();
         Date checkin = (Date) session.getAttribute("checkin");
         Date checkout = (Date) session.getAttribute("checkout");
+        session.setAttribute("hotelId",hId);
         List<Hotel> hotel = hotelService.detail(hId,checkin,checkout);
 //        List<Hotel> hotel2=hotelService.detail2(hId);
 //        for(Hotel h:hotel2){

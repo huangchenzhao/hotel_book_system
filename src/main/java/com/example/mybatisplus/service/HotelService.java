@@ -2,7 +2,9 @@ package com.example.mybatisplus.service;
 
 import com.example.mybatisplus.model.domain.Hotel;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplus.model.domain.Userorder;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -18,5 +20,6 @@ public interface HotelService extends IService<Hotel> {
     List<Hotel> listrem();
     List<Hotel> searchResult(String hotelName, Date checkIN, Date checkOut, Integer code, String roomType);
     List<Hotel> detail(Long hId, Date checkin, Date checkout);
+//    List<Userorder> placeOrder(HttpSession session, Long roomId);
 //    List<Hotel> detail2(Long hId);
 }

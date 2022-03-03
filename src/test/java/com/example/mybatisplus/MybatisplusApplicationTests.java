@@ -1,15 +1,21 @@
 package com.example.mybatisplus;
 
 import com.example.mybatisplus.mapper.HotelMapper;
+import com.example.mybatisplus.mapper.UserorderMapper;
 import com.example.mybatisplus.model.domain.Admin;
 import com.example.mybatisplus.model.domain.Hotel;
+import com.example.mybatisplus.model.domain.Userorder;
 import com.example.mybatisplus.service.AdminService;
 import com.example.mybatisplus.service.UserService;
+import com.example.mybatisplus.service.UserorderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+import java.sql.Date;
 import java.util.List;
 import java.*;
 
@@ -20,6 +26,12 @@ class MybatisplusApplicationTests {
     private AdminService adminService;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserorderService userorderService;
+
+    @Autowired(required =false)
+    private UserorderMapper userorderMapper;
 
     @Test
     void contextLoads() {
@@ -57,6 +69,8 @@ class MybatisplusApplicationTests {
 //    }
 //    @Test
 //    void test1()throws Exception{
-//        userService.sendVerification("2468038761");
+//
+//        List<Userorder> userorder=hotelMapper.placeOrder(1L,1L,new Date(2022-1900,2-1,28),new Date(2022-1900,3-1,4));
+//        System.out.println(userorder);
 //    }
 }
