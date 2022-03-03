@@ -49,7 +49,7 @@
 
     <!--搜索功能sql语句-->
     <select id="searchResult" resultMap="SearchResultMap">
-        SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain FROM
+        SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain,photo.photo_url FROM
         hotel
         INNER JOIN photo ON photo.h_id = hotel.h_id
         INNER JOIN address ON hotel.a_id = address.a_id
