@@ -60,11 +60,27 @@
                               </baidu-map>
                             </el-col>
                             <el-col :span="12">
-                                <el-table :data="room">
-                                    <el-table-column property="latitude" label="房型" width="100" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="star" label="图片" width="200" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="name" label="价格" width="100" align="center" header-align="center"></el-table-column>
-                                    <el-table-column property="longitude" label="数量" align="center" header-align="center"></el-table-column>
+                                <el-table :data="returnDetail">
+                                  <el-table-column
+                                      prop="photo.photoUrl"
+                                      label="图片"
+                                      width="200" align="center" header-align="center">
+                                  </el-table-column>
+                                  <el-table-column
+                                      prop="room.amount"
+                                      label="数量"
+                                      width="100" align="center" header-align="center">
+                                  </el-table-column>
+                                  <el-table-column
+                                      prop="room.price"
+                                      label="价格"
+                                      width="100" align="center" header-align="center">
+                                  </el-table-column>
+                                  <el-table-column
+                                        prop="room.roomtype"
+                                        label="房型"
+                                        width="100" align="center" header-align="center">
+                                    </el-table-column>
                                 </el-table>
                             </el-col>
                         </el-row>
@@ -193,15 +209,15 @@
                 <el-table-column
                         label="评分"
                         align="center" header-align="center" >
-                    <template slot-scope="scope">
+<!--                    <template slot-scope="scope">-->
                         <el-rate
                                 v-model="score"
                                 :icon-classes="iconClasses"
                                 void-icon-class="icon-rate-face-off"
                                 :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                         </el-rate>
-                    </template>
-                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
+<!--                    </template>-->
+<!--                    <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="80%">
                         <el-row :gutter="20">
                             <el-col :span="12">
                                 <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
@@ -219,7 +235,7 @@
                                 </el-table>
                             </el-col>
                         </el-row>
-                    </el-dialog>
+                    </el-dialog>-->
                 </el-table-column>
             </el-table>
             <el-col :span="24" class="toolbar" style="text-align:center">
@@ -290,13 +306,15 @@ export default {
   methods: {
     handleClick (row) {
       this.dialogVisible = true
-      this.room = row
       this.longitude = row.longitude
       this.latitude = row.latitude
       this.addressName = row.address.detail
-      let myDetail = {hid: row.hid}
+      let myDetail = {hId: row.hid}
       getDetail(myDetail).then(res => {
         this.returnDetail = res.data
+        console.info(this.returnDetail)
+        console.info(this.returnDetail)
+        console.info(this.returnDetail)
       })
       this.mykey += 1
     },

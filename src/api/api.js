@@ -12,7 +12,7 @@ export const sendEmail = (obj) => http.GET('/api/user/sendEmail', obj)
 // 验证码是否正确
 export const verifyCode = (obj) => http.GET('/api/user/verify', obj)
 // 获取酒店详情
-export const getDetail = (obj) => http.GET('/api/user/verify', obj)
+export const getDetail = (obj) => http.GET('/api/hotel/detail', obj)
 // 每个页面都获取用户信息
 export const getUserInfo = () => http.GET('/api/user/detail')
 // 获取上传到后端的头像，上传到数据库
