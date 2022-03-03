@@ -155,21 +155,21 @@
                             <i class="el-icon-user"></i>
                             用户名
                         </template>
-                      {{this.$route.params.userInfo.username}}
+                      {{this.userInfo.username}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-mobile-phone"></i>
                             密码
                         </template>
-                      {{this.$route.params.userInfo.password}}
+                      {{this.userInfo.password}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-location-outline"></i>
                             邮箱
                         </template>
-                      {{this.$route.params.userInfo.mail}}
+                      {{this.userInfo.mail}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
@@ -183,7 +183,7 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img :src="updatedUrl" alt="" id="imgid">
+                        <img :src="this.userInfo.photoUrl" alt="" id="imgid">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -218,7 +218,7 @@
 </template>
 
 <script>
-import {searchHotel, user} from '@/api/api'
+import {searchHotel, getUserInfo} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 export default {
@@ -270,7 +270,12 @@ export default {
       dialogTableVisible3: false,
       roomData: [],
       mykey: 0,
-      updatedUrl: ''
+      userInfo: {
+        username: '',
+        password: '',
+        photoUrl: '',
+        mail: ''
+      }
     }
   },
   created () {
@@ -285,7 +290,12 @@ export default {
     let beg = year + '-' + month + '-' + da
     let end = tomorrow
     this.selectForm.mydate = [beg, end]
-    this.updatedUrl = this.$route.params.userInfo.photoUrl
+    getUserInfo().then(res => {
+      this.userInfo.username = res.data.username
+      this.userInfo.password = res.data.password
+      this.userInfo.mail = res.data.mail
+      this.userInfo.photoUrl = res.data.photoUrl
+    })
   },
   methods: {
     handleChange () {
@@ -331,10 +341,8 @@ export default {
       return isJPG && isLt2M
     },
     changePhoto () {
-      let myUser = {username: this.$route.params.userInfo.username, password: this.$route.params.userInfo.username, usertype: this.$route.params.userInfo.usertype}
-      user(myUser).then(res => {
-        console.info(res)
-        this.updatedUrl = res.data.photoUrl
+      getUserInfo().then(res => {
+        this.userInfo.photoUrl = res.data.photoUrl
       })
       this.mykey += 1
       this.centerDialogVisible = false

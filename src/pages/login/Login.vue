@@ -127,7 +127,7 @@ export default {
         if (this.loginForm.logReturn.data === null) {
           this.$message.error({message: '登陆失败，用户名或密码输入错误哦~', center: true})
         } else {
-          this.$router.push({name: 'userPage', params: {userInfo: this.loginForm.logReturn.data}})
+          this.$router.push({name: 'userPage'})
         }
       })
     },

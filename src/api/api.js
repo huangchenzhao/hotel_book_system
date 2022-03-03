@@ -13,3 +13,5 @@ export const sendEmail = (obj) => http.GET('/api/user/sendEmail', obj)
 export const verifyCode = (obj) => http.GET('/api/user/verify', obj)
 // 获取酒店详情
 export const getDetail = (obj) => http.GET('/api/user/verify', obj)
+// 每个页面都获取用户信息
+export const getUserInfo = () => http.GET('/api/user/detail')
