@@ -32,9 +32,6 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
         System.out.println(currorder);
         return currorder;
     }
-
-    @Autowired(required=false)
-    UserorderMapper userorderMapper;
     @Autowired(required=false)
     HotelMapper hotelMapper;
     @Override
