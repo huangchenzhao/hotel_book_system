@@ -4,179 +4,175 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Hotel">
-        <id column="h_id" property="hId"/>
-        <result column="a_id" property="aId"/>
-        <result column="longitude" property="longitude"/>
-        <result column="latitude" property="latitude"/>
-        <result column="star" property="star"/>
-        <result column="name" property="name"/>
+        <id column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
     </resultMap>
     <resultMap id="SearchResultMap" type="com.example.mybatisplus.model.domain.Hotel">
-        <id column="h_id" property="hId"/>
-        <result column="ha_id" property="aId"/>
-        <result column="longitude" property="longitude"/>
-        <result column="latitude" property="latitude"/>
-        <result column="star" property="star"/>
-        <result column="name" property="name"/>
+        <id column="h_id" property="hId" />
+        <result column="ha_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
         <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
-            <id column="a_id" property="aId"/>
-            <result column="code" property="code"/>
-            <result column="province" property="province"/>
-            <result column="city" property="city"/>
-            <result column="district" property="district"/>
-            <result column="detail" property="detail"/>
+            <id column="a_id" property="aId" />
+            <result column="code" property="code" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
-            <id column="p_id" property="pId"/>
-            <result column="pr_id" property="rId"/>
-            <result column="ph_id" property="hId"/>
-            <result column="photo_url" property="photoUrl"/>
+            <id column="p_id" property="pId" />
+            <result column="pr_id" property="rId" />
+            <result column="ph_id" property="hId" />
+            <result column="photo_url" property="photoUrl" />
         </association>
         <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
-            <id column="r_id" property="rId"/>
-            <result column="rh_id" property="hId"/>
-            <result column="price" property="price"/>
-            <result column="roomtype" property="roomtype"/>
-            <result column="amount" property="amount"/>
-            <result column="max_people" property="maxPeople"/>
-        </association>
-        <association property="detail" javaType="com.example.mybatisplus.model.domain.Detail">
-            <id column="r_date" property="rDate"/>
-            <result column="dr_id" property="rId"/>
-            <result column="remain" property="remain"/>
+            <id column="r_id" property="rId" />
+            <result column="rh_id" property="hId" />
+            <result column="price" property="price" />
+            <result column="roomtype" property="roomtype" />
+            <result column="amount" property="amount" />
+            <result column="max_people" property="maxPeople" />
         </association>
     </resultMap>
 
     <!--搜索功能sql语句-->
     <select id="searchResult" resultMap="SearchResultMap">
-        SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain FROM
+        SELECT hotel.*,address.*,
+        photo.photo_url,datas.price,remain  FROM
         hotel
         INNER JOIN photo ON photo.h_id = hotel.h_id
         INNER JOIN address ON hotel.a_id = address.a_id
-        INNER JOIN ((SELECT min(price) AS price,hotel.h_id,room.roomtype
-        FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
+        INNER JOIN ((SELECT min(price) AS price,sum(remain) as remain,hotel.h_id,room.roomtype,detail.r_date
+          FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
+          INNER JOIN detail on room.r_id = detail.r_id
+          GROUP BY hotel.h_id,r_date,roomtype)AS datas)  ON  datas.h_id=hotel.h_id
         <where>
-            <if test="roomType != null and roomType!=''">
-                and roomtype=#{roomType}
-            </if>
+        <if test="hotelName != null and hotelName!=''">
+            and hotel.name like '%${hotelName}%'
+        </if>
+        <if test="checkIn != null">
+            and datas.r_date=#{checkIn} and remain>0
+        </if>
+        <if test="roomType != null and roomType!=''">
+            and datas.roomtype=#{roomType}
+        </if>
+        <if test="code!=null" >
+             and address.code=#{code}
+        </if>
+        <if test="true" >
+            and 1
+        </if>
         </where>
-        group by hotel.h_id) as horoom) on horoom.h_id=hotel.h_id
-        INNER JOIN ((select room.h_id,min(remain)as remain from detail inner join room on room.r_id = detail.r_id
-        <where>
-            <if test="checkIn != null">
-                and detail.r_date &gt;= #{checkIn} and detail.r_date &lt;= #{checkOut}
-            </if>
-            <if test="roomType != null and roomType!=''">
-                and roomtype=#{roomType}
-            </if>
-        </where>
-        group by room.r_id)AS deroom)
-        ON deroom.h_id=hotel.h_id
-        <where>
-            <if test="hotelName != null and hotelName!=''">
-                and hotel.name like '%${hotelName}%'
-            </if>
-            <if test="code!=null">
-                and address.code=#{code}
-            </if>
-
-        </where>
-        group by hotel.h_id
-        having sum(remain)>0
     </select>
     <!-- 酒店推荐三表联查映射结果 -->
 
     <resultMap id="RemMap" type="com.example.mybatisplus.model.domain.Hotel">
-        <id column="id" property="Id"/>
-        <result column="h_id" property="hId"/>
-        <result column="a_id" property="aId"/>
-        <result column="longitude" property="longitude"/>
-        <result column="latitude" property="latitude"/>
-        <result column="star" property="star"/>
-        <result column="name" property="name"/>
+        <id column="id" property="Id" />
+        <result column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
         <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
-            <id column="aid" property="aId"/>
-            <result column="country" property="country"/>
-            <result column="province" property="province"/>
-            <result column="city" property="city"/>
-            <result column="district" property="district"/>
-            <result column="detail" property="detail"/>
+            <id column="aid" property="aId" />
+            <result column="country" property="country" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
-            <id column="p_id" property="pId"/>
-            <result column="r_id" property="rId"/>
-            <result column="hid" property="hId"/>
-            <result column="photo_url" property="photoUrl"/>
+            <id column="p_id" property="pId" />
+            <result column="r_id" property="rId" />
+            <result column="hid" property="hId" />
+            <result column="photo_url" property="photoUrl" />
         </association>
     </resultMap>
     <select id="getrem" resultMap="RemMap">
-        SELECT *,
-               address.a_id as aid,
-               photo.h_id   as hid
-        FROM hotel
-                 INNER JOIN photo ON photo.h_id = hotel.h_id
-                 INNER JOIN address ON hotel.a_id = address.a_id
-        WHERE photo.r_id is NULL
+        SELECT
+            *,address.a_id as aid,photo.h_id as hid
+        FROM
+            hotel
+                INNER JOIN photo ON photo.h_id = hotel.h_id
+                INNER JOIN address ON hotel.a_id = address.a_id
+        WHERE
+             photo.r_id is NULL
         group by hotel.h_id
-        ORDER BY hotel.star DESC
-            LIMIT 3
+        ORDER BY
+            hotel.star DESC
+        LIMIT 3
     </select>
     <resultMap id="HotelDetailMap" type="com.example.mybatisplus.model.domain.Hotel">
-        <id column="id" property="Id"/>
-        <result column="h_id" property="hId"/>
-        <result column="a_id" property="aId"/>
-        <result column="longitude" property="longitude"/>
-        <result column="latitude" property="latitude"/>
-        <result column="star" property="star"/>
-        <result column="name" property="name"/>
+        <id column="id" property="Id" />
+        <result column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
         <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
-            <id column="aid" property="aId"/>
-            <result column="code" property="code"/>
-            <result column="province" property="province"/>
-            <result column="city" property="city"/>
-            <result column="district" property="district"/>
-            <result column="detail" property="detail"/>
+            <id column="aid" property="aId" />
+            <result column="code" property="code" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+            <result column="detail" property="detail" />
         </association>
         <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
-            <id column="p_id" property="pId"/>
-            <result column="rid" property="rId"/>
-            <result column="hhid" property="hId"/>
-            <result column="photo_url" property="photoUrl"/>
+            <id column="p_id" property="pId" />
+            <result column="rid" property="rId" />
+            <result column="hhid" property="hId" />
+            <result column="photo_url" property="photoUrl" />
         </association>
         <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
-            <id column="r_id" property="rId"/>
-            <result column="hh_id" property="hId"/>
-            <result column="price" property="price"/>
-            <result column="roomtype" property="roomtype"/>
-            <result column="amount" property="amount"/>
-            <result column="max_people" property="maxPeople"/>
+            <id column="r_id" property="rId" />
+            <result column="hh_id" property="hId" />
+            <result column="price" property="price" />
+            <result column="roomtype" property="roomtype" />
+            <result column="amount" property="amount" />
+            <result column="max_people" property="maxPeople" />
         </association>
         <association property="detail" javaType="com.example.mybatisplus.model.domain.Detail">
-            <id column="r_date" property="rDate"/>
-            <result column="rrid" property="rId"/>
-            <result column="remain" property="remain"/>
+            <id column="r_date" property="rDate" />
+            <result column="rrid" property="rId" />
+            <result column="remain" property="remain" />
         </association>
     </resultMap>
-    <select id="showDetails" resultMap="HotelDetailMap">
-        SELECT *
-        FROM hotel
-                 RIGHT JOIN room ON room.h_id = hotel.h_id
-                 INNER JOIN photo ON photo.r_id = room.r_id
-                 INNER JOIN detail ON detail.r_id = room.r_id
-                 INNER JOIN address ON hotel.a_id = address.a_id
-        where hotel.h_id = #{hId}
-        GROUP BY room.r_id
+    <!--<select id="showDetails" resultMap="HotelDetailMap">-->
+        <!--SELECT-->
+            <!--*-->
+        <!--FROM-->
+            <!--room-->
+                <!--INNER JOIN detail ON detail.r_id = room.r_id-->
+                <!--INNER JOIN photo ON photo.r_id = room.r_id-->
+                <!--INNER JOIN hotel ON room.h_id = hotel.h_id-->
+        <!--WHERE-->
+                <!--detail.remain in(select min(detail.remain) from detail where detail.r_id=detail.r_id GROUP BY detail.r_id)-->
+        <!--ORDER BY-->
+            <!--room.r_id ASC-->
 
-    </select>
-    <select id="showDetails2" resultMap="HotelDetailMap">
-        SELECT *
-        FROM hotel
-                 INNER JOIN address ON hotel.a_id = address.a_id
-                 INNER JOIN photo ON photo.h_id = hotel.h_id
-        WHERE hotel.h_id = #{hId}
-          and photo.r_id IS NULL
-        ORDER BY photo.p_id ASC
-    </select>
+    <!--</select>-->
+    <!--<select id="showDetails2" resultMap="HotelDetailMap">-->
+        <!--SELECT-->
+            <!--*-->
+        <!--FROM-->
+            <!--hotel-->
+                <!--INNER JOIN address ON hotel.a_id = address.a_id-->
+                <!--INNER JOIN photo ON photo.h_id = hotel.h_id-->
+        <!--WHERE-->
+            <!--hotel.h_id = #{hId} and-->
+            <!--photo.r_id IS NULL-->
+        <!--ORDER BY-->
+            <!--photo.p_id ASC-->
+    <!--</select>-->
 
 
 </mapper>

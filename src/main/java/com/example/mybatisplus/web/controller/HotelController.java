@@ -10,6 +10,8 @@ import com.example.mybatisplus.common.JsonResponse;
 import com.example.mybatisplus.service.HotelService;
 import com.example.mybatisplus.model.domain.Hotel;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -95,10 +97,13 @@ public class HotelController {
     //如果用户输入了房型则只计算对应房型
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse search(@RequestParam(value="name",required=false) String hotelName, @RequestParam(value="checkin",required=false)Date checkIn,
+    public JsonResponse search(HttpServletRequest request, @RequestParam(value="name",required=false) String hotelName, @RequestParam(value="checkin",required=false)Date checkIn,
                                @RequestParam(value="checkout",required=false) Date checkOut, @RequestParam(value="code",required=false) Integer code,
                                @RequestParam(value="roomtype",required=false)String roomType) throws Exception {
 //        hotelService.save();
+        HttpSession session = request.getSession();
+        session.setAttribute("checkin",checkIn);
+        session.setAttribute("checkout",checkOut);
         List<Hotel> hotel1 =  hotelService.searchResult(hotelName,checkIn,checkOut,code,roomType);
         return JsonResponse.success(hotel1);
     }
@@ -112,16 +117,19 @@ public class HotelController {
     }
     //酒店详情
     //gzx
-    @GetMapping("/detail")
-    @ResponseBody
-    public JsonResponse detail(Long hId) throws Exception {
-        List<Hotel> hotel = hotelService.detail(hId);
-        List<Hotel> hotel2=hotelService.detail2(hId);
-        for(Hotel h:hotel2){
-            hotel.add(h);
-        }
-        return JsonResponse.success(hotel);
-    }
+//    @GetMapping("/detail")
+//    @ResponseBody
+//    public JsonResponse detail(HttpServletRequest request, Long hId) throws Exception {
+//        HttpSession session = request.getSession();
+//        Date checkin = (Date) session.getAttribute("checkin");
+//        Date checkout = (Date) session.getAttribute("checkout");
+//        List<Hotel> hotel = hotelService.detail(hId,checkin,checkout);
+////        List<Hotel> hotel2=hotelService.detail2(hId);
+////        for(Hotel h:hotel2){
+////            hotel.add(h);
+////        }
+//        return JsonResponse.success(hotel);
+//    }
 
 
 

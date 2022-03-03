@@ -52,17 +52,28 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
 
     }
-    @Override
-    public List<Hotel> detail(Long hId) {
-        List<Hotel> hoteldetail = hotelMapper.showDetails(hId);
-
-        return  hoteldetail;
-    }
-    @Override
-    public List<Hotel> detail2(Long hId) {
-        List<Hotel> hoteldetail2 = hotelMapper.showDetails2(hId);
-
-        return  hoteldetail2;
-    }
+//    @Override
+//    public List<Hotel> detail(Long hId, Date checkin, Date checkout) {
+//        java.sql.Date checkinSql=null;
+//        java.sql.Date checkoutSql=null;
+//        //处理空指针异常
+//        try{
+//            checkinSql= new java.sql.Date(checkin.getTime());
+//        }catch(Exception e){
+//        }
+//        try{
+//            checkoutSql= new java.sql.Date(checkout.getTime());
+//        }catch(Exception e) {
+//        }
+//        List<Hotel> hoteldetail = hotelMapper.showDetails(hId,checkinSql,checkoutSql);
+//
+//        return  hoteldetail;
+//    }
+//    @Override
+//    public List<Hotel> detail2(Long hId) {
+//        List<Hotel> hoteldetail2 = hotelMapper.showDetails2(hId);
+//
+//        return  hoteldetail2;
+//    }
 
 }

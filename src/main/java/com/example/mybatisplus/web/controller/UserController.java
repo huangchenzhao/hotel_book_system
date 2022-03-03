@@ -182,5 +182,8 @@ public class UserController {
         Long uid = (Long) session.getAttribute("uId");
         return JsonResponse.success(userService.showdetail(uid));
     }
+
+
+
 }
 
