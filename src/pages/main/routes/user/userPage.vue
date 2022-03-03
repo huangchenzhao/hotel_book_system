@@ -146,7 +146,7 @@
                             </span>
                             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="changePhoto">确 定</el-button>
   </span>
                         </el-dialog>
                     </template>
@@ -178,12 +178,12 @@
                         </template>
                         <el-tag size="small">用户</el-tag>
                     </el-descriptions-item>
-                    <el-descriptions-item>
+                    <el-descriptions-item :key="mykey">
                         <template slot="label">
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user2.jpeg" alt="" id="imgid">
+                        <img :src="updatedUrl" alt="" id="imgid">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -218,7 +218,7 @@
 </template>
 
 <script>
-import {searchHotel} from '@/api/api'
+import {searchHotel, user} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 export default {
@@ -268,7 +268,9 @@ export default {
       dialogTableVisible1: false,
       dialogTableVisible2: false,
       dialogTableVisible3: false,
-      roomData: []
+      roomData: [],
+      mykey: 0,
+      updatedUrl: ''
     }
   },
   created () {
@@ -283,6 +285,7 @@ export default {
     let beg = year + '-' + month + '-' + da
     let end = tomorrow
     this.selectForm.mydate = [beg, end]
+    this.updatedUrl = this.$route.params.userInfo.photoUrl
   },
   methods: {
     handleChange () {
@@ -326,6 +329,15 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    changePhoto () {
+      let myUser = {username: this.$route.params.userInfo.username, password: this.$route.params.userInfo.username, usertype: this.$route.params.userInfo.usertype}
+      user(myUser).then(res => {
+        console.info(res)
+        this.updatedUrl = res.data.photoUrl
+      })
+      this.mykey += 1
+      this.centerDialogVisible = false
     }
   }
 }

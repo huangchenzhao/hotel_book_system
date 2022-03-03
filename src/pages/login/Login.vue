@@ -124,7 +124,6 @@ export default {
       let myUser = {username: this.loginForm.userName, password: this.loginForm.pwd, usertype: this.loginForm.radio}
       user(myUser).then(res => {
         this.loginForm.logReturn = res
-        console.info(res.data)
         if (this.loginForm.logReturn.data === null) {
           this.$message.error({message: '登陆失败，用户名或密码输入错误哦~', center: true})
         } else {
