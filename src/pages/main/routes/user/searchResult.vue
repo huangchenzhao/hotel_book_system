@@ -113,21 +113,21 @@
                             <i class="el-icon-user"></i>
                             用户名
                         </template>
-                      {{this.$route.params.userInfo.username}}
+                      {{this.userInfo.username}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-mobile-phone"></i>
                             密码
                         </template>
-                      {{this.$route.params.userInfo.password}}
+                      {{this.userInfo.password}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
                             <i class="el-icon-location-outline"></i>
                             邮箱
                         </template>
-                      {{this.$route.params.userInfo.mail}}
+                      {{this.userInfo.mail}}
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
@@ -141,7 +141,7 @@
                             <i class="el-icon-office-building"></i>
                             头像
                         </template>
-                        <img src="../../../../assets/images/user3.jpeg" alt="" id="imgid" class="userPhoto">
+                        <img :src="this.userInfo.photoUrl" alt="" id="imgid" class="userPhoto">
                     </el-descriptions-item>
                 </el-descriptions>
             </el-card>
@@ -178,7 +178,7 @@
 <script>
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-import {getDetail} from '@/api/api'
+import {getDetail, getUserInfo} from '@/api/api'
 
 export default {
   name: 'searchResult',
@@ -201,7 +201,13 @@ export default {
       addressName: '',
       pageSize: 3,
       currentPage: 1,
-      returnDetail: []
+      returnDetail: [],
+      userInfo: {
+        username: '',
+        password: '',
+        photoUrl: '',
+        mail: ''
+      }
     }
   },
   created () {
@@ -209,6 +215,12 @@ export default {
     /* console.info(this.$route.params.hotelName) */
     console.info(this.$route.params.returnData)
     this.hotel = this.$route.params.returnData
+    getUserInfo().then(res => {
+      this.userInfo.username = res.data.username
+      this.userInfo.password = res.data.password
+      this.userInfo.mail = res.data.mail
+      this.userInfo.photoUrl = res.data.photoUrl
+    })
   },
   methods: {
     handleClick (row) {

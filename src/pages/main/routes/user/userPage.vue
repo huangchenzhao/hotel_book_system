@@ -218,7 +218,7 @@
 </template>
 
 <script>
-import {searchHotel, getUserInfo} from '@/api/api'
+import {searchHotel, getUserInfo, getTempPhoto} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 export default {
@@ -341,6 +341,9 @@ export default {
       return isJPG && isLt2M
     },
     changePhoto () {
+      getTempPhoto().then(res => {
+        console.info(res.data)
+      })
       getUserInfo().then(res => {
         this.userInfo.photoUrl = res.data.photoUrl
       })

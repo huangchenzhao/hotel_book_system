@@ -15,3 +15,5 @@ export const verifyCode = (obj) => http.GET('/api/user/verify', obj)
 export const getDetail = (obj) => http.GET('/api/user/verify', obj)
 // 每个页面都获取用户信息
 export const getUserInfo = () => http.GET('/api/user/detail')
+// 获取上传到后端的头像，上传到数据库
+export const getTempPhoto = () => http.GET('/api/file/yesurl')
