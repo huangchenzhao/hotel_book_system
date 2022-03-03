@@ -1,7 +1,6 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.mybatisplus.model.domain.User;
 import com.example.mybatisplus.mapper.UserMapper;
 import com.example.mybatisplus.service.UserService;
@@ -9,8 +8,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
-import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -54,16 +51,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User register(User a) {
+    public String register(HttpSession session,String email,String code,User a) {
+        if(a.getUsername()==null||a.getPassword()==null)
+        {
+            return "用户名和密码不可为空";
+        }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         //wrapper.lambda().eq(User::getUsername,a.getUsername());
         wrapper.eq("username",a.getUsername());
         User result = userMapper.selectOne(wrapper);
         if(result!=null){//存在用户则返回空
-            return null;
-        }else{//不存在则录入返回登陆信息
+            return "用户已存在！";
+        }else if(verify(session,email,code)==null){//不存在则录入返回登陆信息
+            return "邮箱或验证码错误！";
+        }else{
             userMapper.insert(a);
-            return a;
+            return "注册成功！";
         }
     }
 

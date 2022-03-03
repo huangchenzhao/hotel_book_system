@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  */
 public interface UserService extends IService<User>  {
     User login(User a);
-    User register(User a);
+    String register(HttpSession session,String email,String code,User a);
     String sendVerification(HttpSession session, String account)throws Exception;
     String verify(HttpSession session,String account,String code);
     User showdetail(Long uid);

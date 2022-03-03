@@ -85,6 +85,14 @@ public class HotelController {
     //返回的数据中会统计当天酒店的所有房间剩余量，仅当房间剩余总和大于0才返回
     //如果用户输入了房型则是该房型有剩余才返回
     //酒店名称采用%hotelname%形式的模糊搜索
+    //2022.3.3
+    //调整了sql逻辑，接收参数不变，返回值为hotel.* address.*
+    // room.price(酒店所有房间最低价格，如果用户选了房型则是对应房型的最低价格)photo.photo_url(酒店图片）
+    //detail.remain(酒店从用户输入的起始时间到退房时间的所有房型的房间剩余最低量的总和，仅当大于0返回
+    //上面这句话比较难理解，做如下解释：
+    //首先找出酒店的所有房型，其次找到从入住时间到退房时间这段时间内该房型剩余量最少的数量，此数量作为该房型的最小剩余量
+    //最后将酒店不同房型的最小剩余量相加，作为酒店房间剩余量返回
+    //如果用户输入了房型则只计算对应房型
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
     public JsonResponse search(@RequestParam(value="name",required=false) String hotelName, @RequestParam(value="checkin",required=false)Date checkIn,
