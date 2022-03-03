@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-02-28
  */
 public interface UserorderService extends IService<Userorder> {
-
+    Userorder showorderdetail(Long uid);
 }

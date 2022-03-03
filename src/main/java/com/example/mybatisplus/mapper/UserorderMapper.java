@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2022-02-28
  */
 public interface UserorderMapper extends BaseMapper<Userorder> {
-
+    Userorder selectId(Long uid);
 }

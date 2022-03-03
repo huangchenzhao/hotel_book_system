@@ -1,5 +1,7 @@
 package com.example.mybatisplus.model.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gzx
@@ -37,6 +39,86 @@ public class Userorder extends Model<Userorder> {
 
     private LocalDate checkOut;
 
+    public Long getoId() {
+        return oId;
+    }
+
+    public void setoId(Long oId) {
+        this.oId = oId;
+    }
+
+    public Long getrId() {
+        return rId;
+    }
+
+    public void setrId(Long rId) {
+        this.rId = rId;
+    }
+
+    public Long getuId() {
+        return uId;
+    }
+
+    public void setuId(Long uId) {
+        this.uId = uId;
+    }
+
+    public Long gethId() {
+        return hId;
+    }
+
+    public void sethId(Long hId) {
+        this.hId = hId;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
+    }
+
+    public Float getTotalprice() {
+        return totalprice;
+    }
+
+    public void setTotalprice(Float totalprice) {
+        this.totalprice = totalprice;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     private Float totalprice;
 
     private Integer quantity;
@@ -44,6 +126,18 @@ public class Userorder extends Model<Userorder> {
     private Integer state;
 
     private String comment;
+
+    @TableField(exist=false)
+    private Address address;
+
+    @TableField(exist=false)
+    private Room room;
+
+    @TableField(exist=false)
+    private Detail detail;
+
+    @TableField(exist =false)
+    private Hotel hotel;
 
 
     @Override
