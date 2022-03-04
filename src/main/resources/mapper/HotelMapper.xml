@@ -160,16 +160,22 @@
     </resultMap>
     <select id="showDetails" resultMap="HotelDetailMap">
         SELECT
-        *
+            *
         FROM
-        detail
-        INNER JOIN room ON detail.r_id = room.r_id
-        INNER JOIN hotel ON room.h_id = hotel.h_id
-        INNER JOIN address ON hotel.a_id = address.a_id
-        INNER JOIN photo ON photo.r_id = room.r_id
-        where
-        detail.remain in(select min(detail.remain) from detail where detail.r_date &gt;= #{checkinSql} AND detail.r_date &lt; #{checkoutSql} group by detail.r_id)
-        AND hotel.h_id = #{hId}
+            photo
+                INNER JOIN room ON photo.r_id = room.r_id
+                INNER JOIN (SELECT
+                                detail.r_id,
+                                Min(detail.remain)as remain
+                            FROM
+                                detail
+                            WHERE
+                                detail.r_date &gt;= #{checkinSql} AND
+                                detail.r_date &lt; #{checkoutSql}
+                            GROUP BY
+                                detail.r_id) AS tabless ON tabless.r_id= room.r_id
+        WHERE
+            room.h_id = #{hId}
 
     </select>
     <select id="placeOrder" resultMap="SearchResultMap">
