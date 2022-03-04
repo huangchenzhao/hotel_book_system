@@ -49,12 +49,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectOne(wrapper);
     }
 
-
-
-
-
-
-
     @Override
     public String register(HttpSession session, String code, User a) {
         if (a.getUsername() == null || a.getPassword() == null ||
