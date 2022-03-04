@@ -176,73 +176,7 @@
             </el-card>
         </el-tab-pane>
         <el-tab-pane label="我的订单">
-            <el-table
-                    :data="order.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                    style="width: 100%"
-                    max-height="510">
-                <el-table-column
-                        prop="name"
-                        label="酒店名称"
-                        width="150" align="center" header-align="center" >
-                </el-table-column>
-                <el-table-column
-                        prop="address"
-                        label="酒店地址"
-                        width="150" align="center" header-align="center" >
-                </el-table-column>
-                <el-table-column
-                        prop="roomType"
-                        label="房型"
-                        width="100" align="center" header-align="center" >
-                    <template slot-scope="scope">
-                        <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
-                    </template>
-                </el-table-column>
-                <el-table-column
-                        prop="quantity"
-                        label="数量"
-                        width="100" align="center" header-align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="totalPrice"
-                        label="总价格"
-                        sortable
-                        width="150" align="center" header-align="center" >
-                </el-table-column>
-                <el-table-column
-                        prop="checkIn"
-                        label="入住时间"
-                        width="200" align="center" header-align="center" >
-                </el-table-column>
-                <el-table-column
-                        prop="checkOut"
-                        label="退房时间"
-                        width="200" align="center" header-align="center" >
-                </el-table-column>
-                <el-table-column
-                        prop="state"
-                        label="状态"
-                        width="150" align="center" header-align="center"><el-tag type="success">标签二</el-tag>
-                </el-table-column>
-                <el-table-column
-                        label="评分"
-                        align="center" header-align="center" >
-                        <el-rate
-                                v-model="score"
-                                :icon-classes="iconClasses"
-                                void-icon-class="icon-rate-face-off"
-                                :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                        </el-rate>
-                </el-table-column>
-            </el-table>
-            <el-col :span="24" class="toolbar" style="text-align:center">
-                <el-pagination
-                        @current-change="handleCurrentChange1" @size-change="handleSizeChange1" :current-page="currentPage1"
-                        layout="total, prev, pager, next"
-                        :page-size="pageSize1"
-                        :total="this.order.length"
-                ></el-pagination>
-            </el-col>
+            <orderList></orderList>
         </el-tab-pane>
     </el-tabs>
 </div>
@@ -252,10 +186,11 @@
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import {getDetail, getUserInfo, getTempPhoto, reserve} from '@/api/api'
+import orderList from './orderList'
 
 export default {
   name: 'searchResult',
-  components: {Header, BaiduMap},
+  components: {Header, BaiduMap, orderList},
   data () {
     return {
       center: {lng: 0, lat: 0},
@@ -282,10 +217,6 @@ export default {
         photoUrl: '',
         mail: ''
       },
-      score: null,
-      iconClasses: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3'],
-      pageSize1: 3,
-      currentPage1: 1,
       reserveReturn: []
     }
   },
@@ -321,12 +252,6 @@ export default {
     },
     handleCurrentChange (currentPage) {
       this.currentPage = currentPage
-    },
-    handleCurrentChange1 (currentPage) {
-      this.currentPage = currentPage
-    },
-    handleSizeChange1 (val) {
-      this.pageSize = val
     },
     handler ({BMap, map}) {
       console.log(BMap, map)

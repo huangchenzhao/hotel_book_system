@@ -12,6 +12,7 @@ import '@/assets/iconfont-default'
 import router from './router/'
 import store from './store/'
 import Header from './components/Header.vue'
+import orderList from './pages/main/routes/user/orderList.vue'
 import BaiduMap from 'vue-baidu-map'
 
 Vue.use(BaiduMap, {
@@ -27,6 +28,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App, Header },
+  components: { App, Header, orderList },
   template: '<App/>'
 })
