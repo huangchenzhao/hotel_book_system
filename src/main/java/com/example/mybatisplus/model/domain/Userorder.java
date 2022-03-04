@@ -169,6 +169,9 @@ public class Userorder extends Model<Userorder> {
     @TableField(exist = false)
     private Hotel hotel;
 
+    @TableField(exist = false)
+    private User user;
+
 
     @Override
     protected Serializable pkVal() {

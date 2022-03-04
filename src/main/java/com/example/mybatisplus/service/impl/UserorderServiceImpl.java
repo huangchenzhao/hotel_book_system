@@ -35,8 +35,6 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     @Override
     public List<Userorder> showorderdetail(Long uid) {
         List<Userorder> currorder = userorderMapper.selectId(uid);
-        System.out.println(currorder);
-        System.out.println(currorder);
         return currorder;
     }
 

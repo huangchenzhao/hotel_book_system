@@ -45,13 +45,13 @@
             <result column="star" property="star" />
             <result column="name" property="name" />
         </association>
-        <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
-            <id column="a_id" property="aId" />
-            <result column="code" property="code" />
-            <result column="province" property="province" />
-            <result column="city" property="city" />
-            <result column="district" property="district" />
-            <result column="detail" property="detail" />
+        <association property="user" javaType="com.example.mybatisplus.model.domain.User">
+            <id column="uid" property="uId" />
+            <result column="username" property="username" />
+            <result column="password" property="password" />
+            <result column="photo_url" property="photoUrl" />
+            <result column="mail" property="mail" />
+            <result column="usertype" property="usertype" />
         </association>
         <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
             <id column="rid" property="rId" />
@@ -69,11 +69,11 @@
             *
         FROM
             userorder
+                INNER JOIN `user` ON userorder.u_id = `user`.u_id
                 INNER JOIN hotel ON userorder.h_id = hotel.h_id
-                INNER JOIN address ON hotel.a_id = address.a_id
                 INNER JOIN room ON userorder.r_id = room.r_id
         WHERE
-            userorder.u_id = #{uId}
+            userorder.u_id = #{uid}
     </select>
     <resultMap id="PlaceOrder" type="com.example.mybatisplus.model.domain.Userorder" >
         <id column="o_id" property="oId" />
