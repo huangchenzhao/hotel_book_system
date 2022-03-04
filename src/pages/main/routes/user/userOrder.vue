@@ -37,13 +37,13 @@
                 <el-row :gutter="20">
                     <el-col :span="10" :offset="2">
                         <el-form-item label="数量" prop="quantity">
-                            <el-input-number v-model="orderForm.quantity" controls-position="right" @change="handleChange" :min="1" :max="10" style="width: 100%"></el-input-number>
+                            <el-input-number v-model="orderForm.quantity" controls-position="right" @change="handleChange" :min="1" :max="orderForm.maxRoom" style="width: 100%"></el-input-number>
                         </el-form-item>
                     </el-col>
                     <el-col :span="10" >
                         <el-form-item label="总价" prop="quantity">
 <!--                            <el-input-number v-model="orderForm.quantity" controls-position="right" @change="handleChange" :min="1" :max="10" style="width: 100%"></el-input-number>-->
-                            <el-input v-model="orderForm.totalPrice" readonly="true" prefix-icon="el-icon-document-checked"></el-input>
+                            <el-input v-model="myTotalPrice" readonly="true" prefix-icon="el-icon-document-checked"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -90,6 +90,7 @@
 
 <script>
 import Header from '../../../../components/Header'
+import {confirmOrder} from '@/api/api'
 export default {
   name: 'GetOrder',
   components: {Header},
@@ -100,8 +101,8 @@ export default {
         address: '',
         room: '标准间',
         quantity: 1,
-        totalPrice: '',
-        liveDate: ''
+        liveDate: '',
+        maxRoom: 10
       },
       options: [{
         value: '标准间',
@@ -126,16 +127,25 @@ export default {
     let beg = this.$route.params.reserveData[0].checkIn
     let end = this.$route.params.reserveData[0].checkOut
     this.orderForm.liveDate = [beg, end]
+    this.orderForm.maxRoom = this.$route.params.reserveData[0].detail.remain
     this.orderForm.address = this.$route.params.reserveData[0].address.detail
     this.orderForm.name = this.$route.params.reserveData[0].name
     this.orderForm.room = this.$route.params.reserveData[0].room.roomtype
-    this.orderForm.totalPrice = (this.$route.params.reserveData[0].room.price) * this.orderForm.quantity
+  },
+  computed: {
+    myTotalPrice: function () {
+      return (this.$route.params.reserveData[0].room.price) * this.orderForm.quantity
+    }
   },
   methods: {
     handleChange (value) {
       console.log(value)
     },
-    getOneOrder (room) {
+    getOneOrder () {
+      let orderInfo = {quantity: this.orderForm.quantity}
+      confirmOrder(orderInfo).then(res => {
+        console.info(res.data)
+      })
       this.centerDialogVisible = true
     },
     jump () {
