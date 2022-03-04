@@ -8,5 +8,9 @@
         <result column="r_id" property="rId" />
         <result column="remain" property="remain" />
     </resultMap>
+    <update id="updateRemain">
+        update detail set remain=remain-#{quantity} where detail.r_id=#{roomId} and detail.r_date &lt; #{checkOut} and
+                                                         detail.r_date &gt;= #{checkIn}
+    </update>
 
 </mapper>

@@ -117,7 +117,8 @@
         inner join address on hotel.a_id=address.a_id
     </select>
     <select id="selectRoom" resultMap="PlaceOrder">
-        select * from room inner join hotel on hotel.r_id=room.r_id
+        select room.* ,address.* ,hotel.name,room.h_id as rh_id from room inner join hotel on hotel.h_id=room.h_id and room.r_id=#{roomId}
+        inner join address on hotel.a_id = address.a_id;
     </select>
 
 </mapper>

@@ -89,6 +89,7 @@ public class UserorderController {
     @ResponseBody
     public JsonResponse placeOrder(HttpServletRequest request, @RequestParam(value="roomId", required=false)Long roomId){
         HttpSession session = request.getSession();
+        session.setAttribute("roomId",roomId);
         List<Hotel> result = userorderService.placeOrder(session,roomId);
         return JsonResponse.success(result);
     }
@@ -103,12 +104,19 @@ public class UserorderController {
         Long uid = (Long) session.getAttribute("uId");
         return JsonResponse.success(userorderService.showorderdetail(uid));
     }
+    //用户提交订单
+    //接收前端一个参数quantity，代表用户订购房间的数量
+    //根据不同情况返回前端不同的字符串
+    //友情提示如果用postman测试该函数需要首先跑login，search，detail，placeOrder函数
+    //后端会根据用户u_id，房间r_id,入住时间checkin，退房时间checkout判断此次订单是否已经存在数据库，如存在则返回请勿重复提交
+    //后端会同时更新detail表。目前更新detail.remain字段属性为无符号，以实现防止前端出错传来错误的quantity导致数据错误，
+    // 如出错返回数据库错误、
+    //一切无误且更新数据库则返回预定酒店成功。
     @GetMapping("/submitOrder")
     @ResponseBody
     public JsonResponse submitOrder(HttpServletRequest request,@RequestParam(value="quantity",required=false)int quantity){
         HttpSession session = request.getSession();
-        userorderService.submitOrder(session,quantity);
-        return JsonResponse.success(null);
+        return JsonResponse.success(userorderService.submitOrder(session,quantity));
     }
 
     //啊哈哈哈哈，用户评价来喽！

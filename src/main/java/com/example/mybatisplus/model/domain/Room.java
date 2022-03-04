@@ -37,6 +37,7 @@ public class Room extends Model<Room> {
     private Integer maxPeople;
 
 
+
     @Override
     protected Serializable pkVal() {
         return this.rId;
