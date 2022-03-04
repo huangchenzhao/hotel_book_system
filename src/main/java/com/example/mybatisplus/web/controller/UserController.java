@@ -188,5 +188,38 @@ public class UserController {
 
 
 
+    //修改密码
+    //用户需输入原密码与新密码
+    //若原密码不对，则返回提示
+    //原密码与新密码一致，返回提示
+    //新密码为null或""，返回提示
+    @GetMapping("/newpassword")
+    @ResponseBody
+    public JsonResponse newpassword(HttpServletRequest request,String oldpaw,String newpaw){
+        HttpSession session = request.getSession();
+        Long uid = (Long) session.getAttribute("uId");
+        User user = userService.getById(uid);
+        System.out.println(user.getPassword());
+        if (oldpaw.equals(user.getPassword()) ){
+            if (oldpaw.equals(newpaw)){
+                return JsonResponse.failure("旧密码与新密码一致，请换一个新密码");
+            }
+            else {
+                if (newpaw == null ||newpaw.isEmpty()){
+                    return JsonResponse.failure("新密码不得为null或空字符串，请换一个新密码");
+                }
+                else {
+                    userService.newPassword(uid,newpaw);
+                    return JsonResponse.success("修改密码成功");
+                }
+            }
+        }
+        else{
+            return JsonResponse.failure("旧密码与原密码不一致，请重新输入");
+        }
+    }
+
+
+
 }
 

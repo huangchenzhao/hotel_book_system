@@ -110,4 +110,8 @@ public class FileServiceImpl implements FileService {
     public void yesupdate(Long uid, String userpicurl) {
         userMapper.updatePic(uid,userpicurl);
     }
+
+
+
+
 }

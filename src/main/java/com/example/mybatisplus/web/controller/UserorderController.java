@@ -118,5 +118,15 @@ public class UserorderController {
         HttpSession session = request.getSession();
         return JsonResponse.success(userorderService.submitOrder(session,quantity));
     }
+
+    //啊哈哈哈哈，用户评价来喽！
+    //这，这接口都齐了，怎么还不用啊？
+    @GetMapping("/updatecomment")
+    @ResponseBody
+    public JsonResponse updatecomment(@RequestParam(value="orderId")Long orderId,@RequestParam(value="comments")String comments){
+        userorderService.usercomment(orderId,comments);
+        return JsonResponse.success(null);
+    }
+
 }
 

@@ -19,4 +19,5 @@ public interface UserService extends IService<User>  {
     String sendVerification(HttpSession session, String account)throws Exception;
     String verify(HttpSession session,String account,String code);
     User showdetail(Long uid);
+    void newPassword(Long uid, String newpaw);
 }

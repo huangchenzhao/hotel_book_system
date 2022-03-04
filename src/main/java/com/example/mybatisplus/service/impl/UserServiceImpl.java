@@ -191,4 +191,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         System.out.println(curruser);
         return curruser;
     }
+
+    @Override
+    public void newPassword(Long uid, String newpaw) {
+        userMapper.newPassword(uid,newpaw);
+    }
 }

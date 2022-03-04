@@ -17,4 +17,5 @@ public interface UserMapper extends BaseMapper<User> {
     User selectLogin(String username, String password, Integer usertype);
 
     void updatePic(Long uid, String picurl);
+    void newPassword(Long uid, String newpaw);
 }
