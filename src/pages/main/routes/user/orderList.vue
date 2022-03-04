@@ -54,9 +54,28 @@
                         align="center" header-align="center" >
                     <template slot-scope="scope">
                         <el-button
-                                type="text" @click="orderComplete(scope.row)" :disabled="btnChangeEnable">
+                                type="text" @click="orderComplete" :disabled="btnChangeEnable">
                             确定已完成
                         </el-button>
+                        <el-dialog
+                                title="请填写评价"
+                                :visible.sync="centerDialogVisible"
+                                width="30%"
+                                center>
+                            <span>
+                                <el-input
+                                        type="textarea"
+                                        placeholder="请输入评价"
+                                        v-model="comment"
+                                        maxlength="30"
+                                        show-word-limit>
+                                </el-input>
+                            </span>
+                            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="commentComplete(scope.row)">确 定</el-button>
+  </span>
+                        </el-dialog>
                     </template>
                 </el-table-column>
             </el-table>
@@ -78,8 +97,14 @@ export default {
     return {
       order: [],
       currentPage: 1,
-      pageSize: 8
+      pageSize: 8,
+      centerDialogVisible: false,
+      comment: ''
     }
+  },
+  computed () {
+  },
+  created () {
   },
   methods: {
     handleCurrentChange1 (currentPage) {
@@ -89,7 +114,9 @@ export default {
       this.pageSize = val
     },
     orderComplete () {
-      this.btnChangeEnable = true
+      this.centerDialogVisible = true
+    },
+    commentComplete (comment) {
     }
   }
 }
