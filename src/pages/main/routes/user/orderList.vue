@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import {writeComment} from '@/api/api'
+import {writeComment, getMyAllOrder} from '@/api/api'
 export default {
   name: 'orderList',
   data () {
@@ -104,6 +104,9 @@ export default {
     }
   },
   created () {
+    getMyAllOrder().then(res => {
+      this.order = res.data
+    })
   },
   methods: {
     handleCurrentChange1 (currentPage) {
