@@ -248,7 +248,7 @@
 <script>
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-import {getDetail, getUserInfo, getTempPhoto} from '@/api/api'
+import {getDetail, getUserInfo, getTempPhoto, reserve} from '@/api/api'
 
 export default {
   name: 'searchResult',
@@ -282,7 +282,8 @@ export default {
       score: null,
       iconClasses: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3'],
       pageSize1: 3,
-      currentPage1: 1
+      currentPage1: 1,
+      reserveReturn: []
     }
   },
   created () {
@@ -310,6 +311,10 @@ export default {
       this.mykey += 1
     },
     getOne (row) {
+      let myReserve = {roomId: row.room.rid}
+      reserve(myReserve).then(res => {
+        this.$router.push({name: 'userOrder', params: {reserveData: res.data}})
+      })
     },
     handleCurrentChange (currentPage) {
       this.currentPage = currentPage

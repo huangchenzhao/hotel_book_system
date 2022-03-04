@@ -17,3 +17,5 @@ export const getDetail = (obj) => http.GET('/api/hotel/detail', obj)
 export const getUserInfo = () => http.GET('/api/user/detail')
 // 获取上传到后端的头像，上传到数据库
 export const getTempPhoto = () => http.GET('/api/file/yesurl')
+// 用户下单
+export const reserve = (obj) => http.GET('/api/userorder/placeOrder', obj)

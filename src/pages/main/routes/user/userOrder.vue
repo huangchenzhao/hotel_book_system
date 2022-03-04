@@ -107,17 +107,13 @@ export default {
     }
   },
   created () {
-    let date = new Date()
-    let year = date.getFullYear().toString()
-    let month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString()
-    let da = date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate().toString()
-    let day3 = new Date()
-    day3.setTime(day3.getTime() + 24 * 60 * 60 * 1000)
-    let s3 = day3.getFullYear() + '-' + (day3.getMonth() + 1) + '-' + day3.getDate()
-    let tomorrow = s3.toString()
-    let beg = year + '-' + month + '-' + da
-    let end = tomorrow
+    let beg = this.$route.params.reserveData[0].checkIn
+    let end = this.$route.params.reserveData[0].checkOut
     this.orderForm.liveDate = [beg, end]
+    this.orderForm.address = this.$route.params.reserveData[0].address.detail
+    this.orderForm.name = this.$route.params.reserveData[0].name
+    this.orderForm.room = this.$route.params.reserveData[0].room.roomtype
+    this.orderForm.totalPrice = (this.$route.params.reserveData[0].room.price) * this.orderForm.quantity
   },
   methods: {
     handleChange (value) {
