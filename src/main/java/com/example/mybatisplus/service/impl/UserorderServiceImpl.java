@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.sql.Date;
@@ -42,38 +41,36 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public String submitOrder(HttpSession session, int quantity) {
+    public String submitOrder(HttpSession session, Userorder userorder) {
         Long roomId = (Long) session.getAttribute("roomId");
-        Userorder userorder = null;
+        Userorder userOrderSearch = null;
         try {
-            userorder = userorderMapper.selectRoom(roomId);
+            userOrderSearch = userorderMapper.selectRoom(roomId);
         } catch (Exception e) {
             return "房间信息未找到！";
         }
-        Userorder data = new Userorder();
+        Userorder data = new Userorder(userorder);
         try {
-            data.sethId(userorder.getRoom().getHId());
+            data.sethId(userOrderSearch.getRoom().getHId());
             data.setCheckIn(((java.util.Date) session.getAttribute("checkin")).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             data.setCheckOut(((java.util.Date) session.getAttribute("checkout")).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             data.setrId(roomId);
             data.setuId((Long) session.getAttribute("uId"));
-            data.setQuantity(quantity);
-            data.setTotalprice(quantity * userorder.getRoom().getPrice());
-            data.setState(0);
-            data.setComment("暂无评论");
+            data.setTotalprice(userorder.getQuantity() * userOrderSearch.getRoom().getPrice());
+//            data.set
         } catch (Exception e) {
             return "用户数据出错！";
         }
-        if (test(data) != null) {
-            return "请勿重复提交同一订单！";
-        }
+//        if (test(data) != null) {
+//            return "请勿重复提交同一订单！";
+//        }
         try {
             System.out.println("data:");
             System.out.println(data);
             try {
-                detailService.updateRemain(roomId, data.getCheckIn(), data.getCheckOut(),quantity);
+                detailService.updateRemain(roomId, data.getCheckIn(), data.getCheckOut(), userorder.getQuantity());
             } catch (Exception e) {
-                return "数据库出错！请稍后重试。";
+                return "该房间已无剩余！请稍后重试。";
             }
             userorderMapper.insert(data);
         } catch (Exception e) {

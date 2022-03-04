@@ -112,15 +112,20 @@ public class UserorderController {
     //后端会同时更新detail表。目前更新detail.remain字段属性为无符号，以实现防止前端出错传来错误的quantity导致数据错误，
     // 如出错返回数据库错误、
     //一切无误且更新数据库则返回预定酒店成功。
+    //2022.3.4 18:51
+    //添加了createtime,idcard,phonenumber,truename字段
+    // 使用Userorder类封装数据，前端输入应与数据库字段匹配
+    //
     @GetMapping("/submitOrder")
     @ResponseBody
-    public JsonResponse submitOrder(HttpServletRequest request,@RequestParam(value="quantity",required=false)int quantity){
+    public JsonResponse submitOrder(HttpServletRequest request,Userorder userorder){
         HttpSession session = request.getSession();
-        return JsonResponse.success(userorderService.submitOrder(session,quantity));
+        return JsonResponse.success(userorderService.submitOrder(session,userorder));
     }
 
     //啊哈哈哈哈，用户评价来喽！
     //这，这接口都齐了，怎么还不用啊？
+    //老谷啊，这大伙都不敢用，据说，有人在接口里，写了bug！
     @GetMapping("/updatecomment")
     @ResponseBody
     public JsonResponse updatecomment(@RequestParam(value="orderId")Long orderId,@RequestParam(value="comments")String comments){

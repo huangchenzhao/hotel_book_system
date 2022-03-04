@@ -41,6 +41,8 @@ public class Admin extends Model<Admin> {
 
     private String remark;
 
+    //测试一手
+
 
     @Override
     protected Serializable pkVal() {

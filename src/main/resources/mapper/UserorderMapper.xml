@@ -4,16 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.mybatisplus.model.domain.Userorder">
-        <id column="o_id" property="oId"/>
-        <result column="r_id" property="rId"/>
-        <result column="u_id" property="uId"/>
-        <result column="h_id" property="hId"/>
-        <result column="check_in" property="checkIn"/>
-        <result column="check_out" property="checkOut"/>
-        <result column="totalprice" property="totalprice"/>
-        <result column="quantity" property="quantity"/>
-        <result column="state" property="state"/>
-        <result column="comment" property="comment"/>
+        <id column="o_id" property="oId" />
+        <result column="r_id" property="rId" />
+        <result column="u_id" property="uId" />
+        <result column="h_id" property="hId" />
+        <result column="check_in" property="checkIn" />
+        <result column="check_out" property="checkOut" />
+        <result column="totalprice" property="totalprice" />
+        <result column="quantity" property="quantity" />
+        <result column="state" property="state" />
+        <result column="comment" property="comment" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="created_time" property="createdTime" />
     </resultMap>
     <update id="usercomment">
         update userorder set comment = #{comments} , state = 1 where o_id = #{orderId}
@@ -29,6 +33,10 @@
         <result column="quantity" property="quantity" />
         <result column="state" property="state" />
         <result column="comment" property="comment" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="created_time" property="createdTime" />
         <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
             <id column="hid" property="hId" />
             <result column="aid" property="aId" />
@@ -55,7 +63,6 @@
         </association>
     </resultMap>
     <insert id="submitOrder">
-        insert into userorder values()
     </insert>
     <select id="selectId" resultMap="userorderMap">
         SELECT
@@ -69,7 +76,20 @@
             userorder.u_id = #{uId}
     </select>
     <resultMap id="PlaceOrder" type="com.example.mybatisplus.model.domain.Userorder" >
-        <id column="id" property="oId"/>
+        <id column="o_id" property="oId" />
+        <result column="r_id" property="rId" />
+        <result column="u_id" property="uId" />
+        <result column="h_id" property="hId" />
+        <result column="check_in" property="checkIn" />
+        <result column="check_out" property="checkOut" />
+        <result column="totalprice" property="totalprice" />
+        <result column="quantity" property="quantity" />
+        <result column="state" property="state" />
+        <result column="comment" property="comment" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="created_time" property="createdTime" />
         <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
             <id column="h_id" property="hId"/>
             <result column="ha_id" property="aId"/>

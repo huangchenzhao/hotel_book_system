@@ -92,7 +92,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir(projectPath + "/src/main/java"); // 输出文件目录
-        gc.setFileOverride(true); // 是否覆盖已有文件
+        gc.setFileOverride(false); // 是否覆盖已有文件
         gc.setOpen(false); // 是否打开输出目录
         gc.setAuthor(author);
         gc.setSwagger2(true);  // 实体属性 Swagger2 注解
@@ -186,7 +186,7 @@ public class CodeGenerator {
         strategy.setSuperControllerClass("com.example.mybatisplus.common.BaseController");
         strategy.setEntityLombokModel(true);//启用lombok注解
         strategy.setChainModel(true);//启用lombok链式注解
-        strategy.setInclude("detail");
+        strategy.setInclude("admin");
        //strategy.setTablePrefix("caps_");//去表前缀配置
 
         mpg.setGlobalConfig(gc);

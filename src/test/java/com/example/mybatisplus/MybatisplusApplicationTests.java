@@ -84,16 +84,16 @@ class MybatisplusApplicationTests {
     private DetailService detailService;
     @Test
     void test3()throws Exception{
-        Userorder data = new Userorder();
-//        data.setQuantity(2);
-//        data.setCheckIn((LocalDate.of(2022,2,28)));
-//        data.setCheckOut((LocalDate.of(2022,3,4)));
-//        data.setuId(1L);
-        LocalDate date1 = LocalDate.of(2022,2,28);
-        LocalDate date2 = LocalDate.of(2022,3,4);
-        try{System.out.println(detailService.updateRemain(1L,date1,date2,8));}
-        catch(Exception e){
-            System.out.println("异常");
-        }
+//        Userorder data = new Userorder();
+////        data.setQuantity(2);
+////        data.setCheckIn((LocalDate.of(2022,2,28)));
+////        data.setCheckOut((LocalDate.of(2022,3,4)));
+////        data.setuId(1L);
+//        LocalDate date1 = LocalDate.of(2022,2,28);
+//        LocalDate date2 = LocalDate.of(2022,3,4);
+//        try{System.out.println(detailService.updateRemain(1L,date1,date2,8));}
+//        catch(Exception e){
+//            System.out.println("异常");
+//        }
     }
 }
