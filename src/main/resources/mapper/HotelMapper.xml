@@ -173,7 +173,10 @@
                                 detail.r_date &gt;= #{checkinSql} AND
                                 detail.r_date &lt; #{checkoutSql}
                             GROUP BY
-                                detail.r_id) AS tabless ON tabless.r_id= room.r_id
+                                detail.r_id
+                  having remain&gt; 0
+                  ) AS tabless ON tabless.r_id= room.r_id
+
         WHERE
             room.h_id = #{hId}
 
