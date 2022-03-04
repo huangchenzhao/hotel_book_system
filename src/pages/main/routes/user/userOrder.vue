@@ -62,6 +62,27 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="20" :offset="2">
+                        <el-form-item label="姓名" prop="userName">
+                            <el-input v-model="orderForm.userName" placeholder="请输入姓名" prefix-icon="el-icon-user"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="20" :offset="2">
+                        <el-form-item label="联系电话" prop="phone">
+                            <el-input v-model="orderForm.phone" placeholder="请输入联系方式" prefix-icon="el-icon-phone-outline"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="20" :offset="2">
+                        <el-form-item label="身份证号" prop="id">
+                            <el-input v-model="orderForm.id" :maxlength="18" placeholder="请输入身份证号" prefix-icon="el-icon-circle-check"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
                 <el-row :gutter="20" type="flex" justify="center">
                     <el-col :span="6" :offset="4">
                         <el-button style="margin: auto" @click="jump">取 消</el-button>
@@ -103,6 +124,36 @@ export default {
         quantity: 1,
         liveDate: '',
         maxRoom: 10
+      },
+      rules: {
+        userName: [
+          { required: true, message: '请输入姓名', trigger: 'blur' },
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
+          {
+            required: true,
+            pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9.·-]+$/,
+            message: '姓名不支持特殊字符',
+            trigger: 'blur'
+          }
+        ],
+        id: [
+          { required: true, message: '请输入身份证号', trigger: 'blur' },
+          { min: 15, max: 18, message: '请如实填写18位号码，以供酒店方核对', trigger: 'blur' },
+          {
+            required: true,
+            pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+            message: '请输入正确的身份证号码',
+            trigger: 'blur'
+          }
+        ],
+        phone: [
+          { required: true, message: '请输入联系方式', trigger: 'blur' },
+          { min: 11, max: 11, message: '请输入11位手机号码', trigger: 'blur' },
+          {
+            pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
+            message: '请输入正确的手机号码'
+          }
+        ]
       },
       options: [{
         value: '标准间',
