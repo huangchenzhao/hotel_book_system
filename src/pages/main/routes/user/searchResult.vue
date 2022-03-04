@@ -65,6 +65,9 @@
                                       prop="photo.photoUrl"
                                       label="图片"
                                       width="200" align="center" header-align="center">
+                                      <template slot-scope="scope">
+                                          <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
+                                      </template>
                                   </el-table-column>
                                   <el-table-column
                                       prop="detail.remain"
