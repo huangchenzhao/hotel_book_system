@@ -103,6 +103,13 @@ public class UserorderController {
         Long uid = (Long) session.getAttribute("uId");
         return JsonResponse.success(userorderService.showorderdetail(uid));
     }
+    @GetMapping("/submitOrder")
+    @ResponseBody
+    public JsonResponse submitOrder(HttpServletRequest request,@RequestParam(value="quantity",required=false)int quantity){
+        HttpSession session = request.getSession();
+        userorderService.submitOrder(session,quantity);
+        return JsonResponse.success(null);
+    }
 
     //啊哈哈哈哈，用户评价来喽！
     //这，这接口都齐了，怎么还不用啊？

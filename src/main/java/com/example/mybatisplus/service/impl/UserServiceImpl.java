@@ -24,7 +24,7 @@ import com.sun.mail.util.MailSSLSocketFactory;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author gzx
@@ -32,10 +32,9 @@ import com.sun.mail.util.MailSSLSocketFactory;
  */
 
 
-
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    @Autowired(required=false)
+    @Autowired(required = false)
     private UserMapper userMapper;
 
     @Override
@@ -44,30 +43,46 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         /*wrapper.lambda().eq(User::getPassword,a.getPassword())
                 .eq(User::getUsername,a.getUsername())
                 .eq(User::getUsertype,a.getUsertype());*/
-        wrapper.eq("username",a.getUsername())
+        wrapper.eq("username", a.getUsername())
                 .eq("password", a.getPassword())
-                .eq("usertype",a.getUsertype());
+                .eq("usertype", a.getUsertype());
         return userMapper.selectOne(wrapper);
     }
 
+
+
+
+
+
+
     @Override
-    public String register(HttpSession session,String email,String code,User a) {
-        if(a.getUsername().equals("")||a.getPassword().equals(""))
-        {
+    public String register(HttpSession session, String code, User a) {
+        if (a.getUsername() == null || a.getPassword() == null ||
+                a.getUsername().equals("") || a.getPassword().equals("")) {
             return "用户名和密码不可为空";
         }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         //wrapper.lambda().eq(User::getUsername,a.getUsername());
-        wrapper.eq("username",a.getUsername());
+        wrapper.eq("username", a.getUsername());
         User result = userMapper.selectOne(wrapper);
-        if(result!=null){//存在用户则返回空
+        QueryWrapper<User> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("mail", a.getMail());
+        User result1 = userMapper.selectOne(wrapper1);
+        System.out.println("result:" + result);
+        System.out.println("result:1" + result1);
+        System.out.println(a);
+        if (result != null) {//存在用户则返回空
             return "用户已存在！";
-        }else if(verify(session,email,code)==null){//不存在则录入返回登陆信息
+        } else if (result1 != null) {
+            return "邮箱已注册！";
+        } else if (verify(session, a.getMail(), code) == null) {//不存在则录入返回登陆信息
             return "邮箱或验证码错误！";
-        }else{
+        } else {
             userMapper.insert(a);
             return "注册成功！";
         }
+
+
     }
 
     @Override
@@ -92,13 +107,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             // 通过session得到transport对象
             Transport ts = session.getTransport();
             // 连接邮件服务器：邮箱类型，帐号，POP3/SMTP协议授权码 163使用：smtp.163.com
-            ts.connect("smtp.qq.com", "1030430640@qq.com", "irvjjfijjszubcai");
+            ts.connect("smtp.qq.com", "2468038761@qq.com", "bngxuyganfkbdijj");
             // 创建邮件
             Message message = createMail(session, sessions, account);
             // 发送邮件
             ts.sendMessage(message, message.getAllRecipients());
             ts.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
         return "true";
@@ -120,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             // 创建邮件对象
             MimeMessage message = new MimeMessage(session);
             // 指明邮件的发件人
-            message.setFrom(new InternetAddress("1030430640@qq.com"));
+            message.setFrom(new InternetAddress("2468038761@qq.com"));
             // 指明邮件的收件人，发件人和收件人如果是一样的，那就是自己给自己发
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(account));
             // 邮件的标题
@@ -166,7 +181,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //       失败之后重新注册
         if (email == null || email.isEmpty()) {
             return null;
-        } else if (!(email.equals(account)&&code.equals(codeInput))) {
+        } else if (!(email.equals(account) && code.equals(codeInput))) {
             return null;
         }
         System.out.println((account));
@@ -176,7 +191,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User showdetail(Long uid){
+    public User showdetail(Long uid) {
         User curruser = userMapper.selectById(uid);
         System.out.println(curruser);
         System.out.println(curruser);

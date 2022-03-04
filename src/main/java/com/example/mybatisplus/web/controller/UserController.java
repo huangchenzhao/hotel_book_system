@@ -113,10 +113,13 @@ public class UserController {
     //完善了register方法，加入session并在内部调用了verify函数验证邮箱验证码
     //增加了几个不同的返回值供前端使用
     //增加需要前端传递的email，code参数
+    //2022.3.4
+    //修复了同一邮箱多次注册的bug
+    //改变了参数接口。email参数和用户表字段匹配为mail
+    //前端需将email转成mail
     @GetMapping("/register")
     @ResponseBody
-    public JsonResponse register(HttpServletRequest request, @RequestParam(value = "email", required = false) String email,
-                                 @RequestParam(value = "code", required = false) String code, User a) {
+    public JsonResponse register(HttpServletRequest request, @RequestParam(value = "code", required = false) String code, User a) {
 //        List<User> userList = userService.list();
 //        int flag = 0;  //标记变量，如果为1说明user表里存在用户要注册的用户名
 //        for (User tempUser : userList) {
@@ -131,7 +134,7 @@ public class UserController {
 //            return JsonResponse.success(a);
 //        }
         HttpSession session = request.getSession();
-        String result = userService.register(session, email, code, a);
+        String result = userService.register(session,code, a);
         return JsonResponse.success(result);
     }
 
