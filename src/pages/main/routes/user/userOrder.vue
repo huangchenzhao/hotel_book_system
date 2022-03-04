@@ -9,7 +9,7 @@
                 <el-row :gutter="20">
                     <el-col :span="20" :offset="2">
                         <el-form-item label="酒店名称" prop="name">
-                            <el-input v-model="orderForm.name" readonly="true" prefix-icon="el-icon-office-building"></el-input>
+                            <el-input v-model="orderForm.name" readonly="true" prefix-icon="el-icon-office-building" clearable="false"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -62,11 +62,26 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="10" :offset="6">
-                        <el-button style="margin: auto">取 消</el-button>
-                        <el-button type="primary" @click="handleSave" style="margin: auto">确 定</el-button>
+                <el-row :gutter="20" type="flex" justify="center">
+                    <el-col :span="6" :offset="4">
+                        <el-button style="margin: auto" @click="jump">取 消</el-button>
                     </el-col>
+                    <el-col :span="6" :offset="1">
+                        <el-button type="primary" @click="getOneOrder" style="margin: auto">确 定</el-button>
+                    </el-col>
+                    <el-dialog
+                            title="提示"
+                            :visible.sync="centerDialogVisible"
+                            width="30%"
+                            center>
+                        <span>
+                            <el-result icon="success" title="成功" subTitle="下单成功，请点击我的订单查看">
+      <template slot="extra">
+        <el-button type="primary" @click="jumpBack">返回</el-button>
+      </template>
+    </el-result>
+                        </span>
+                    </el-dialog>
                 </el-row>
             </el-form>
         </el-card>
@@ -81,9 +96,9 @@ export default {
   data () {
     return {
       orderForm: {
-        name: '',
+        name: '如家快捷酒店',
         address: '',
-        room: '',
+        room: '标准间',
         quantity: 1,
         totalPrice: '',
         liveDate: ''
@@ -103,7 +118,8 @@ export default {
       }, {
         value: '总统套房',
         label: '总统套房'
-      }]
+      }],
+      centerDialogVisible: false
     }
   },
   created () {
@@ -118,6 +134,21 @@ export default {
   methods: {
     handleChange (value) {
       console.log(value)
+    },
+    getOneOrder (room) {
+      this.centerDialogVisible = true
+    },
+    jump () {
+      this.$message({
+        showClose: true,
+        message: '请重新选择',
+        type: 'success',
+        center: true
+      })
+      this.$router.push({path: '/userPage'})
+    },
+    jumpBack () {
+      this.$router.push({path: '/userPage'})
     }
   }
 }
