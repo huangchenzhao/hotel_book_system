@@ -327,11 +327,14 @@ export default {
     changePhoto () {
       getTempPhoto().then(res => {
       })
-      getUserInfo().then(res => {
-        this.userInfo.photoUrl = res.data.photoUrl
-      })
-      this.centerDialogVisible = false
-      this.mykey += 1
+      setTimeout(() => {
+        getUserInfo().then(res => {
+          this.userInfo.photoUrl = res.data.photoUrl
+        })
+        this.centerDialogVisible = false
+        this.mykey += 1
+        console.info('100ms后执行')
+      }, 100)
     }
   }
 }

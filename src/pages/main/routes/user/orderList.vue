@@ -54,7 +54,7 @@
                         align="center" header-align="center" >
                     <template slot-scope="scope">
                         <el-button
-                                 @click="orderComplete" :disabled="btnChangeEnable">
+                                 @click="orderComplete" :disabled="scope.row.state===1">
                             确定已完成
                         </el-button>
                         <el-button
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import {writeComment, getMyAllOrder} from '@/api/api'
 export default {
   name: 'orderList',
   data () {
@@ -128,9 +129,10 @@ export default {
       centerDialogVisible1: false
     }
   },
-  computed () {
-  },
   created () {
+    getMyAllOrder().then(res => {
+      this.order = res.data
+    })
   },
   methods: {
     handleCurrentChange1 (currentPage) {
@@ -142,7 +144,11 @@ export default {
     orderComplete () {
       this.centerDialogVisible = true
     },
-    commentComplete (comment) {
+    commentComplete (row) {
+      let myComment = {roomId: row.roomId, comment: this.comment}
+      writeComment(myComment).then(res => {
+        console.info(res.data)
+      })
     }
   }
 }
