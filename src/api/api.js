@@ -21,3 +21,5 @@ export const getTempPhoto = () => http.GET('/api/file/yesurl')
 export const reserve = (obj) => http.GET('/api/userorder/placeOrder', obj)
 // 下单确定写到数据库中
 export const confirmOrder = (obj) => http.GET('/api/userorder/placeOrder', obj)
+// 用户评价
+export const writeComment = (obj) => http.GET('/api/userorder/placeOrder', obj)
