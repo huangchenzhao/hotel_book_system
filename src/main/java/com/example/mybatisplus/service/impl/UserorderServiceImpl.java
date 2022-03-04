@@ -34,8 +34,8 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     private DetailService detailService;
 
     @Override
-    public Userorder showorderdetail(Long uid) {
-        Userorder currorder = userorderMapper.selectId(uid);
+    public List<Userorder> showorderdetail(Long uid) {
+        List<Userorder> currorder = userorderMapper.selectId(uid);
         System.out.println(currorder);
         System.out.println(currorder);
         return currorder;
