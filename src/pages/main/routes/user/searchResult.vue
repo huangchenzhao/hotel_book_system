@@ -81,6 +81,16 @@
                                         label="房型"
                                         width="100" align="center" header-align="center">
                                     </el-table-column>
+                                    <el-table-column
+                                            label="操作"
+                                            align="center" header-align="center" >
+                                        <template slot-scope="scope">
+                                            <el-button
+                                                    type="text" @click="getOne(scope.row)">
+                                                预订
+                                            </el-button>
+                                        </template>
+                                    </el-table-column>
                                 </el-table>
                             </el-col>
                         </el-row>

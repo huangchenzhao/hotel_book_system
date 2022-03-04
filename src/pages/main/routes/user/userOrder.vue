@@ -62,6 +62,12 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="10" :offset="6">
+                        <el-button style="margin: auto">取 消</el-button>
+                        <el-button type="primary" @click="handleSave" style="margin: auto">确 定</el-button>
+                    </el-col>
+                </el-row>
             </el-form>
         </el-card>
 </div>
