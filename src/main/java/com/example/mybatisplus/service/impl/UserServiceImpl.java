@@ -32,7 +32,6 @@ import com.sun.mail.util.MailSSLSocketFactory;
  */
 
 
-
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired(required = false)
@@ -50,12 +49,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectOne(wrapper);
     }
 
+
+
+
+
+
+
     @Override
-    public String register(HttpSession session,String email,String code,User a) {
-        if(a.getUsername().equals("")||a.getPassword().equals(""))
-        {
     public String register(HttpSession session, String code, User a) {
-        if (a.getUsername() == null || a.getPassword() == null) {
+        if (a.getUsername() == null || a.getPassword() == null ||
+                a.getUsername().equals("") || a.getPassword().equals("")) {
             return "用户名和密码不可为空";
         }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -65,8 +68,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper<User> wrapper1 = new QueryWrapper<>();
         wrapper1.eq("mail", a.getMail());
         User result1 = userMapper.selectOne(wrapper1);
-        System.out.println("result:"+result);
-        System.out.println("result:1"+result1);
+        System.out.println("result:" + result);
+        System.out.println("result:1" + result1);
         System.out.println(a);
         if (result != null) {//存在用户则返回空
             return "用户已存在！";

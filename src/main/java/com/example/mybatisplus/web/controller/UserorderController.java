@@ -103,5 +103,12 @@ public class UserorderController {
         Long uid = (Long) session.getAttribute("uId");
         return JsonResponse.success(userorderService.showorderdetail(uid));
     }
+    @GetMapping("/submitOrder")
+    @ResponseBody
+    public JsonResponse submitOrder(HttpServletRequest request,@RequestParam(value="quantity",required=false)int quantity){
+        HttpSession session = request.getSession();
+        userorderService.submitOrder(session,quantity);
+        return JsonResponse.success(null);
+    }
 }
 

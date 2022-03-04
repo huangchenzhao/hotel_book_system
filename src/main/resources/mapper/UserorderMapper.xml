@@ -51,6 +51,9 @@
             <result column="max_people" property="maxPeople" />
         </association>
     </resultMap>
+    <insert id="submitOrder">
+        insert into userorder values()
+    </insert>
     <select id="selectId" resultMap="userorderMap">
         SELECT
             *
@@ -109,6 +112,9 @@
             and hotel.h_id = #{hotelId}
         </if>
         inner join address on hotel.a_id=address.a_id
+    </select>
+    <select id="selectRoom" resultMap="PlaceOrder">
+        select * from room inner join hotel on hotel.r_id=room.r_id
     </select>
 
 </mapper>

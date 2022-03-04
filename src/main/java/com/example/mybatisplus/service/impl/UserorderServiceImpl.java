@@ -32,6 +32,15 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
         System.out.println(currorder);
         return currorder;
     }
+
+    @Override
+    public Userorder submitOrder(HttpSession session, int quantity) {
+        Long roomId = (Long)session.getAttribute("roomId");
+        Userorder userorder = userorderMapper.selectRoom(roomId);
+        userorderMapper.submitOrder(quantity,roomId);
+        return null;
+    }
+
     @Autowired(required=false)
     HotelMapper hotelMapper;
     @Override
@@ -39,6 +48,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
         Date checkIn = new Date(((java.util.Date)session.getAttribute("checkin")).getTime());
         Date checkOut = new Date(((java.util.Date)session.getAttribute("checkout")).getTime());
         Long hotelId = (Long)session.getAttribute("hotelId");
+        session.setAttribute("roomId",roomId);
         System.out.println(hotelId);
         System.out.println(roomId);
         List<Hotel> result = hotelMapper.placeOrder(hotelId,roomId,checkIn,checkOut);
