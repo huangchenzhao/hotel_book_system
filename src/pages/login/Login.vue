@@ -154,7 +154,7 @@ export default {
       }
     },
     handleSave: function () {
-      let newUser = {email: this.regForm.regMail, code: this.regForm.regCheck, username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
+      let newUser = {mail: this.regForm.regMail, code: this.regForm.regCheck, username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
       regUser(newUser).then(res => {
         this.regForm.regReturn = res.data
         /* if (this.regForm.regReturn.data === null) {
@@ -180,15 +180,19 @@ export default {
           if (this.regForm.regReturn === '用户已存在！') {
             this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
           } else {
-            if (this.regForm.regReturn === '邮箱或验证码错误！') {
-              this.$message.error({message: '注册失败，邮箱或验证码错误哦~', center: true})
+            if (this.regForm.regReturn === '邮箱已注册！') {
+              this.$message.error({message: '注册失败，该邮箱已注册过哦~', center: true})
             } else {
-              this.$message({
-                message: '注册成功，请登陆~',
-                type: 'success',
-                center: true
-              })
-              this.dialogFormVisible = false
+              if (this.regForm.regReturn === '邮箱或验证码错误！') {
+                this.$message.error({message: '注册失败，邮箱或验证码错误哦~', center: true})
+              } else {
+                this.$message({
+                  message: '注册成功，请登陆~',
+                  type: 'success',
+                  center: true
+                })
+                this.dialogFormVisible = false
+              }
             }
           }
         }
