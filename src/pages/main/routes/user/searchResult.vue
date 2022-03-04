@@ -67,7 +67,7 @@
                                       width="200" align="center" header-align="center">
                                   </el-table-column>
                                   <el-table-column
-                                      prop="room.amount"
+                                      prop="detail.remain"
                                       label="数量"
                                       width="100" align="center" header-align="center">
                                   </el-table-column>

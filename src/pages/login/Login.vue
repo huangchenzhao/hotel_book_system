@@ -63,11 +63,11 @@
     ]">
                                 <el-input v-model="regForm.regMail" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-message"></el-input>
                             </el-form-item>
-                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="regUserName" :rules="[
+                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="regCheck" :rules="[
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
                                 <div>
-                                    <el-input type="text" max="6" v-model="checkcode" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                     </el-input>
                                     <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
                                         <span v-show="show">获取验证码</span>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import {user, regUser, sendEmail, verifyCode} from '@/api/api'
+import {user, regUser, sendEmail} from '@/api/api'
 import Header from '../../components/Header'
 const TIME_COUNT = 60
 export default {
@@ -107,7 +107,7 @@ export default {
         regPwd: '',
         regMail: '',
         regCheck: '',
-        regReturn: {}
+        regReturn: ''
       },
       title: '登陆',
       dialogTableVisible: false,
@@ -115,8 +115,7 @@ export default {
       formLabelWidth: '120px',
       show: true,
       count: '',
-      timer: null,
-      checkcode: ''
+      timer: null
     }
   },
   methods: {
@@ -132,34 +131,37 @@ export default {
       })
     },
     send () {
-      if (!this.timer) {
-        this.count = TIME_COUNT
-        this.show = false
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--
-          } else {
-            this.show = true
-            clearInterval(this.timer)
-            this.timer = null
-          }
-        }, 1000)
+      if (this.regForm.regMail === '') {
+        this.$message.error({message: '请输入正确的邮箱地址~', center: true})
+      } else {
+        if (!this.timer) {
+          this.count = TIME_COUNT
+          this.show = false
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--
+            } else {
+              this.show = true
+              clearInterval(this.timer)
+              this.timer = null
+            }
+          }, 1000)
+        }
+        let myEmail = {email: this.regForm.regMail}
+        sendEmail(myEmail).then(res => {
+          console.info(res.data)
+        })
       }
-      let myEmail = {email: this.regForm.regMail}
-      sendEmail(myEmail).then(res => {
-        console.info(res.data)
-      })
     },
     handleSave: function () {
-      let newUser = {username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
+      let newUser = {email: this.regForm.regMail, code: this.regForm.regCheck, username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
       regUser(newUser).then(res => {
-        this.regForm.regReturn = res
-        if (this.regForm.regReturn.data === null) {
+        this.regForm.regReturn = res.data
+        /* if (this.regForm.regReturn.data === null) {
           this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
         } else {
-          let newCode = {code: this.checkcode}
-          console.info(this.checkcode)
-          verifyCode(newCode).then(res => {
+          let regMsg = {email: this.regForm.regMail, code: this.checkcode}
+          verifyCode(regMsg).then(res => {
             if (res.data === null) {
               this.$message.error({message: '注册失败，验证码不正确哦~', center: true})
             } else {
@@ -171,6 +173,24 @@ export default {
               this.dialogFormVisible = false
             }
           })
+        } */
+        if (this.regForm.regReturn === '用户名和密码不可为空') {
+          this.$message.error({message: '注册失败，用户名和密码不可为空哦~', center: true})
+        } else {
+          if (this.regForm.regReturn === '用户已存在！') {
+            this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
+          } else {
+            if (this.regForm.regReturn === '邮箱或验证码错误！') {
+              this.$message.error({message: '注册失败，邮箱或验证码错误哦~', center: true})
+            } else {
+              this.$message({
+                message: '注册成功，请登陆~',
+                type: 'success',
+                center: true
+              })
+              this.dialogFormVisible = false
+            }
+          }
         }
       })
     }
