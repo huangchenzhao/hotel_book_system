@@ -26,7 +26,7 @@ import java.util.List;
  * @version v1.0
  */
 @Controller
-@RequestMapping("/userorder")
+@RequestMapping("/api/userorder")
 public class UserorderController {
 
     private final Logger logger = LoggerFactory.getLogger( UserorderController.class );
