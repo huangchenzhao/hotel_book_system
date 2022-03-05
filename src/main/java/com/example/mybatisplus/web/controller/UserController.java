@@ -238,7 +238,7 @@ public class UserController {
 
         return JsonResponse.success(result);
     }
-    @RequestMapping(value="forgetPassword",method = RequestMethod.GET)
+    @RequestMapping(value="/forgetPassword",method = RequestMethod.GET)
     @ResponseBody
     public JsonResponse forgetPassword(HttpServletRequest request,@RequestParam(value="email",required=false)String mail,
                                        @RequestParam(value="code",required=false)String code,
