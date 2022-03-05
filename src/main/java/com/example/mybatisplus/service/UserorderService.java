@@ -21,4 +21,5 @@ public interface UserorderService extends IService<Userorder> {
     String submitOrder(HttpSession session, Userorder quantity);
 //    public Userorder test(Userorder data);
     void usercomment(Long orderId, String comments);
+    List<Userorder> getoneorder(Long Uid);
 }

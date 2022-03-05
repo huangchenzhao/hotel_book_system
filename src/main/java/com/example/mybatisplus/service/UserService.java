@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * <p>
@@ -22,5 +23,7 @@ public interface UserService extends IService<User>  {
     User showdetail(Long uid);
     void newPassword(Long uid, String newpaw);
     String forgetPassword(HttpSession request, String mail, String password,String code);
+    List<User> getalluser();
+    String forgetPassword(HttpSession session, String mail, String password);
     String sendMail(HttpSession session, String account);
 }

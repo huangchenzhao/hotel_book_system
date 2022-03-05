@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -226,5 +227,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return "邮件发送失败";
         }
         return "邮件发送成功请注意查收";
+    }
+
+
+    @Override
+    public List<User> getalluser(){
+        List<User> allUsers = userMapper.getalluser();
+        return allUsers;
     }
 }
