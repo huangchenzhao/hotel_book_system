@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -195,5 +196,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void newPassword(Long uid, String newpaw) {
         userMapper.newPassword(uid,newpaw);
+    }
+
+
+    @Override
+    public List<User> getalluser(){
+        List<User> allUsers = userMapper.getalluser();
+        return allUsers;
     }
 }

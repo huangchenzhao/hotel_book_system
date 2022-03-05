@@ -20,6 +20,9 @@
     <select id="selectLogin" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where username = #{username} and password = #{password} and usertype = #{usertype}
     </select>
+    <select id="getalluser" resultType="com.example.mybatisplus.model.domain.User">
+        select * from user where usertype = 1
+    </select>
     <resultMap id="myMap" type="com.example.mybatisplus.model.domain.User">
         <id column="u_id" property="uId" />
         <result column="username" property="username" />

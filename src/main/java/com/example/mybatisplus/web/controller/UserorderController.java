@@ -126,6 +126,8 @@ public class UserorderController {
     //啊哈哈哈哈，用户评价来喽！
     //这，这接口都齐了，怎么还不用啊？
     //老谷啊，这大伙都不敢用，据说，有人在接口里，写了bug！
+    //害羞羞，岳大队长，你这人就喜欢开玩笑。
+    //快趁热用吧，我不打扰，我走了哈！
     @GetMapping("/updatecomment")
     @ResponseBody
     public JsonResponse updatecomment(@RequestParam(value="orderId")Long orderId,@RequestParam(value="comments")String comments){

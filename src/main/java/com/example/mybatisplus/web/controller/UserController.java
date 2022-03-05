@@ -219,6 +219,15 @@ public class UserController {
         }
     }
 
+    //管理员看到user表的数据
+    //
+    @GetMapping("/alluser")
+    @ResponseBody
+    public JsonResponse alluser(){
+        List<User> allusers = userService.getalluser();
+        return JsonResponse.success(allusers);
+    }
+
 
 
 }
