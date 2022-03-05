@@ -109,7 +109,7 @@
                 ></el-pagination>
             </el-col>
         </el-tab-pane>
-        <el-tab-pane label="我的账户">
+        <el-tab-pane label="我的账户" :key="mykeyPhoto">
             <el-card class="user-card" style="margin: auto">
                 <el-descriptions class="des-user" :column="2" border :size="size" title="账户信息">
                     <template slot="extra">
@@ -288,7 +288,7 @@ export default {
           this.userInfo.photoUrl = res.data.photoUrl
         })
         this.centerDialogVisible = false
-        this.mykey += 1
+        this.mykeyPhoto += 1
         console.info('100ms后执行')
       }, 100)
     }

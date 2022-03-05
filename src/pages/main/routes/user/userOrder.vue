@@ -196,11 +196,12 @@ export default {
       console.log(value)
     },
     getOneOrder () {
-      let orderInfo = {quantity: this.orderForm.quantity, name: this.orderForm.userName, phone: this.orderForm.phone, id: this.orderForm.id}
+      let orderInfo = {quantity: this.orderForm.quantity, truename: this.orderForm.userName, phonenumber: this.orderForm.phone, idcard: this.orderForm.id}
       confirmOrder(orderInfo).then(res => {
-        console.info(res.data)
+        if (res.data === '预定酒店成功！') {
+          this.centerDialogVisible = true
+        }
       })
-      this.centerDialogVisible = true
     },
     jump () {
       this.$message({
