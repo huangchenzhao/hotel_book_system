@@ -20,4 +20,6 @@ public interface UserService extends IService<User>  {
     String verify(HttpSession session,String account,String code);
     User showdetail(Long uid);
     void newPassword(Long uid, String newpaw);
+    String forgetPassword(HttpSession session, String mail, String password);
+    String sendMail(HttpSession session, String account);
 }

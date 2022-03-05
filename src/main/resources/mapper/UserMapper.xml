@@ -17,6 +17,9 @@
     <update id="updatePic">
         update user set photo_url = #{picurl} where u_id = #{uid}
     </update>
+    <update id="updatePassword">
+        update user set password = #{password} where mail=#{mail}
+    </update>
     <select id="selectLogin" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where username = #{username} and password = #{password} and usertype = #{usertype}
     </select>
