@@ -221,6 +221,8 @@ public class UserController {
         }
     }
 
+
+
     //找回密码两个接口
     //发送邮件调用sendMailForPassword,接收一个email参数，具体实现调用了注册的sendEmail实现函数,如果觉得太长了可以删掉一点
     //如果用户输入的邮箱不存在于数据库则返回邮箱不存在
