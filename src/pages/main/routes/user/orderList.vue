@@ -81,7 +81,7 @@
                           :visible.sync="centerDialogVisible1"
                           width="50%"
                           center>
-                          <el-descriptions direction="vertical" :column="4" border>
+                          <el-descriptions direction="vertical" :column="3" border>
                             <el-descriptions-item>
                               <template slot="label">
                                 <i class="el-icon-user"></i>

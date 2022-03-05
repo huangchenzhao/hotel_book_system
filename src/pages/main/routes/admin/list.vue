@@ -13,33 +13,24 @@
                                 <i class="el-icon-office-building"></i>
                                 <span>酒店信息</span>
                             </template>
-                        <el-menu-item-group>
-                            <template slot="title"></template>
-                            <el-menu-item index="1-1">酒店列表</el-menu-item>
+                            <el-menu-item index="1-1" background-color="#99CCCC">酒店列表</el-menu-item>
                             <el-menu-item index="1-2">增加酒店</el-menu-item>
                             <el-menu-item index="1-3">酒店管理</el-menu-item>
-                        </el-menu-item-group>
                         </el-submenu>
                         <el-submenu index="2">
                             <template slot="title">
                                 <i class="el-icon-sell"></i>
                                 <span>订单信息</span>
                             </template>
-                            <el-menu-item-group>
-                                <template slot="title"></template>
-                                <el-menu-item index="2-1">订单列表</el-menu-item>
-                            </el-menu-item-group>
+                            <el-menu-item index="2-1">订单列表</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title">
                                 <i class="el-icon-user"></i>
                                 <span>用户信息</span>
                             </template>
-                            <el-menu-item-group>
-                                <template slot="title"></template>
-                                <el-menu-item index="3-1">用户列表</el-menu-item>
-                                <el-menu-item index="3-2">用户管理</el-menu-item>
-                            </el-menu-item-group>
+                            <el-menu-item index="3-1">用户列表</el-menu-item>
+                            <el-menu-item index="3-2">用户管理</el-menu-item>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
@@ -69,7 +60,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style scoped>
     .el-header {
         background: url('../../../../assets/images/header.png');
         text-align: center;
@@ -85,29 +76,14 @@ export default {
         line-height: 200px;
         height:100vh;
     }
-    .el-submenu .el-menu-item.is-active {
-        background-color: #FFFFFF !important;
-    }
-    .el-submenu .el-menu-item:hover {
-        background-color: #FFFFFF !important;
-    }
-    .el-menu-item.is-active {
-        background-color: #FFFFFF !important;
-    }
-    .el-menu-item:hover {
-        background-color: #FFFFFF !important;
-    }
-    .el-submenu__title:hover, .el-menu-item:focus, .el-menu-item:hover{
-        background-color: #FFFFFF !important;
-    }
     .el-submenu {
         background-color: #FFFFCC;
     }
+    .el-menu-item {
+        background-color: #99CCCC !important;
+    }
     .el-menu {
         background-color: #FFFFCC;
-    }
-    .el-menu-item-group {
-        background-color: #99CCCC;
     }
     .el-main {
         background-color: #E9EEF3;
@@ -125,15 +101,4 @@ export default {
         line-height: 320px;
     }
 
-    /*.el-submenu.is-opened .el-submenu__title {*/
-    /*    background-image: linear-gradient(to right, #99CCCC, #20DFE1);*/
-    /*    background-color: #99CCCC;*/
-    /*}*/
-    /*.el-menu-item {*/
-    /*    color: #777F8F;*/
-    /*}*/
-    /*.el-menu-item.is-active {*/
-    /*    color: #6681FA;*/
-    /*    background-color: #EAEEFF;*/
-    /*}*/
 </style>
