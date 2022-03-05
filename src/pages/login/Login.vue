@@ -72,7 +72,7 @@
                             </span>
                             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click=forgetPwd>确 定</el-button>
+    <el-button type="primary" @click="forgetPwd">确 定</el-button>
   </span>
                         </el-dialog>
                         <el-row type="flex" justify="center">
@@ -113,14 +113,12 @@
                             <el-form-item label="验证码" :label-width="formLabelWidth" prop="regCheck" :rules="[
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
-                                <div>
-                                    <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
-                                    </el-input>
-                                    <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
-                                        <span v-show="show">获取验证码</span>
-                                        <span v-show="!show" class="count">{{count}}s后再试</span>
-                                    </el-button>
-                                </div>
+                                            <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                            </el-input>
+                                            <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
+                                                <span v-show="show">获取验证码</span>
+                                                <span v-show="!show" class="count">{{count}}s后再试</span>
+                                            </el-button>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
