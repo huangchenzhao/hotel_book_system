@@ -85,9 +85,9 @@
                             <el-descriptions-item>
                               <template slot="label">
                                 <i class="el-icon-user"></i>
-                                入住人
+                                创建时间
                               </template>
-                              {{orderDetail.mytruename}}
+                              {{orderDetail.mycreatedTime}}
                             </el-descriptions-item>
                             <el-descriptions-item label="入住人">
                               {{orderDetail.mytruename}}
