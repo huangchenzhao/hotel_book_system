@@ -135,5 +135,16 @@ public class UserorderController {
         return JsonResponse.success(null);
     }
 
+
+
+    //管理员查看某个用户的所有订单
+    @GetMapping("/oneorder")
+    @ResponseBody
+    public  JsonResponse oneorder(Long Uid){
+        List<Userorder> Oneorder = userorderService.getoneorder(Uid);
+        return JsonResponse.success(Oneorder);
+    }
+
+
 }
 

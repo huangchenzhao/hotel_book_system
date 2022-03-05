@@ -111,4 +111,9 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     public void usercomment(Long orderId, String comments){
         userorderMapper.usercomment(orderId,comments);
     }
+    @Override
+    public List<Userorder> getoneorder(Long Uid){
+        List<Userorder> oneorder = userorderMapper.getoneorder(Uid);
+        return oneorder;
+    }
 }
