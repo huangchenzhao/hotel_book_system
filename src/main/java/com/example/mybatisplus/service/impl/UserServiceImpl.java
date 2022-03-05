@@ -18,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.sun.mail.util.MailSSLSocketFactory;
@@ -198,10 +199,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String forgetPassword(HttpSession session, String mail, String password) {
+    public String forgetPassword(HttpSession request, String mail, String password,String code) {
+
         try{
-            if(!mail.equals((String)session.getAttribute("email"))){
-                return "邮箱错误";
+            if(verify(request,mail,code)==null){
+                return "验证码或邮箱错误";
             }
             userMapper.updatePassword(mail,password);
         }catch(Exception e){

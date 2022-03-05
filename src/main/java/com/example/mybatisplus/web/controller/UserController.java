@@ -221,14 +221,15 @@ public class UserController {
         }
     }
 
-    //找回密码三个接口
+    //找回密码两个接口
     //发送邮件调用sendMailForPassword,接收一个email参数，具体实现调用了注册的sendEmail实现函数,如果觉得太长了可以删掉一点
     //如果用户输入的邮箱不存在于数据库则返回邮箱不存在
-    //验证验证码调用verify，即和注册时使用的一样
-    //更新密码调用forgetPassword，接收email和password参数,如果邮箱无误则录入数据库，并返回找回成功，否则返回邮箱错误
+    //更新密码调用forgetPassword，接收email和password和code参数,如果邮箱无误且验证码验证成功
+    // 则录入数据库，并返回找回成功，否则返回邮箱或验证码错误
     @RequestMapping(value = "/sendMailForPassword", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse sendMailToGetPassword(HttpServletRequest request, @RequestParam(value = "email", required = false) String account) throws Exception {
+    public JsonResponse sendMailToGetPassword(HttpServletRequest request,
+                                              @RequestParam(value = "email", required = false) String account) throws Exception {
         HttpSession session = request.getSession();
 
         String result = userService.sendMail(session, account);
@@ -238,8 +239,9 @@ public class UserController {
     @RequestMapping(value="forgetPassword",method = RequestMethod.GET)
     @ResponseBody
     public JsonResponse forgetPassword(HttpServletRequest request,@RequestParam(value="email",required=false)String mail,
+                                       @RequestParam(value="code",required=false)String code,
                                        @RequestParam(value="password",required=false)String password){
-        return JsonResponse.success(userService.forgetPassword(request.getSession(),mail,password));
+        return JsonResponse.success(userService.forgetPassword(request.getSession(),mail,password,code));
     }
 
 
