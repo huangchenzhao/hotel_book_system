@@ -149,6 +149,30 @@
     <el-button type="primary" @click="changePhoto">确 定</el-button>
   </span>
                         </el-dialog>
+                        <el-button @click="centerDialogVisible1 = true">修改密码</el-button>
+                        <el-dialog
+                                title="修改密码"
+                                :visible.sync="centerDialogVisible1"
+                                width="40%"
+                                center>
+                            <span>
+                                <el-form :model="pwdForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="pwdForm" :label-position="right">
+  <el-form-item label="原密码" prop="oldPwd">
+    <el-input type="password" v-model="pwdForm.oldPwd" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="新密码" prop="newPwd">
+    <el-input type="password" v-model="pwdForm.newPwd" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="确认密码" prop="checkPwd">
+    <el-input type="password" v-model="pwdForm.checkPwd" autocomplete="off"></el-input>
+  </el-form-item>
+                                </el-form>
+                            </span>
+                            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click=submitPwd>确 定</el-button>
+  </span>
+                        </el-dialog>
                     </template>
                     <el-descriptions-item>
                         <template slot="label">
@@ -162,7 +186,7 @@
                             <i class="el-icon-mobile-phone"></i>
                             密码
                         </template>
-                      {{this.userInfo.password}}
+                      ********
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template slot="label">
@@ -196,7 +220,7 @@
 </template>
 
 <script>
-import {searchHotel, getUserInfo, getTempPhoto} from '@/api/api'
+import {searchHotel, getUserInfo, getTempPhoto, changePwd} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 import orderList from './orderList'
@@ -204,7 +228,37 @@ export default {
   name: 'userPage',
   components: {Header, orderList},
   data: function () {
+    var checkOldPwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入原密码'))
+      } else {
+        if (this.pwdForm.oldPwd !== this.userInfo.password) {
+          callback(new Error('请输入正确的原密码'))
+        }
+        callback()
+      }
+    }
+    var checkNewPwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.pwdForm.newPwd) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
+      rules: {
+        oldPwd: [
+          { required: true, validator: checkOldPwd, trigger: 'blur' }
+        ],
+        newPwd: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        checkPwd: [
+          { required: true, validator: checkNewPwd, trigger: 'blur' }
+        ]
+      },
       pickerOptions: {
         disabledDate (time) {
           return time.getTime() < Date.now() - 24 * 60 * 60 * 1000
@@ -241,6 +295,7 @@ export default {
         label: '总统套房'
       }],
       centerDialogVisible: false,
+      centerDialogVisible1: false,
       imageUrl: '',
       imgReturn: '',
       orderData: [],
@@ -259,7 +314,12 @@ export default {
       iconClasses: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3'],
       pageSize1: 3,
       currentPage1: 1,
-      order: []
+      order: [],
+      pwdForm: {
+        oldPwd: '',
+        newPwd: '',
+        checkPwd: ''
+      }
     }
   },
   created () {
@@ -335,6 +395,18 @@ export default {
         this.mykey += 1
         console.info('100ms后执行')
       }, 100)
+    },
+    submitPwd () {
+      let myPwd = {oldpaw: this.pwdForm.oldPwd, newpaw: this.pwdForm.newPwd}
+      changePwd(myPwd).then(res => {
+        console.info(res.data)
+      })
+      this.$message({
+        message: '修改成功',
+        type: 'success',
+        center: true
+      })
+      this.$router.push({name: 'login'})
     }
   }
 }
