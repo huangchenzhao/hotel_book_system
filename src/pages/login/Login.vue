@@ -11,13 +11,13 @@
                     </div>
                     <el-form class="loginForm" :model="loginForm">
                         <el-row>
-                            <el-col :span="18" :offset="2"><div class="grid-content bg-purple">
+                            <el-col :span="18" :offset="2">
                                 <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur'}
     ]">
                                     <el-input v-model="loginForm.userName" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone"></el-input>
                                 </el-form-item>
-                            </div></el-col>
+                            </el-col>
                         </el-row>
                         <el-row>
                             <el-col :span="18" :offset="2"><div class="grid-content bg-purple">
@@ -28,21 +28,68 @@
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
-                        <el-row>
-                            <el-col span="12" offset="8"><div class="grid-content bg-purple">
+                        <el-row type="flex" justify="center">
+                            <el-col :span="4" >
+                                <el-link icon="el-icon-edit" :disabled="this.loginForm.radio==='0'" @click="centerDialogVisible=true">忘记密码</el-link>
+                            </el-col>
+                        </el-row>
+                        <el-dialog
+                                title="忘记密码"
+                                :visible.sync="centerDialogVisible"
+                                width="40%"
+                                center :modal-append-to-body='false'>
+                            <span>
+                                <el-form :model="getPwdForm" label-width="80px">
+                                    <el-row type="flex" justify="center">
+  <el-col :span="20" :offset="2">
+      <el-form-item label="邮箱" prop="mail">
+    <el-input type="text" v-model="getPwdForm.mail" style="width: 93%" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-document-checked"></el-input>
+  </el-form-item>
+  </el-col>
+</el-row>
+                                    <el-row type="flex" justify="center">
+  <el-col :span="20" :offset="2">
+      <div>
+          <el-form-item label="验证码" prop="check">
+                                    <el-input type="text" max="6" v-model="getPwdForm.check" style="width: 55%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    </el-input>
+                                    <el-button icon="el-icon-mobile-phone" @click="pwdSend" type="success" :disabled="disabled=!show1" >
+                                        <span v-show="show1">获取验证码</span>
+                                        <span v-show="!show1" class="count">{{count1}}s后再试</span>
+                                    </el-button>
+              </el-form-item>
+                                </div>
+  </el-col>
+</el-row>
+                                    <el-row type="flex" justify="center">
+  <el-col :span="20" :offset="2">
+      <el-form-item label="新密码" prop="pwd">
+    <el-input type="text" v-model="getPwdForm.pwd" style="width: 93%" autocomplete="off" placeholder="请输入密码" prefix-icon="el-icon-document-checked"></el-input>
+  </el-form-item>
+  </el-col>
+</el-row>
+                                </el-form>
+                            </span>
+                            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click=forgetPwd>确 定</el-button>
+  </span>
+                        </el-dialog>
+                        <el-row type="flex" justify="center">
+                            <el-col span="10" :offset="2">
                                 <el-form-item>
                                     <el-radio v-model="loginForm.radio" label="1">用户登录</el-radio>
                                     <el-radio v-model="loginForm.radio" label="0">管理员登陆</el-radio>
                                 </el-form-item>
-                            </div></el-col>
+                            </el-col>
                         </el-row>
-                        <el-row>
-                            <el-col span="12" offset="8"><div class="grid-content bg-purple">
+                        <el-row type="flex" justify="center">
+                            <el-col span="12" :offset="4">
                                 <el-form-item>
                                     <el-button type="primary" class="login-btn" @click="login">确认登陆</el-button>
                                     <el-button type="primary" plain class="reg-btn" @click="dialogFormVisible = true">注册一个</el-button>
                                 </el-form-item>
-                            </div></el-col>
+                            </el-col>
                         </el-row>
                     </el-form>
                     <el-dialog title="注册" :visible.sync="dialogFormVisible" @closed="handleClose" append-to-body="true" center>
@@ -109,16 +156,28 @@ export default {
         regCheck: '',
         regReturn: ''
       },
+      getPwdForm: {
+        mail: '',
+        check: '',
+        pwd: ''
+      },
       title: '登陆',
       dialogTableVisible: false,
       dialogFormVisible: false,
       formLabelWidth: '120px',
       show: true,
       count: '',
-      timer: null
+      timer: null,
+      centerDialogVisible: false,
+      show1: true,
+      count1: '',
+      timer1: null
     }
   },
   methods: {
+    forgetPwd () {
+      this.centerDialogVisible = false
+    },
     login: function () {
       let myUser = {username: this.loginForm.userName, password: this.loginForm.pwd, usertype: this.loginForm.radio}
       user(myUser).then(res => {
@@ -129,6 +188,29 @@ export default {
           this.$router.push({name: 'userPage'})
         }
       })
+    },
+    pwdSend () {
+      if (this.getPwdForm.mail === '') {
+        this.$message.error({message: '请输入正确的邮箱地址~', center: true})
+      } else {
+        if (!this.timer) {
+          this.count1 = TIME_COUNT
+          this.show1 = false
+          this.timer1 = setInterval(() => {
+            if (this.count1 > 0 && this.count1 <= TIME_COUNT) {
+              this.count1--
+            } else {
+              this.show1 = true
+              clearInterval(this.timer1)
+              this.timer1 = null
+            }
+          }, 1000)
+        }
+        let myEmail = {email: this.getPwdForm.mail}
+        sendEmail(myEmail).then(res => {
+          console.info(res.data)
+        })
+      }
     },
     send () {
       if (this.regForm.regMail === '') {
