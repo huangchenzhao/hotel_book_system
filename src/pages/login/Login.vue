@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import {user, regUser, sendEmail} from '@/api/api'
+import {user, regUser, sendEmail, sendEmailForPassword, resetPwd} from '@/api/api'
 import Header from '../../components/Header'
 const TIME_COUNT = 60
 export default {
@@ -176,7 +176,20 @@ export default {
   },
   methods: {
     forgetPwd () {
-      this.centerDialogVisible = false
+      let myresetPwd = {email: this.getPwdForm.mail, code: this.getPwdForm.check, password: this.getPwdForm.pwd}
+      console.info(myresetPwd)
+      resetPwd(myresetPwd).then(res => {
+        if (res.data === '验证码或邮箱错误') {
+          this.$message.error({message: '重设密码失败，邮箱或验证码错误！', center: true})
+        } else {
+          this.$message({
+            message: '重设密码成功，请登陆~',
+            type: 'success',
+            center: true
+          })
+          this.centerDialogVisible = false
+        }
+      })
     },
     login: function () {
       let myUser = {username: this.loginForm.userName, password: this.loginForm.pwd, usertype: this.loginForm.radio}
@@ -207,8 +220,16 @@ export default {
           }, 1000)
         }
         let myEmail = {email: this.getPwdForm.mail}
-        sendEmail(myEmail).then(res => {
-          console.info(res.data)
+        sendEmailForPassword(myEmail).then(res => {
+          if (res.data === '邮箱未注册') {
+            this.$message.error({message: '该邮箱地址未注册哦，请输入正确的邮箱地址~', center: true})
+          } else {
+            this.$message({
+              message: '忘记密码验证码已发送，请查收~',
+              type: 'success',
+              center: true
+            })
+          }
         })
       }
     },
@@ -239,23 +260,6 @@ export default {
       let newUser = {mail: this.regForm.regMail, code: this.regForm.regCheck, username: this.regForm.regUserName, password: this.regForm.regPwd, usertype: '1'}
       regUser(newUser).then(res => {
         this.regForm.regReturn = res.data
-        /* if (this.regForm.regReturn.data === null) {
-          this.$message.error({message: '注册失败，用户名已存在哦~', center: true})
-        } else {
-          let regMsg = {email: this.regForm.regMail, code: this.checkcode}
-          verifyCode(regMsg).then(res => {
-            if (res.data === null) {
-              this.$message.error({message: '注册失败，验证码不正确哦~', center: true})
-            } else {
-              this.$message({
-                message: '注册成功，请登陆~',
-                type: 'success',
-                center: true
-              })
-              this.dialogFormVisible = false
-            }
-          })
-        } */
         if (this.regForm.regReturn === '用户名和密码不可为空') {
           this.$message.error({message: '注册失败，用户名和密码不可为空哦~', center: true})
         } else {

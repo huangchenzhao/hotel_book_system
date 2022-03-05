@@ -27,3 +27,7 @@ export const getMyAllOrder = () => http.GET('/api/userorder/orderdetail')
 export const writeComment = (obj) => http.GET('/api/userorder/updatecomment', obj)
 // 修改密码
 export const changePassword = (obj) => http.GET('/api/user/newpassword', obj)
+// 忘记密码要发送验证码
+export const sendEmailForPassword = (obj) => http.GET('/api/user/sendMailForPassword', obj)
+// reset密码
+export const resetPwd = (obj) => http.GET('/api/user/forgetPassword', obj)
