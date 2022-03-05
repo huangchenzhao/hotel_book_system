@@ -5,22 +5,17 @@
                     style="width: 100%"
                     max-height="510">
                 <el-table-column
-                        prop="createTime"
+                        prop="createdTime"
                         label="创建时间"
                         width="200" align="center" header-align="center" >
                 </el-table-column>
                 <el-table-column
-                        prop="name"
+                        prop="hotel.name"
                         label="酒店名称"
                         width="150" align="center" header-align="center" >
                 </el-table-column>
-<!--                <el-table-column-->
-<!--                        prop="address"-->
-<!--                        label="酒店地址"-->
-<!--                        width="150" align="center" header-align="center" >-->
-<!--                </el-table-column>-->
                 <el-table-column
-                        prop="roomType"
+                        prop="room.roomtype"
                         label="房型"
                         width="150" align="center" header-align="center" >
                 </el-table-column>
@@ -30,28 +25,24 @@
                         width="100" align="center" header-align="center">
                 </el-table-column>
                 <el-table-column
-                        prop="totalPrice"
+                        prop="totalprice"
                         label="总价格"
                         sortable
                         width="100" align="center" header-align="center" >
                 </el-table-column>
-<!--                <el-table-column-->
-<!--                        prop="checkIn"-->
-<!--                        label="入住时间"-->
-<!--                        width="150" align="center" header-align="center" >-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="checkOut"-->
-<!--                        label="退房时间"-->
-<!--                        width="150" align="center" header-align="center" >-->
-<!--                </el-table-column>-->
-                <el-table-column
+              <el-table-column
                         prop="state"
                         label="状态"
-                        width="100" align="center" header-align="center"><el-tag type="success">{{stateTag}}</el-tag>
+                        width="100" align="center" header-align="center">
+                <template slot-scope="scope">
+                <el-tag type="success">
+                  {{stateTag[scope.row.state]}}
+              </el-tag>
+                </template>
                 </el-table-column>
                 <el-table-column
-                        prop="comment" label="评价"
+                        prop="comment"
+                        label="评价"
                         align="center" header-align="center" width="200">
                 </el-table-column>
                 <el-table-column
@@ -59,7 +50,7 @@
                         align="center" header-align="center" >
                     <template slot-scope="scope">
                         <el-button
-                                 @click="orderComplete" :disabled="scope.row.state===1">
+                                 @click="openComment(scope.row)" :disabled="scope.row.state===1">
                             确定已完成
                         </el-button>
                         <el-button
@@ -82,10 +73,10 @@
                             </span>
                             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="commentComplete(scope.row)">确 定</el-button>
+    <el-button type="primary" @click="commentComplete">确 定</el-button>
   </span>
                         </el-dialog>
-                        <el-dialog
+<!--                        <el-dialog
                                 title="订单详情"
                                 :visible.sync="centerDialogVisible1"
                                 width="50%"
@@ -110,7 +101,7 @@
     <el-button @click="centerDialogVisible1 = false">取 消</el-button>
     <el-button type="primary" @click="commentComplete(scope.row)">确 定</el-button>
   </span>
-                        </el-dialog>
+                        </el-dialog>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -137,29 +128,16 @@ export default {
       centerDialogVisible: false,
       comment: '',
       centerDialogVisible1: false,
-      stateTag: '',
-      orderInfo: {
-        uName: '',
-        hName: '',
-        uPhone: '',
-        uID: '',
-        roomType: '',
-        quantity: 1,
-        totalPrice: 1,
-        createTime: '',
-        state: '',
-        comment: ''
-      }
+      stateTag: {
+        0: '未完成',
+        1: '已完成'
+      },
+      orderId: 0
     }
   },
   created () {
     getMyAllOrder().then(res => {
       this.order = res.data
-      if (this.order.state === 1) {
-        this.stateTag = '已完成'
-      } else {
-        this.stateTag = '未完成'
-      }
     })
   },
   methods: {
@@ -169,13 +147,24 @@ export default {
     handleSizeChange1 (val) {
       this.pageSize = val
     },
-    orderComplete () {
+    openComment (myRow) {
+      this.orderId = myRow.oId
       this.centerDialogVisible = true
     },
-    commentComplete (row) {
-      let myComment = {roomId: row.roomId, comment: this.comment}
+    commentComplete () {
+      alert(this.orderId)
+      let myComment = {orderId: this.orderId, comments: this.comment}
       writeComment(myComment).then(res => {
-        console.info(res.data)
+        this.centerDialogVisible = false
+        getMyAllOrder().then(res => {
+          this.order = res.data
+          console.info(res.data)
+        })
+        this.$message({
+          message: '订单已结束，祝您生活愉快~',
+          type: 'success',
+          center: true
+        })
       })
     }
   }
