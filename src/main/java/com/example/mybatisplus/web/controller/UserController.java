@@ -1,5 +1,6 @@
 package com.example.mybatisplus.web.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.mapper.UserMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -158,7 +159,8 @@ public class UserController {
     //验证正确无误则返回字符串true
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse verify(HttpServletRequest request, @RequestParam(value = "email", required = false) String email, @RequestParam(value = "code", required = false) String code) {
+    public JsonResponse verify(HttpServletRequest request, @RequestParam(value = "email", required = false) String email,
+                               @RequestParam(value = "code", required = false) String code) {
         String str = userService.verify(request.getSession(), email, code);
 //        System.out.println(session.getId());
 //        System.out.println(session.getAttribute("username"));
@@ -171,9 +173,9 @@ public class UserController {
 //        System.out.println(session.getId());
 //        System.out.println(str);
         if (str != null) {
-            return JsonResponse.success("true");
+            return JsonResponse.success("验证成功");
         }
-        return JsonResponse.success(null);
+        return JsonResponse.success("邮箱或验证码错误");
     }
 
 
@@ -217,6 +219,27 @@ public class UserController {
         else{
             return JsonResponse.failure("旧密码与原密码不一致，请重新输入");
         }
+    }
+
+    //找回密码三个接口
+    //发送邮件调用sendMailForPassword,接收一个email参数，具体实现调用了注册的sendEmail实现函数,如果觉得太长了可以删掉一点
+    //如果用户输入的邮箱不存在于数据库则返回邮箱不存在
+    //验证验证码调用verify，即和注册时使用的一样
+    //更新密码调用forgetPassword，接收email和password参数,如果邮箱无误则录入数据库，并返回找回成功，否则返回邮箱错误
+    @RequestMapping(value = "/sendMailForPassword", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse sendMailToGetPassword(HttpServletRequest request, @RequestParam(value = "email", required = false) String account) throws Exception {
+        HttpSession session = request.getSession();
+
+        String result = userService.sendMail(session, account);
+
+        return JsonResponse.success(result);
+    }
+    @RequestMapping(value="forgetPassword",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResponse forgetPassword(HttpServletRequest request,@RequestParam(value="email",required=false)String mail,
+                                       @RequestParam(value="password",required=false)String password){
+        return JsonResponse.success(userService.forgetPassword(request.getSession(),mail,password));
     }
 
     //管理员看到user表的数据

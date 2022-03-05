@@ -182,7 +182,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         System.out.println((account));
         System.out.println(codeInput);
 //        保存数据
-        return "true";
+        return "验证成功";
     }
 
     @Override
@@ -196,6 +196,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void newPassword(Long uid, String newpaw) {
         userMapper.newPassword(uid,newpaw);
+    }
+
+    @Override
+    public String forgetPassword(HttpSession session, String mail, String password) {
+        try{
+            if(!mail.equals((String)session.getAttribute("email"))){
+                return "邮箱错误";
+            }
+            userMapper.updatePassword(mail,password);
+        }catch(Exception e){
+            return "找回失败";
+        }
+        return "找回成功";
+    }
+
+    @Override
+    public String sendMail(HttpSession session, String account) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("mail",account);
+        if(userMapper.selectOne(wrapper)==null)
+        {
+            return "邮箱未注册";
+        }
+        try{
+            sendVerification(session,account);
+        }catch(Exception e){
+            return "邮件发送失败";
+        }
+        return "邮件发送成功请注意查收";
     }
 
 
