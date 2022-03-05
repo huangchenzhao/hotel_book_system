@@ -54,7 +54,7 @@
                             确定已完成
                         </el-button>
                         <el-button
-                                type="primary" @click="centerDialogVisible1=true">
+                                type="primary" @click="openDetail(scope.row)">
                             查看详情
                         </el-button>
                         <el-dialog
@@ -72,36 +72,58 @@
                                 </el-input>
                             </span>
                             <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="commentComplete">确 定</el-button>
-  </span>
-                        </el-dialog>
-<!--                        <el-dialog
-                                title="订单详情"
-                                :visible.sync="centerDialogVisible1"
-                                width="50%"
-                                center>
-                            <span>
-                                <el-descriptions direction="vertical" :column="4" border>
-  <el-descriptions-item label="创建时间">{{this.orderInfo.createTime}}</el-descriptions-item>
-  <el-descriptions-item label="入住人">{{this.orderInfo.uName}}</el-descriptions-item>
-  <el-descriptions-item label="手机号">{{this.orderInfo.uPhone}}</el-descriptions-item>
-  <el-descriptions-item label="身份证号">{{this.orderInfo.uID}}</el-descriptions-item>
-  <el-descriptions-item label="酒店名称">{{this.orderInfo.hName}}</el-descriptions-item>
-  <el-descriptions-item label="房型">{{this.orderInfo.roomType}}</el-descriptions-item>
-  <el-descriptions-item label="房间数量">{{this.orderInfo.quantity}}</el-descriptions-item>
-  <el-descriptions-item label="总价格">{{this.orderInfo.totalPrice}}</el-descriptions-item>
-  <el-descriptions-item label="状态">
-    <el-tag>{{this.orderInfo.state}}</el-tag>
-  </el-descriptions-item>
-  <el-descriptions-item label="评价" :span="2">{{this.orderInfo.comment}}</el-descriptions-item>
-</el-descriptions>
+                              <el-button @click="centerDialogVisible = false">取 消</el-button>
+                              <el-button type="primary" @click="commentComplete">确 定</el-button>
                             </span>
-                            <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="commentComplete(scope.row)">确 定</el-button>
-  </span>
-                        </el-dialog>-->
+                        </el-dialog>
+                        <el-dialog
+                          title="订单详情"
+                          :visible.sync="centerDialogVisible1"
+                          width="50%"
+                          center>
+                          <el-descriptions direction="vertical" :column="4" border>
+                            <el-descriptions-item>
+                              <template slot="label">
+                                <i class="el-icon-user"></i>
+                                入住人
+                              </template>
+                              {{orderDetail.mytruename}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="入住人">
+                              {{orderDetail.mytruename}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="手机号">
+                              {{orderDetail.myphonenumber}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="身份证号">
+                              {{orderDetail.myidcard}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="酒店名称">
+                              {{orderDetail.myhotelname}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="房型">
+                              {{orderDetail.myroomtype}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="房间数量">
+                              {{orderDetail.myquantity}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="总价格">
+                              {{orderDetail.mytotalprice}}
+                            </el-descriptions-item>
+                            <el-descriptions-item label="状态">
+                              <el-tag>
+                                {{stateTag[orderDetail.mystate]}}
+                              </el-tag>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="评价" :span="2">
+                              {{orderDetail.mycomments}}
+                            </el-descriptions-item>
+                          </el-descriptions>
+                          <span slot="footer" class="dialog-footer">
+                            <el-button @click="centerDialogVisible1 = false">取 消</el-button>
+                            <el-button type="primary" @click="centerDialogVisible1 = false">确 定</el-button>
+                          </span>
+                        </el-dialog>
                     </template>
                 </el-table-column>
             </el-table>
@@ -110,7 +132,7 @@
                         @current-change="handleCurrentChange1" @size-change="handleSizeChange1" :current-page="currentPage"
                         layout="total, prev, pager, next"
                         :page-size="pageSize"
-                        :total="this.order.length"
+                        :total="order.length"
                 ></el-pagination>
             </el-col>
     </div>
@@ -132,7 +154,19 @@ export default {
         0: '未完成',
         1: '已完成'
       },
-      orderId: 0
+      orderId: 0,
+      orderDetail: {
+        mycreatedTime: '',
+        mytruename: '',
+        myphonenumber: '',
+        myidcard: '',
+        myhotelname: '',
+        myroomtype: '',
+        myquantity: 0,
+        mytotalprice: 0,
+        mystate: 0,
+        mycomments: ''
+      }
     }
   },
   created () {
@@ -150,6 +184,19 @@ export default {
     openComment (myRow) {
       this.orderId = myRow.oId
       this.centerDialogVisible = true
+    },
+    openDetail (myRow2) {
+      this.orderDetail.mytruename = myRow2.truename
+      this.orderDetail.mycomments = myRow2.comment
+      this.orderDetail.mycreatedTime = myRow2.createdTime
+      this.orderDetail.myhotelname = myRow2.hotel.name
+      this.orderDetail.myidcard = myRow2.idcard
+      this.orderDetail.myphonenumber = myRow2.phonenumber
+      this.orderDetail.myquantity = myRow2.quantity
+      this.orderDetail.myroomtype = myRow2.room.roomtype
+      this.orderDetail.mystate = myRow2.state
+      this.orderDetail.mytotalprice = myRow2.totalprice
+      this.centerDialogVisible1 = true
     },
     commentComplete () {
       alert(this.orderId)
