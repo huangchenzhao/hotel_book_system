@@ -80,13 +80,35 @@ export default {
     }
 
     .el-aside {
-        background-color: #a9c0ce;
-        color: #333;
+        background-color: #336699;
         text-align: center;
         line-height: 200px;
         height:100vh;
     }
-
+    .el-submenu .el-menu-item.is-active {
+        background-color: #FFFFFF !important;
+    }
+    .el-submenu .el-menu-item:hover {
+        background-color: #FFFFFF !important;
+    }
+    .el-menu-item.is-active {
+        background-color: #FFFFFF !important;
+    }
+    .el-menu-item:hover {
+        background-color: #FFFFFF !important;
+    }
+    .el-submenu__title:hover, .el-menu-item:focus, .el-menu-item:hover{
+        background-color: #FFFFFF !important;
+    }
+    .el-submenu {
+        background-color: #FFFFCC;
+    }
+    .el-menu {
+        background-color: #FFFFCC;
+    }
+    .el-menu-item-group {
+        background-color: #99CCCC;
+    }
     .el-main {
         background-color: #E9EEF3;
         color: #333;
@@ -102,4 +124,16 @@ export default {
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
     }
+
+    /*.el-submenu.is-opened .el-submenu__title {*/
+    /*    background-image: linear-gradient(to right, #99CCCC, #20DFE1);*/
+    /*    background-color: #99CCCC;*/
+    /*}*/
+    /*.el-menu-item {*/
+    /*    color: #777F8F;*/
+    /*}*/
+    /*.el-menu-item.is-active {*/
+    /*    color: #6681FA;*/
+    /*    background-color: #EAEEFF;*/
+    /*}*/
 </style>

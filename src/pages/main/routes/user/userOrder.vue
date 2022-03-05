@@ -123,7 +123,10 @@ export default {
         room: '标准间',
         quantity: 1,
         liveDate: '',
-        maxRoom: 10
+        maxRoom: 10,
+        userName: '',
+        id: '',
+        phone: ''
       },
       rules: {
         userName: [
@@ -193,7 +196,7 @@ export default {
       console.log(value)
     },
     getOneOrder () {
-      let orderInfo = {quantity: this.orderForm.quantity}
+      let orderInfo = {quantity: this.orderForm.quantity, name: this.orderForm.userName, phone: this.orderForm.phone, id: this.orderForm.id}
       confirmOrder(orderInfo).then(res => {
         console.info(res.data)
       })
