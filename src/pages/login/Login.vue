@@ -196,7 +196,7 @@ export default {
         if (this.loginForm.logReturn.data === null) {
           this.$message.error({message: '登陆失败，用户名或密码输入错误哦~', center: true})
         } else {
-          if (myUser.usertype === 1) {
+          if (myUser.usertype === '1') {
             this.$router.push({name: 'userPage'})
           } else {
             this.$router.push({name: 'list'})
