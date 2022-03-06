@@ -170,7 +170,7 @@
                             </span>
                             <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click=submitPwd>确 定</el-button>
+    <el-button type="primary" @click="submitPwd">确 定</el-button>
   </span>
                         </el-dialog>
                     </template>
@@ -220,7 +220,7 @@
 </template>
 
 <script>
-import {searchHotel, getUserInfo, getTempPhoto, changePwd} from '@/api/api'
+import {searchHotel, getUserInfo, getTempPhoto, changePassword} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 import orderList from './orderList'
@@ -398,15 +398,15 @@ export default {
     },
     submitPwd () {
       let myPwd = {oldpaw: this.pwdForm.oldPwd, newpaw: this.pwdForm.newPwd}
-      changePwd(myPwd).then(res => {
+      changePassword(myPwd).then(res => {
         console.info(res.data)
+        this.$message({
+          message: '修改成功',
+          type: 'success',
+          center: true
+        })
+        this.$router.push({name: 'login'})
       })
-      this.$message({
-        message: '修改成功',
-        type: 'success',
-        center: true
-      })
-      this.$router.push({name: 'login'})
     }
   }
 }
