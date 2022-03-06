@@ -7,7 +7,7 @@
             <el-container>
                 <el-aside width="200px" class="el-aside">
                     <el-menu class="el-menu" @open="handleOpen"
-                             @close="handleClose" :default-openeds="openeds" router :default-active="$route.path">
+                             @close="handleClose" router :default-active="$route.path">
                         <el-submenu index="1">
                             <template slot="title">
                                 <i class="el-icon-office-building"></i>
@@ -34,7 +34,27 @@
                         </el-submenu>
                     </el-menu>
                 </el-aside>
-                <el-main class="el-main">Main</el-main>
+                <el-main class="el-main">
+                    <el-form :model="hotelForm" :rules="rules" ref="ruleForm" class="hotelForm">
+                        <el-row :gutter="20">
+                            <el-col :span="12" :offset="6">
+                                <el-form-item label="酒店名称" prop="name">
+                                    <el-input v-model="hotelForm.name"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-form-item label="酒店地点" prop="cityValue">
+                            <el-row>
+                                <el-cascader
+                                        size="large"
+                                        :options="hotelForm.options"
+                                        v-model="hotelForm.selectedOptions"
+                                        @change="handleChange" style="width: 100%">
+                                </el-cascader>
+                            </el-row>
+                        </el-form-item>
+                    </el-form>
+                </el-main>
             </el-container>
         </el-container>
     </div>
@@ -42,12 +62,18 @@
 
 <script>
 import Header from '../../../../components/Header'
+import { regionData, CodeToText } from 'element-china-area-data'
 export default {
-  name: 'list',
+  name: 'addHotel',
   components: {Header},
   data () {
     return {
-      openeds: ['1']
+      hotelForm: {
+        name: '',
+        cityValue: [],
+        selectedOptions: [],
+        options: regionData
+      }
     }
   },
   methods: {
@@ -56,6 +82,14 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleChange () {
+      let loc = ''
+      for (let i = 0; i < this.hotelForm.selectedOptions.length; i++) {
+        loc += CodeToText[this.hotelForm.selectedOptions[i]]
+      }
+      console.info(loc)
+      console.info(this.hotelForm.selectedOptions[this.hotelForm.selectedOptions.length - 1])
     }
   }
 }
@@ -89,8 +123,6 @@ export default {
     .el-main {
         background-color: #E9EEF3;
         color: #333;
-        text-align: center;
-        line-height: 160px;
     }
 
     .el-container:nth-child(5) .el-aside,
