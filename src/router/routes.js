@@ -50,6 +50,12 @@ const loginPage = [
     name: 'manageHotel',
     component: () =>
       import(/* webpackChunkName: "Login" */ '../pages/main/routes/admin/manageHotel')
+  },
+  {
+    path: '/user/list',
+    name: 'userList',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../pages/main/routes/admin/userList')
   }
 ]
 

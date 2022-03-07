@@ -29,7 +29,7 @@
                                 <i class="el-icon-user"></i>
                                 <span>用户信息</span>
                             </template>
-                            <el-menu-item index="3-1">用户列表</el-menu-item>
+                            <el-menu-item index="/user/list">用户列表</el-menu-item>
                             <el-menu-item index="3-2">用户管理</el-menu-item>
                         </el-submenu>
                     </el-menu>
@@ -81,6 +81,12 @@
                                         type="text" @click="handleClick(scope.row)">
                                     管理酒店信息
                                 </el-button>
+                            </template>
+                            <template slot-scope="scope">
+                                <el-popconfirm
+                                        title="确定删除这家酒店吗?" @onConfirm="delHotel">
+                                    <el-button slot="reference">删除</el-button>
+                                </el-popconfirm>
                             </template>
                             <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="90%">
                                 <el-row :gutter="20">
@@ -174,7 +180,8 @@ export default {
     },
     handleClick (myRow) {
       this.dialogVisible = true
-    }
+    },
+    delHotel () {}
   }
 }
 </script>
@@ -208,7 +215,7 @@ export default {
         background-color: #E9EEF3;
         color: #333;
         text-align: center;
-        line-height: 160px;
+        /*line-height: 160px;*/
     }
 
     .el-container:nth-child(5) .el-aside,
