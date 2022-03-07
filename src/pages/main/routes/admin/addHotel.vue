@@ -191,7 +191,11 @@ export default {
         roomPhoto1: '',
         room2: '',
         quantity2: 1,
-        roomPhoto2: ''
+        roomPhoto2: '',
+        areaCode: '',
+        province: '',
+        city: '',
+        district: ''
       },
       labelPosition: 'top',
       center: {
@@ -249,12 +253,9 @@ export default {
       console.log(key, keyPath)
     },
     handleChange () {
-      let loc = ''
-      for (let i = 0; i < this.hotelForm.selectedOptions.length; i++) {
-        loc += CodeToText[this.hotelForm.selectedOptions[i]]
-      }
-      console.info(loc)
-      console.info(this.hotelForm.selectedOptions[this.hotelForm.selectedOptions.length - 1])
+      this.hotelForm.province = CodeToText[this.hotelForm.selectedOptions[0]]
+      this.hotelForm.city = CodeToText[this.hotelForm.selectedOptions[1]]
+      this.hotelForm.district = CodeToText[this.hotelForm.selectedOptions[2]]
     },
     handleAvatarSuccess (res, file) {
       this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
@@ -275,7 +276,16 @@ export default {
       return isJPG && isLt2M
     },
     commitHotel () {
-      addHotel(null).then(res => {
+      let newHotel = {name: this.hotelForm.name,
+        detail: this.hotelForm.address,
+        province: this.hotelForm.province,
+        city: this.hotelForm.city,
+        district: this.hotelForm.district,
+        areaCode: this.hotelForm.areaCode,
+        longitude: this.center.lng,
+        latitude: this.center.lat
+      }
+      addHotel(newHotel).then(res => {
         console.info(res.data)
       })
     },
