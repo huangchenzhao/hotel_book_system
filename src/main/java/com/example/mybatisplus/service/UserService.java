@@ -3,6 +3,7 @@ package com.example.mybatisplus.service;
 import com.example.mybatisplus.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface UserService extends IService<User>  {
     String verify(HttpSession session,String account,String code);
     User showdetail(Long uid);
     void newPassword(Long uid, String newpaw);
+    String forgetPassword(HttpSession request, String mail, String password,String code);
     List<User> getalluser();
-    String forgetPassword(HttpSession session, String mail, String password);
     String sendMail(HttpSession session, String account);
 }
