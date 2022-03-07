@@ -149,6 +149,7 @@
 <script>
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import Header from '../../../../components/Header'
+import {adminGetHotelList} from '@/api/api'
 
 export default {
   name: 'hotelList',
@@ -161,6 +162,11 @@ export default {
       returnDetail: [],
       dialogVisible: false
     }
+  },
+  created () {
+    adminGetHotelList().then(res => {
+      console.info(res.data)
+    })
   },
   methods: {
     handleCurrentChange (currentPage) {

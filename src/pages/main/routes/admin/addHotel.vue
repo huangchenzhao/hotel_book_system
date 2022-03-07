@@ -57,12 +57,31 @@
                 </el-main>
             </el-container>
         </el-container>
+      <div>
+        <input v-model.number="center.lng">
+        <input v-model.number="center.lat">
+        <input v-model.number="zoom">
+        <baidu-map
+            :scroll-wheel-zoom="true"
+            :center="center"
+            :zoom="zoom"
+            class="bm-view"
+            ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl"
+            @moving="syncCenterAndZoom"
+            @moveend="syncCenterAndZoom"
+            @zoomend="syncCenterAndZoom"
+            @ready="handler">
+          <bm-marker :position="center" :dragging="false">
+            <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
+          </bm-marker>
+        </baidu-map>
+      </div>
     </div>
 </template>
 
 <script>
 import Header from '../../../../components/Header'
-import { regionData, CodeToText } from 'element-china-area-data'
+import { regionData, CodeToText, addHotel } from 'element-china-area-data'
 export default {
   name: 'addHotel',
   components: {Header},
@@ -73,7 +92,12 @@ export default {
         cityValue: [],
         selectedOptions: [],
         options: regionData
-      }
+      },
+      center: {
+        lng: 116.404,
+        lat: 39.915
+      },
+      zoom: 15
     }
   },
   methods: {
@@ -90,6 +114,23 @@ export default {
       }
       console.info(loc)
       console.info(this.hotelForm.selectedOptions[this.hotelForm.selectedOptions.length - 1])
+    },
+    commitHotel () {
+      addHotel(null).then(res => {
+        console.info(res.data)
+      })
+    },
+    syncCenterAndZoom (e) {
+      const {lng, lat} = e.target.getCenter()
+      this.center.lng = lng
+      this.center.lat = lat
+      this.zoom = e.target.getZoom()
+    },
+    handler ({BMap, map}) {
+      console.log(BMap, map)
+      this.center.lng = 116.404
+      this.center.lat = 39.915
+      this.zoom = 15
     }
   }
 }
@@ -132,6 +173,11 @@ export default {
 
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
+    }
+
+    .bm-view {
+      width: 100%;
+      height: 300px;
     }
 
 </style>
