@@ -22,7 +22,7 @@
                                 <i class="el-icon-sell"></i>
                                 <span>订单信息</span>
                             </template>
-                            <el-menu-item index="2-1">订单列表</el-menu-item>
+                            <el-menu-item index="/order/list">订单列表</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title">
@@ -86,7 +86,7 @@
                                     查看详情
                                 </el-button>
                             </template>
-                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="55%">
+                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="65%">
                                         <el-table :data="returnDetail">
                                             <el-table-column
                                                     prop="photo.photoUrl"
@@ -121,6 +121,27 @@
                                                     label="价格"
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
+                                            <el-table-column
+                                                    label="操作"
+                                                    align="center" header-align="center" >
+                                                <template slot-scope="scope">
+                                                    <el-button
+                                                            type="primary" icon="el-icon-edit" @click="editPrice(scope.row)">
+                                                        管理
+                                                    </el-button>
+                                                    <el-dialog title="更改房间信息" :visible.sync="priceDialog" width="30%" :append-to-body="true">
+                                                        <el-form :model="roomForm">
+                                                            <el-form-item label="价格">
+                                                                <el-input v-model="roomForm.price" autocomplete="off"></el-input>
+                                                            </el-form-item>
+                                                        </el-form>
+                                                        <div slot="footer" class="dialog-footer">
+                                                            <el-button @click="priceDialog = false">取 消</el-button>
+                                                            <el-button type="primary" @click="priceFinish">确 定</el-button>
+                                                        </div>
+                                                    </el-dialog>
+                                                </template>
+                                            </el-table-column>
                                         </el-table>
                             </el-dialog>
                         </el-table-column>
@@ -153,7 +174,11 @@ export default {
       pageSize: 10,
       currentPage: 1,
       returnDetail: [],
-      dialogVisible: false
+      dialogVisible: false,
+      priceDialog: false,
+      roomForm: {
+        price: 100
+      }
     }
   },
   created () {
@@ -180,6 +205,12 @@ export default {
       adminGetDetail(myDetail).then(res => {
         this.returnDetail = res.data
       })
+    },
+    editPrice (myRow) {
+      this.priceDialog = true
+    },
+    priceFinish () {
+      this.priceDialog = false
     }
   }
 }
@@ -199,7 +230,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:135vh;
+        height:100vh;
     }
     .el-submenu {
         background-color: #FFFFCC;

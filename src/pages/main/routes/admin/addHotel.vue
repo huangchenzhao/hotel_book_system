@@ -22,7 +22,7 @@
                                 <i class="el-icon-sell"></i>
                                 <span>订单信息</span>
                             </template>
-                            <el-menu-item index="2-1">订单列表</el-menu-item>
+                            <el-menu-item index="/order/list">订单列表</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title">
@@ -95,9 +95,15 @@
                                     <el-form-item label="酒店纬度" prop="lat">
                                 <el-input v-model.number="center.lat"></el-input>
                                 </el-form-item>
+                                <el-form-item label="酒店星级" prop="lat">
+                                    <el-rate
+                                            v-model="hotelForm.star"
+                                            :colors="colors">
+                                    </el-rate>
+                                </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row type="flex" justify="space-around">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room1">
                                     <el-select v-model="hotelForm.room1" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
@@ -112,7 +118,12 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间数量" prop="quantity1">
-                                    <el-input-number size="medium" v-model="hotelForm.quantity1" :min="0" :max="100" label="描述文字"></el-input-number>
+                                    <el-input-number v-model="hotelForm.quantity1" :min="0" :max="100"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间价格" prop="price1">
+                                    <el-input-number v-model="hotelForm.price1" :precision="2" :step="0.1" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -129,7 +140,7 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row type="flex" justify="space-around">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room2">
                                     <el-select v-model="hotelForm.room2" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
@@ -148,6 +159,11 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
+                                <el-form-item label="房间价格" prop="price2">
+                                    <el-input-number v-model="hotelForm.price2" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
                                 <el-form-item label="双人间图片" prop="roomPhoto2">
                                     <el-upload
                                             class="avatar-uploader"
@@ -161,7 +177,7 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row type="flex" justify="space-around">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room3">
                                     <el-select v-model="hotelForm.room3" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
@@ -180,6 +196,11 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
+                                <el-form-item label="房间价格" prop="price3">
+                                    <el-input-number v-model="hotelForm.price3" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
                                 <el-form-item label="大床房图片" prop="roomPhoto3">
                                     <el-upload
                                             class="avatar-uploader"
@@ -193,7 +214,7 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row type="flex" justify="space-around">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room4">
                                     <el-select v-model="hotelForm.room4" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
@@ -212,6 +233,11 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
+                                <el-form-item label="房间价格" prop="price4">
+                                    <el-input-number v-model="hotelForm.price4" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
                                 <el-form-item label="亲子房图片" prop="roomPhoto4">
                                     <el-upload
                                             class="avatar-uploader"
@@ -225,7 +251,7 @@
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-row type="flex" justify="space-around">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room5">
                                     <el-select v-model="hotelForm.room5" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
@@ -241,6 +267,11 @@
                             <el-col :span="6">
                                 <el-form-item label="房间数量" prop="quantity5">
                                     <el-input-number size="medium" v-model="hotelForm.quantity5" :min="0" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间价格" prop="price5">
+                                    <el-input-number v-model="hotelForm.price5" :precision="2" :step="0.1" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -295,6 +326,11 @@ export default {
         room3: '大床房',
         room4: '亲子房',
         room5: '总统套房',
+        price1: 1,
+        price2: 1,
+        price3: 1,
+        price4: 1,
+        price5: 1,
         quantity2: 0,
         quantity3: 0,
         quantity4: 0,
@@ -306,8 +342,10 @@ export default {
         areaCode: '',
         province: '',
         city: '',
-        district: ''
+        district: '',
+        star: null
       },
+      colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       labelPosition: 'top',
       center: {
         lng: 116.404,
