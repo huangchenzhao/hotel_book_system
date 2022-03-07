@@ -23,6 +23,7 @@ public interface HotelService extends IService<Hotel> {
     List<Hotel> detail(Long hId, Date checkin, Date checkout);
     String saveHotelInfo(Hotelinfo hotelinfo);
     List<Hotel> showlist();
+    boolean isExist(Hotel hotel);
 //    List<Userorder> placeOrder(HttpSession session, Long roomId);
 //    List<Hotel> detail2(Long hId);
 }

@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 
 /**
@@ -32,16 +34,29 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
 
     @Override
     public String saveDetail(Long rId, Integer amount) {
-        java.util.Date date = new java.util.Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
-        String dateStr = dateFormat.format( date );
-        System.out.println(dateStr);
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DATE);
-        //插入一个月的房间数据
-        //还没写完
-        for(java.util.Date date1=new java.util.Date();;){
-            break;
+        try {
+            Calendar end = Calendar.getInstance();// 得到一个Calendar的实例
+            end.setTime(new java.util.Date()); // 设置时间为当前时间
+            end.add(Calendar.MONTH, +1);// 设置为一个月后
+            //end.add(Calendar.DATE, +1);// 日期加1
+            java.util.Date result = end.getTime();
+            Calendar begin = Calendar.getInstance();//获得当前时间
+            Long startTime = begin.getTimeInMillis();
+            Long endTime = end.getTimeInMillis();
+            Long oneDay = 1000 * 60 * 60 * 24l;// 一天的时间转化为ms
+            Long time = startTime;
+            //插入往后一个月的数据
+            while (time <= endTime) {
+                java.util.Date d = new java.util.Date(time);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                df.format(d);
+                System.out.println(d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                Detail detail = new Detail(d.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), rId, amount);
+                detailMapper.insert(detail);
+                time += oneDay;
+            }
+        } catch (Exception e) {
+            return "deteail更新失败";
         }
         return null;
     }

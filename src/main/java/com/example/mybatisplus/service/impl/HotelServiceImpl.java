@@ -2,6 +2,7 @@ package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.mapper.AddressMapper;
+import com.example.mybatisplus.mapper.PhotoMapper;
 import com.example.mybatisplus.mapper.RoomMapper;
 import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.mapper.HotelMapper;
@@ -34,8 +35,15 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Autowired(required = false)
     private RoomMapper roomMapper;
+
     @Autowired(required = false)
     private DetailService detailService;
+
+    @Autowired(required = false)
+    private PhotoMapper photoMapper;
+
+    @Autowired(required=false)
+    private HotelService hotelService;
 
     public List<Hotel> listrem() {
         return hotelMapper.getrem();
@@ -50,12 +58,10 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         try {
             checkInSql = new java.sql.Date(checkIn.getTime());
         } catch (Exception e) {
-
         }
         try {
             checkOutSql = new java.sql.Date(checkOut.getTime());
         } catch (Exception e) {
-
         }
         //调用mapper层函数，sql语句在xml文件中实现，实现了一个又臭又长的sql
         List<Hotel> hotel = hotelMapper.searchResult(hotelName, checkInSql, checkOutSql, code, roomType);
@@ -72,12 +78,12 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         //处理空指针异常
         try {
             checkinSql = new java.sql.Date(checkin.getTime());
-        } catch (Exception e) {
-        }
-        try {
+
             checkoutSql = new java.sql.Date(checkout.getTime());
+
         } catch (Exception e) {
         }
+
         List<Hotel> hoteldetail = hotelMapper.showDetails(hId, checkinSql, checkoutSql);
 
         return hoteldetail;
@@ -95,20 +101,32 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
             wrapper.eq("code", address.getCode());
             Address addressSearch = addressMapper.selectOne(wrapper);
             if (addressSearch != null) {
-                //地址存在，填补hotel表信息
+                //地址存在，填补address表信息
                 //hotel.setAId(addressSearch.getAId());
+                address.setAId(addressSearch.getAId());
             } else {
                 //地址不存在存入数据库获取aid
                 addressMapper.insert(address);
             }
             //存入aid，此时address里应有aid
             hotel.setAId(address.getAId());
+            if(hotelService.isExist(hotel)){
+                return "该酒店已注册";
+            }
             //插入hotel
             hotelMapper.insert(hotel);
+            //插入酒店photo
+            if (hotel.getPhoto() != null && hotel.getPhoto().getPhotoUrl() != null) {
+                photoMapper.insert(new Photo(null, hotel.getHId(), hotel.getPhoto().getPhotoUrl()));
+            }
             //填补并插入room表，此时hotel应有hid
             for (Room r : room) {
                 r.setHId(hotel.getHId());
                 roomMapper.insert(r);
+                //插入房间photo;
+                if (r.getPhoto() != null && r.getPhoto().getPhotoUrl() != null) {
+                    photoMapper.insert(new Photo(r.getRId(), hotel.getHId(), r.getPhoto().getPhotoUrl()));
+                }
                 //修改detail表
                 detailService.saveDetail(r.getRId(), r.getAmount());
             }
@@ -120,9 +138,20 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
     }
 
     @Override
-    public List<Hotel> showlist(){
+    public List<Hotel> showlist() {
         List<Hotel> hotelList = hotelMapper.showlist();
         return hotelList;
+    }
+
+    @Override
+    public boolean isExist(Hotel hotel) {
+        QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
+        wrapper.eq("a_id",hotel.getAId());
+        wrapper.eq("longitude",hotel.getLongitude());
+        wrapper.eq("latitude",hotel.getLatitude());
+        wrapper.eq("name",hotel.getName());
+        wrapper.eq("star",hotel.getStar());
+        return hotelMapper.selectOne(wrapper)==null ? false:true;
     }
 //    @Override
 //    public List<Hotel> detail2(Long hId) {

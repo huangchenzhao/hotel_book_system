@@ -1,7 +1,9 @@
 package com.example.mybatisplus.model.domain;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gzx
@@ -19,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Photo对象", description="")
+@ApiModel(value = "Photo对象", description = "")
 public class Photo extends Model<Photo> {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +33,15 @@ public class Photo extends Model<Photo> {
     private Long hId;
 
     private String photoUrl;
+
+    public Photo(Long rId, Long hId, String photoUrl) {
+        this.rId = rId;
+        this.hId = hId;
+        this.photoUrl = photoUrl;
+    }
+    public Photo(){
+
+    }
 
 
     @Override
