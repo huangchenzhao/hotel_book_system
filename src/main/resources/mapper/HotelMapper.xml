@@ -252,7 +252,7 @@
             orderr.count AS countt
         FROM
             hotel
-                INNER JOIN (SELECT
+                LEFT JOIN (SELECT
                                 userorder.r_id,
                                 userorder.u_id,
                                 userorder.h_id,

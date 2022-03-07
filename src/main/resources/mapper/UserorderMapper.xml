@@ -187,29 +187,32 @@
     </resultMap>
     <select id="showhoteldetail" resultMap="hotelDatail">
         SELECT
-            userorder.r_id,
-            userorder.h_id,
-            Count(userorder.r_id) AS roomcount,
+            detail.remain,
+            detail.r_date,
+            room.r_id,
             room.price,
             room.roomtype,
             room.amount,
             room.max_people,
+            photo.photo_url,
             hotel.longitude,
             hotel.latitude,
-            hotel.star,
-            hotel.`name`,
-            photo.photo_url,
-            detail.remain
+            room.h_id,
+            ooo.roomcount
         FROM
-            userorder
-                INNER JOIN room ON room.r_id = userorder.r_id
-                INNER JOIN hotel ON userorder.h_id = hotel.h_id
-                INNER JOIN photo ON photo.r_id = userorder.r_id
-                INNER JOIN detail ON detail.r_id = userorder.r_id AND detail.r_date = #{todaySql}
-        WHERE
-            userorder.h_id = #{hid}
-        GROUP BY
-            userorder.r_id
+            room
+                INNER JOIN hotel ON room.h_id = hotel.h_id
+                INNER JOIN photo on photo.r_id = room.r_id
+                left JOIN (SELECT
+                               userorder.r_id,
+                               userorder.h_id,
+                               Count(userorder.r_id) AS roomcount
+                           FROM
+                               userorder
+                           GROUP BY
+                               userorder.r_id)as ooo ON ooo.r_id = room.r_id
+                INNER JOIN detail ON detail.r_id = room.r_id
+        WHERE hotel.h_id = #{hid} AND detail.r_date = #{todaySql}
     </select>
 
 </mapper>
