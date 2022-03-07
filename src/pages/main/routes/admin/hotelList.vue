@@ -112,12 +112,12 @@
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
                                             <el-table-column
-                                                    prop="detail.quantity"
+                                                    prop="room.amount"
                                                     label="总数量"
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
                                             <el-table-column
-                                                    prop="detail.order"
+                                                    prop="roomcount"
                                                     label="预订次数"
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
@@ -183,7 +183,7 @@ export default {
     },
     handleClick (myRow) {
       this.dialogVisible = true
-      let myDetail = {hId: myRow.hid}
+      let myDetail = {hid: myRow.hid}
       adminGetDetail(myDetail).then(res => {
         this.returnDetail = res.data
       })
