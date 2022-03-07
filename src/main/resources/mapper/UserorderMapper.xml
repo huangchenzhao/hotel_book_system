@@ -143,5 +143,73 @@
     <select id="getoneorder" resultType="com.example.mybatisplus.model.domain.Userorder">
         select * from userorder where u_id = #{Uid}
     </select>
+    <resultMap id="hotelDatail" type="com.example.mybatisplus.model.domain.Userorder" >
+        <id column="o_id" property="oId" />
+        <result column="r_id" property="rId" />
+        <result column="u_id" property="uId" />
+        <result column="h_id" property="hId" />
+        <result column="check_in" property="checkIn" />
+        <result column="check_out" property="checkOut" />
+        <result column="totalprice" property="totalprice" />
+        <result column="quantity" property="quantity" />
+        <result column="state" property="state" />
+        <result column="comment" property="comment" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="created_time" property="createdTime" />
+        <result column="roomcount" property="roomcount" />
+        <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
+            <id column="h_id" property="hId"/>
+            <result column="ha_id" property="aId"/>
+            <result column="longitude" property="longitude"/>
+            <result column="latitude" property="latitude"/>
+            <result column="star" property="star"/>
+            <result column="name" property="name"/>
+        </association>
+        <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
+            <id column="r_id" property="rId"/>
+            <result column="rh_id" property="hId"/>
+            <result column="price" property="price"/>
+            <result column="roomtype" property="roomtype"/>
+            <result column="amount" property="amount"/>
+            <result column="max_people" property="maxPeople"/>
+        </association>
+        <association property="detail" javaType="com.example.mybatisplus.model.domain.Detail">
+            <result column="remain" property="remain"/>
+        </association>
+        <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
+            <id column="p_id" property="pId" />
+            <result column="r_idd" property="rId" />
+            <result column="h_idd" property="hId" />
+            <result column="photo_url" property="photoUrl" />
+        </association>
+    </resultMap>
+    <select id="showhoteldetail" resultMap="hotelDatail">
+        SELECT
+            userorder.r_id,
+            userorder.h_id,
+            Count(userorder.r_id) AS roomcount,
+            room.price,
+            room.roomtype,
+            room.amount,
+            room.max_people,
+            hotel.longitude,
+            hotel.latitude,
+            hotel.star,
+            hotel.`name`,
+            photo.photo_url,
+            detail.remain
+        FROM
+            userorder
+                INNER JOIN room ON room.r_id = userorder.r_id
+                INNER JOIN hotel ON userorder.h_id = hotel.h_id
+                INNER JOIN photo ON photo.r_id = userorder.r_id
+                INNER JOIN detail ON detail.r_id = userorder.r_id AND detail.r_date = #{todaySql}
+        WHERE
+            userorder.h_id = #{hid}
+        GROUP BY
+            userorder.r_id
+    </select>
 
 </mapper>

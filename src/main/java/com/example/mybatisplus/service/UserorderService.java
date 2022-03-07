@@ -22,4 +22,5 @@ public interface UserorderService extends IService<Userorder> {
 //    public Userorder test(Userorder data);
     void usercomment(Long orderId, String comments);
     List<Userorder> getoneorder(Long Uid);
+    List<Userorder> showhoteldetail(Long hid);
 }

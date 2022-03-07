@@ -145,6 +145,15 @@ public class UserorderController {
         return JsonResponse.success(Oneorder);
     }
 
+    //管理员查看今日某个酒店房间
+    //gzx
+    @GetMapping("/hoteldetail")
+    @ResponseBody
+    public JsonResponse hoteldetail(Long hid)throws Exception{
+        List<Userorder> detaillist = userorderService.showhoteldetail(hid);
+        return JsonResponse.success(detaillist);
+    }
+
 
 }
 

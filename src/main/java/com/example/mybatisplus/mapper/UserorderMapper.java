@@ -21,4 +21,5 @@ public interface UserorderMapper extends BaseMapper<Userorder> {
      void submitOrder(int quantity, Long roomId);
      Userorder selectRoom(Long roomId);
      List<Userorder> getoneorder(Long Uid);
+    List<Userorder> showhoteldetail(Long hid, Date todaySql);
 }

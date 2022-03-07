@@ -172,6 +172,12 @@ public class Userorder extends Model<Userorder> {
     @TableField(exist = false)
     private User user;
 
+    @TableField(exist = false)
+    private Integer roomcount;
+
+    @TableField(exist = false)
+    private Photo photo;
+
 
     @Override
     protected Serializable pkVal() {

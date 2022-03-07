@@ -116,4 +116,18 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
         List<Userorder> oneorder = userorderMapper.getoneorder(Uid);
         return oneorder;
     }
+
+    @Override
+    public List<Userorder> showhoteldetail(Long hid){
+        java.util.Date today = new java.util.Date();
+        java.sql.Date todaySql=null;
+        //处理空指针异常
+        try{
+            todaySql= new java.sql.Date(today.getTime());
+        }catch(Exception e){
+        }
+        System.out.println(todaySql);
+        List<Userorder> detailList = userorderMapper.showhoteldetail(hid,todaySql);
+        return detailList;
+    }
 }
