@@ -61,6 +61,7 @@
                         <el-table-column
                                 prop="countt"
                                 label="预订次数"
+                                :formatter="counttFormat"
                                 sortable
                                 width="200" align="center" header-align="center" >
                         </el-table-column>
@@ -82,7 +83,7 @@
                                     查看详情
                                 </el-button>
                             </template>
-                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="90%">
+                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="40%">
                                         <el-table :data="returnDetail">
                                             <el-table-column
                                                     prop="photo.photoUrl"
@@ -154,6 +155,7 @@ export default {
   },
   created () {
     adminGetHotelList().then(res => {
+      alert(JSON.stringify(res.data))
       this.hotel = res.data
     })
   },
@@ -176,6 +178,9 @@ export default {
       adminGetDetail(myDetail).then(res => {
         this.returnDetail = res.data
       })
+    },
+    counttFormat (row) {
+      return row.countt == null ? '0' : row.countt
     }
   }
 }
