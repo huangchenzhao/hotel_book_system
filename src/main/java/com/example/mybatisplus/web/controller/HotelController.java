@@ -144,5 +144,16 @@ public class HotelController {
 
 
 
+    //管理员查看酒店
+    //gzx
+    @GetMapping("/hotellist")
+    @ResponseBody
+    public JsonResponse hotellist()throws Exception{
+        List<Hotel> hotelList = hotelService.showlist();
+        return JsonResponse.success(hotelList);
+    }
+
+
+
 }
 

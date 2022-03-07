@@ -22,6 +22,7 @@ public interface HotelService extends IService<Hotel> {
     List<Hotel> searchResult(String hotelName, Date checkIN, Date checkOut, Integer code, String roomType);
     List<Hotel> detail(Long hId, Date checkin, Date checkout);
     String saveHotelInfo(Hotelinfo hotelinfo);
+    List<Hotel> showlist();
 //    List<Userorder> placeOrder(HttpSession session, Long roomId);
 //    List<Hotel> detail2(Long hId);
 }

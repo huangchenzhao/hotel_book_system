@@ -202,6 +202,68 @@
     <select id="test" resultMap="SearchResultMap">
         select * from #{datas} where datas.h_id=2;
     </select>
+    <resultMap id="HotelorderMap" type="com.example.mybatisplus.model.domain.Hotel">
+        <id column="id" property="Id" />
+        <result column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="star" property="star" />
+        <result column="name" property="name" />
+        <result column="countt" property="countt" />
+        <association property="address" javaType="com.example.mybatisplus.model.domain.Address">
+            <id column="aid" property="aId" />
+            <result column="code" property="code" />
+            <result column="province" property="province" />
+            <result column="city" property="city" />
+            <result column="district" property="district" />
+            <result column="detail" property="detail" />
+        </association>
+        <association property="photo" javaType="com.example.mybatisplus.model.domain.Photo">
+            <id column="p_id" property="pId" />
+            <result column="rid" property="rId" />
+            <result column="hhid" property="hId" />
+            <result column="photo_url" property="photoUrl" />
+        </association>
+        <association property="userOrder" javaType="com.example.mybatisplus.model.domain.Userorder">
+            <id column="o_id" property="oId" />
+            <result column="r_id" property="rId" />
+            <result column="u_id" property="uId" />
+            <result column="hid" property="hId" />
+            <result column="check_in" property="checkIn" />
+            <result column="check_out" property="checkOut" />
+            <result column="totalprice" property="totalprice" />
+            <result column="quantity" property="quantity" />
+            <result column="state" property="state" />
+            <result column="comment" property="comment" />
+            <result column="truename" property="truename" />
+            <result column="idcard" property="idcard" />
+            <result column="phonenumber" property="phonenumber" />
+            <result column="created_time" property="createdTime" />
+        </association>
+    </resultMap>
+    <select id="showlist" resultMap="HotelorderMap">
+        SELECT
+            hotel.h_id,
+            hotel.star,
+            hotel.`name`,
+            address.detail,
+            photo.photo_url,
+            orderr.count AS countt
+        FROM
+            hotel
+                INNER JOIN (SELECT
+                                userorder.r_id,
+                                userorder.u_id,
+                                userorder.h_id,
+                                Count(userorder.h_id) as count
+                            FROM
+                                userorder
+                            GROUP BY
+                                userorder.h_id) AS orderr ON orderr.h_id= hotel.h_id
+                INNER JOIN address ON hotel.a_id = address.a_id
+                INNER JOIN photo ON photo.h_id = hotel.h_id AND photo.r_id is NULL
+    </select>
 
     <!--</select>-->
     <!--<select id="showDetails2" resultMap="HotelDetailMap">-->
