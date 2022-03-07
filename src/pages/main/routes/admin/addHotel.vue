@@ -36,23 +36,61 @@
                 </el-aside>
                 <el-main class="el-main">
                     <el-form :model="hotelForm" :rules="rules" ref="ruleForm" class="hotelForm">
-                        <el-row :gutter="20">
-                            <el-col :span="12" :offset="6">
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
                                 <el-form-item label="酒店名称" prop="name">
-                                    <el-input v-model="hotelForm.name"></el-input>
+                                    <el-input v-model="hotelForm.name" placeholder="请输入酒店名称"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="酒店省市区" prop="cityValue">
+                                    <el-cascader
+                                            size="large"
+                                            :options="hotelForm.options"
+                                            v-model="hotelForm.selectedOptions"
+                                            @change="handleChange" style="width: 100%">
+                                    </el-cascader>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="酒店地址" prop="address">
+                                    <el-input v-model="hotelForm.address" placeholder="请填写具体地址，如：'西航港街道101号'"></el-input>
                                 </el-form-item>
                             </el-col>
                         </el-row>
-                        <el-form-item label="酒店地点" prop="cityValue">
-                            <el-row>
-                                <el-cascader
-                                        size="large"
-                                        :options="hotelForm.options"
-                                        v-model="hotelForm.selectedOptions"
-                                        @change="handleChange" style="width: 100%">
-                                </el-cascader>
-                            </el-row>
-                        </el-form-item>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="酒店图片" prop="photo">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                        </el-row>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="房型" prop="room1">
+                                    <el-select v-model="hotelForm.room1" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                        <el-option
+                                                v-for="item in roomOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+                            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                        </el-row>
                     </el-form>
                 </el-main>
             </el-container>
@@ -72,7 +110,41 @@ export default {
         name: '',
         cityValue: [],
         selectedOptions: [],
-        options: regionData
+        options: regionData,
+        address: '',
+        photo: '',
+        imageUrl: '',
+        room1: ''
+      },
+      roomOptions: [{
+        value: '标准间',
+        label: '标准间'
+      }, {
+        value: '双人房',
+        label: '双人房'
+      }, {
+        value: '大床房',
+        label: '大床房'
+      }, {
+        value: '亲子房',
+        label: '亲子房'
+      }, {
+        value: '总统套房',
+        label: '总统套房'
+      }],
+      rules: {
+        name: [
+          { required: true, message: '请输入酒店名称', trigger: 'blur' }
+        ],
+        cityValue: [
+          { required: true, message: '请选择省市区', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: '请填写具体地址，如：\'西航港街道101号\'', trigger: 'blur' }
+        ],
+        room1: [
+          { required: true, message: '请选择房型', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -90,6 +162,24 @@ export default {
       }
       console.info(loc)
       console.info(this.hotelForm.selectedOptions[this.hotelForm.selectedOptions.length - 1])
+    },
+    handleAvatarSuccess (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      console.info(this.imgReturn)
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
   }
 }
@@ -133,5 +223,4 @@ export default {
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
     }
-
 </style>
