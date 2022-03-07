@@ -289,16 +289,16 @@ export default {
         room1: '标准间',
         lng: 1,
         lat: 1,
-        quantity1: 1,
+        quantity1: 0,
         roomPhoto1: '',
         room2: '双人间',
         room3: '大床房',
         room4: '亲子房',
         room5: '总统套房',
-        quantity2: 1,
-        quantity3: 1,
-        quantity4: 1,
-        quantity5: 1,
+        quantity2: 0,
+        quantity3: 0,
+        quantity4: 0,
+        quantity5: 0,
         roomPhoto5: '',
         roomPhoto2: '',
         roomPhoto3: '',
@@ -416,7 +416,15 @@ export default {
       console.log(value)
     },
     hotelSubmit () {
+      if ((this.hotelForm.quantity1 +
+          this.hotelForm.quantity2 +
+          this.hotelForm.quantity3 +
+          this.hotelForm.quantity4 +
+          this.hotelForm.quantity5) === 0) {
+        this.$message.error({message: '请添加至少一间房型！', center: true})
+      } else {
 
+      }
     }
   }
 }
