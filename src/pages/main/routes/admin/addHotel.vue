@@ -100,7 +100,7 @@
                         <el-row type="flex" justify="space-around">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room1">
-                                    <el-select v-model="hotelForm.room1" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                    <el-select v-model="hotelForm.room1" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
                                         <el-option
                                                 v-for="item in roomOptions"
                                                 :key="item.value"
@@ -112,11 +112,11 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间数量" prop="quantity1">
-                                    <el-input-number size="medium" v-model="hotelForm.quantity1" @change="handleRoom1Num" :min="1" :max="100" label="描述文字"></el-input-number>
+                                    <el-input-number size="medium" v-model="hotelForm.quantity1" :min="0" :max="100" label="描述文字"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
-                                <el-form-item label="房间1图片" prop="roomPhoto1">
+                                <el-form-item label="标准间图片" prop="roomPhoto1">
                                     <el-upload
                                             class="avatar-uploader"
                                             action="/api/file/upload"
@@ -132,7 +132,7 @@
                         <el-row type="flex" justify="space-around">
                             <el-col :span="6">
                                 <el-form-item label="房型" prop="room2">
-                                    <el-select v-model="hotelForm.room2" @change="handleRoom1Num" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                    <el-select v-model="hotelForm.room2" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
                                         <el-option
                                                 v-for="item in roomOptions"
                                                 :key="item.value"
@@ -143,12 +143,12 @@
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
-                                <el-form-item label="房间数量" prop="quantity1">
-                                    <el-input-number size="medium" v-model="hotelForm.quantity2" :min="1" :max="100" label="描述文字"></el-input-number>
+                                <el-form-item label="房间数量" prop="quantity2">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity2" :min="0" :max="100" label="描述文字"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
-                                <el-form-item label="房间2图片" prop="roomPhoto2">
+                                <el-form-item label="双人间图片" prop="roomPhoto2">
                                     <el-upload
                                             class="avatar-uploader"
                                             action="/api/file/upload"
@@ -159,6 +159,108 @@
                                         <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
                                     </el-upload>
                                 </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="房型" prop="room3">
+                                    <el-select v-model="hotelForm.room3" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                        <el-option
+                                                v-for="item in roomOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间数量" prop="quantity3">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity3" :min="0" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="大床房图片" prop="roomPhoto3">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+                                        <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="房型" prop="room4">
+                                    <el-select v-model="hotelForm.room4" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                        <el-option
+                                                v-for="item in roomOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间数量" prop="quantity4">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity4" :min="0" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="亲子房图片" prop="roomPhoto4">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+                                        <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="房型" prop="room5">
+                                    <el-select v-model="hotelForm.room5" :disabled="true" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                        <el-option
+                                                v-for="item in roomOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间数量" prop="quantity5">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity5" :min="0" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="总统套房图片" prop="roomPhoto5">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+                                        <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="12" :offset="6">
+                                <el-button type="primary" @click="hotelSubmit">立即创建</el-button>
+                                <el-button>取消</el-button>
                             </el-col>
                         </el-row>
                     </el-form>
@@ -184,14 +286,23 @@ export default {
         address: '',
         photo: '',
         imageUrl: '',
-        room1: '',
+        room1: '标准间',
         lng: 1,
         lat: 1,
         quantity1: 1,
         roomPhoto1: '',
-        room2: '',
+        room2: '双人间',
+        room3: '大床房',
+        room4: '亲子房',
+        room5: '总统套房',
         quantity2: 1,
+        quantity3: 1,
+        quantity4: 1,
+        quantity5: 1,
+        roomPhoto5: '',
         roomPhoto2: '',
+        roomPhoto3: '',
+        roomPhoto4: '',
         areaCode: '',
         province: '',
         city: '',
@@ -304,10 +415,8 @@ export default {
     handleRoom1Num (value) {
       console.log(value)
     },
-    handleRoom1Type () {
-      for (var i = 1; i < 6; i++) {
-        this.roomOptions.forEach()
-      }
+    hotelSubmit () {
+
     }
   }
 }
@@ -327,7 +436,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:100vh;
+        height:135vh;
     }
     .el-submenu {
         background-color: #FFFFCC;
