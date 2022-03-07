@@ -32,6 +32,8 @@ export const sendEmailForPassword = (obj) => http.GET('/api/user/sendMailForPass
 // reset密码
 export const resetPwd = (obj) => http.GET('/api/user/forgetPassword', obj)
 // 管理员获取酒店列表
-export const adminGetHotelList = () => http.GET('/api/hotel/forgetPassword')
+export const adminGetHotelList = () => http.GET('/api/hotel/hotellist')
 // 管理员增加酒店
 export const addHotel = (obj) => http.GET('/api/hotel/forgetPassword', obj)
+// 管理员获取酒店详情
+export const adminGetDetail = (obj) => http.GET('/api/hotel/detail', obj)

@@ -59,7 +59,7 @@
                                 width="250" align="center" header-align="center">
                         </el-table-column>
                         <el-table-column
-                                prop="reservation"
+                                prop="countt"
                                 label="预订次数"
                                 sortable
                                 width="200" align="center" header-align="center" >
@@ -149,7 +149,7 @@
 <script>
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import Header from '../../../../components/Header'
-import {adminGetHotelList} from '@/api/api'
+import {adminGetHotelList, adminGetDetail} from '@/api/api'
 
 export default {
   name: 'hotelList',
@@ -165,7 +165,7 @@ export default {
   },
   created () {
     adminGetHotelList().then(res => {
-      console.info(res.data)
+      this.hotel = res.data
     })
   },
   methods: {
@@ -180,6 +180,13 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleClick (myRow) {
+      this.dialogVisible = true
+      let myDetail = {hId: myRow.hid}
+      adminGetDetail(myDetail).then(res => {
+        this.returnDetail = res.data
+      })
     }
   }
 }
