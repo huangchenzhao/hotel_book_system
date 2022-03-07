@@ -35,8 +35,8 @@
                     </el-menu>
                 </el-aside>
                 <el-main class="el-main">
-                    <el-form :model="hotelForm" :rules="rules" ref="ruleForm" class="hotelForm">
-                        <el-row type="flex" justify="space-around">
+                    <el-form :model="hotelForm" :rules="rules" ref="ruleForm" class="hotelForm" :label-position="labelPosition">
+                        <el-row :gutter="20">
                             <el-col :span="6">
                                 <el-form-item label="酒店名称" prop="name">
                                     <el-input v-model="hotelForm.name" placeholder="请输入酒店名称"></el-input>
@@ -57,8 +57,6 @@
                                     <el-input v-model="hotelForm.address" placeholder="请填写具体地址，如：'西航港街道101号'"></el-input>
                                 </el-form-item>
                             </el-col>
-                        </el-row>
-                        <el-row type="flex" justify="space-around">
                             <el-col :span="6">
                                 <el-form-item label="酒店图片" prop="photo">
                                     <el-upload
@@ -68,12 +66,36 @@
                                             :on-success="handleAvatarSuccess"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
-                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+<!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
                                     </el-upload>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                        </el-row>
+                        <el-row :gutter="20">
+                            <el-col :span="16">
+                                <baidu-map
+                                        :scroll-wheel-zoom="true"
+                                        :center="center"
+                                        :zoom="zoom"
+                                        class="bm-view"
+                                        ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl"
+                                        @moving="syncCenterAndZoom"
+                                        @moveend="syncCenterAndZoom"
+                                        @zoomend="syncCenterAndZoom"
+                                        @ready="handler">
+                                    <bm-marker :position="center" :dragging="false">
+                                        <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
+                                    </bm-marker>
+                                </baidu-map>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-form-item label="酒店经度" prop="lng">
+                                <el-input v-model.number="center.lng" ></el-input>
+                                </el-form-item>
+                                    <el-form-item label="酒店纬度" prop="lat">
+                                <el-input v-model.number="center.lat"></el-input>
+                                </el-form-item>
+                            </el-col>
                         </el-row>
                         <el-row type="flex" justify="space-around">
                             <el-col :span="6">
@@ -88,32 +110,61 @@
                                     </el-select>
                                 </el-form-item>
                             </el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-                            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间数量" prop="quantity1">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity1" @change="handleRoom1Num" :min="1" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间1图片" prop="roomPhoto1">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+<!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row type="flex" justify="space-around">
+                            <el-col :span="6">
+                                <el-form-item label="房型" prop="room2">
+                                    <el-select v-model="hotelForm.room2" @change="handleRoom1Num" placeholder="请选择房型" style="width: 100%" prefix-icon="el-icon-house">
+                                        <el-option
+                                                v-for="item in roomOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间数量" prop="quantity1">
+                                    <el-input-number size="medium" v-model="hotelForm.quantity2" :min="1" :max="100" label="描述文字"></el-input-number>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-form-item label="房间2图片" prop="roomPhoto2">
+                                    <el-upload
+                                            class="avatar-uploader"
+                                            action="/api/file/upload"
+                                            :http-request="uploadImg"
+                                            :on-success="handleAvatarSuccess"
+                                            :before-upload="beforeAvatarUpload">
+                                        <el-button type="primary">点击上传</el-button>
+                                        <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                                    </el-upload>
+                                </el-form-item>
+                            </el-col>
                         </el-row>
                     </el-form>
                 </el-main>
             </el-container>
         </el-container>
-      <div>
-        <input v-model.number="center.lng">
-        <input v-model.number="center.lat">
-        <input v-model.number="zoom">
-        <baidu-map
-            :scroll-wheel-zoom="true"
-            :center="center"
-            :zoom="zoom"
-            class="bm-view"
-            ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl"
-            @moving="syncCenterAndZoom"
-            @moveend="syncCenterAndZoom"
-            @zoomend="syncCenterAndZoom"
-            @ready="handler">
-          <bm-marker :position="center" :dragging="false">
-            <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
-          </bm-marker>
-        </baidu-map>
-      </div>
     </div>
 </template>
 
@@ -133,28 +184,46 @@ export default {
         address: '',
         photo: '',
         imageUrl: '',
-        room1: ''
+        room1: '',
+        lng: 1,
+        lat: 1,
+        quantity1: 1,
+        roomPhoto1: '',
+        room2: '',
+        quantity2: 1,
+        roomPhoto2: ''
       },
+      labelPosition: 'top',
       center: {
         lng: 116.404,
         lat: 39.915
       },
       zoom: 15,
       roomOptions: [{
+        id: 1,
         value: '标准间',
-        label: '标准间'
+        label: '标准间',
+        disabled: false
       }, {
+        id: 2,
         value: '双人房',
-        label: '双人房'
+        label: '双人房',
+        disabled: false
       }, {
+        id: 3,
         value: '大床房',
-        label: '大床房'
+        label: '大床房',
+        disabled: false
       }, {
+        id: 4,
         value: '亲子房',
-        label: '亲子房'
+        label: '亲子房',
+        disabled: false
       }, {
+        id: 5,
         value: '总统套房',
-        label: '总统套房'
+        label: '总统套房',
+        disabled: false
       }],
       rules: {
         name: [
@@ -221,6 +290,14 @@ export default {
       this.center.lng = 116.404
       this.center.lat = 39.915
       this.zoom = 15
+    },
+    handleRoom1Num (value) {
+      console.log(value)
+    },
+    handleRoom1Type () {
+      for (var i = 1; i < 6; i++) {
+        this.roomOptions.forEach()
+      }
     }
   }
 }
