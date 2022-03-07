@@ -61,6 +61,7 @@
                         <el-table-column
                                 prop="countt"
                                 label="预订次数"
+                                :formatter="counttFormat"
                                 sortable
                                 width="150" align="center" header-align="center" >
                         </el-table-column>
@@ -205,6 +206,9 @@ export default {
       adminGetDetail(myDetail).then(res => {
         this.returnDetail = res.data
       })
+    },
+    counttFormat (row) {
+      return row.countt == null ? '0' : row.countt
     },
     editPrice (myRow) {
       this.priceDialog = true
