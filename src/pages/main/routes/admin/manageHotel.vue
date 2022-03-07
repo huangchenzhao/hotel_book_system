@@ -7,7 +7,7 @@
             <el-container>
                 <el-aside width="200px" class="el-aside">
                     <el-menu class="el-menu" @open="handleOpen"
-                             @close="handleClose" router :default-active="$route.path">
+                             @close="handleClose" :default-openeds="openeds" router :default-active="$route.path">
                         <el-submenu index="1">
                             <template slot="title">
                                 <i class="el-icon-office-building"></i>
@@ -79,10 +79,19 @@
                             <template slot-scope="scope">
                                 <el-button
                                         type="text" @click="handleClick(scope.row)">
-                                    查看详情
+                                    管理酒店信息
                                 </el-button>
                             </template>
                             <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="90%">
+                                <el-row :gutter="20">
+                                    <el-col :span="12">
+                                        <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">
+                                            <bm-marker :position="center" :dragging="false">
+                                                <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
+                                            </bm-marker>
+                                        </baidu-map>
+                                    </el-col>
+                                    <el-col :span="12">
                                         <el-table :data="returnDetail">
                                             <el-table-column
                                                     prop="photo.photoUrl"
@@ -118,6 +127,8 @@
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
                                         </el-table>
+                                    </el-col>
+                                </el-row>
                             </el-dialog>
                         </el-table-column>
                     </el-table>
@@ -136,26 +147,17 @@
 </template>
 
 <script>
-import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import Header from '../../../../components/Header'
-import {adminGetHotelList, adminGetDetail} from '@/api/api'
-
 export default {
-  name: 'hotelList',
-  components: {BaiduMap, Header},
+  name: 'manageHotel',
+  components: {Header},
   data () {
     return {
       hotel: [],
       pageSize: 10,
       currentPage: 1,
-      returnDetail: [],
       dialogVisible: false
     }
-  },
-  created () {
-    adminGetHotelList().then(res => {
-      this.hotel = res.data
-    })
   },
   methods: {
     handleCurrentChange (currentPage) {
@@ -172,10 +174,6 @@ export default {
     },
     handleClick (myRow) {
       this.dialogVisible = true
-      let myDetail = {hId: myRow.hid}
-      adminGetDetail(myDetail).then(res => {
-        this.returnDetail = res.data
-      })
     }
   }
 }
@@ -210,7 +208,7 @@ export default {
         background-color: #E9EEF3;
         color: #333;
         text-align: center;
-        /*line-height: 160px;*/
+        line-height: 160px;
     }
 
     .el-container:nth-child(5) .el-aside,

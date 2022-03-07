@@ -15,7 +15,7 @@
                             </template>
                             <el-menu-item index="/hotel/list">酒店列表</el-menu-item>
                             <el-menu-item index="/hotel/add">增加酒店</el-menu-item>
-                            <el-menu-item index="1-3">酒店管理</el-menu-item>
+                            <el-menu-item index="/hotel/manage">酒店管理</el-menu-item>
                         </el-submenu>
                         <el-submenu index="2">
                             <template slot="title">
@@ -258,7 +258,7 @@
                             </el-col>
                         </el-row>
                         <el-row :gutter="20">
-                            <el-col :span="12" :offset="6">
+                            <el-col :span="12" :offset="9">
                                 <el-button type="primary" @click="hotelSubmit">立即创建</el-button>
                                 <el-button>取消</el-button>
                             </el-col>

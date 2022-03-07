@@ -1,5 +1,5 @@
 export default {
-  whiteList: ['/', 'notFound', 'login', 'forbidden', 'badGateway', 'userPage', 'searchResult', 'userOrder', 'list', 'hotelList', 'addHotel'],
+  whiteList: ['/', 'notFound', 'login', 'forbidden', 'badGateway', 'userPage', 'searchResult', 'userOrder', 'list', 'hotelList', 'addHotel', 'manageHotel'],
   permissionMap: {
     1: {
       main: ['*']

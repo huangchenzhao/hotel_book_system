@@ -15,7 +15,7 @@
                             </template>
                             <el-menu-item index="/hotel/list">酒店列表</el-menu-item>
                             <el-menu-item index="/hotel/add">增加酒店</el-menu-item>
-                            <el-menu-item index="1-3">酒店管理</el-menu-item>
+                            <el-menu-item index="/hotel/manage">酒店管理</el-menu-item>
                         </el-submenu>
                         <el-submenu index="2">
                             <template slot="title">
@@ -75,7 +75,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:130vh;
+        height:135vh;
     }
     .el-submenu {
         background-color: #FFFFCC;
