@@ -29,7 +29,7 @@
                                 <i class="el-icon-user"></i>
                                 <span>用户信息</span>
                             </template>
-                            <el-menu-item index="3-1">用户列表</el-menu-item>
+                            <el-menu-item index="/user/list">用户列表</el-menu-item>
                             <el-menu-item index="3-2">用户管理</el-menu-item>
                         </el-submenu>
                     </el-menu>
@@ -48,7 +48,7 @@
                         <el-table-column
                                 prop="photo.photoUrl"
                                 label="图片"
-                                width="300" align="center" header-align="center" >
+                                width="250" align="center" header-align="center" >
                             <template slot-scope="scope">
                                 <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
                             </template>
@@ -56,14 +56,14 @@
                         <el-table-column
                                 prop="address.detail"
                                 label="详细地址"
-                                width="250" align="center" header-align="center">
+                                width="200" align="center" header-align="center">
                         </el-table-column>
                         <el-table-column
                                 prop="countt"
                                 label="预订次数"
                                 :formatter="counttFormat"
                                 sortable
-                                width="200" align="center" header-align="center" >
+                                width="150" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="star"
@@ -78,12 +78,16 @@
                                 label="操作"
                                 align="center" header-align="center" >
                             <template slot-scope="scope">
+                                <el-popconfirm
+                                        title="确定删除这家酒店吗?" @onConfirm="delHotel">
+                                    <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
+                                </el-popconfirm>
                                 <el-button
-                                        type="text" @click="handleClick(scope.row)">
+                                        type="primary" icon="el-icon-search" @click="handleClick(scope.row)">
                                     查看详情
                                 </el-button>
                             </template>
-                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="40%">
+                            <el-dialog :visible.sync="dialogVisible" append-to-body="true" width="55%">
                                         <el-table :data="returnDetail">
                                             <el-table-column
                                                     prop="photo.photoUrl"
@@ -155,7 +159,6 @@ export default {
   },
   created () {
     adminGetHotelList().then(res => {
-      alert(JSON.stringify(res.data))
       this.hotel = res.data
     })
   },

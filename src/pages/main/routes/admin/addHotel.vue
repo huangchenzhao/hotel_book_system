@@ -29,7 +29,7 @@
                                 <i class="el-icon-user"></i>
                                 <span>用户信息</span>
                             </template>
-                            <el-menu-item index="3-1">用户列表</el-menu-item>
+                            <el-menu-item index="/user/list">用户列表</el-menu-item>
                             <el-menu-item index="3-2">用户管理</el-menu-item>
                         </el-submenu>
                     </el-menu>
