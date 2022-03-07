@@ -2,6 +2,8 @@ package com.example.mybatisplus.web.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.mapper.UserMapper;
+import com.example.mybatisplus.model.domain.Hotelinfo;
+import com.example.mybatisplus.service.HotelService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -34,8 +36,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired(required = false)
     private UserMapper userMapper;
+
+    @Autowired(required = false)
+    private HotelService hotelService;
 
     /**
      * 描述：根据Id 查询
@@ -255,6 +261,14 @@ public class UserController {
         return JsonResponse.success(allusers);
     }
 
+    //添加酒店，接收前端酒店信息，地址信息，房间信息，图片信息，如果酒店已存在数据库则返回酒店已注册，否则写入数据库
+    //具体传参格式参考我在群里传的图片
+    @PostMapping("/addHotel")
+    @ResponseBody
+    public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo){
+        System.out.println(hotelinfo);
+        return JsonResponse.success(hotelService.saveHotelInfo(hotelinfo));
+    }
 
 
 }

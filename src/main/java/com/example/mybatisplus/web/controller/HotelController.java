@@ -20,38 +20,34 @@ import java.util.Map;
 
 
 /**
- *
- *  前端控制器
- *
+ * 前端控制器
  *
  * @author gzx
- * @since 2022-02-28
  * @version v1.0
+ * @since 2022-02-28
  */
 @Controller
 @RequestMapping("/api/hotel")
 public class HotelController {
 
-    private final Logger logger = LoggerFactory.getLogger( HotelController.class );
+    private final Logger logger = LoggerFactory.getLogger(HotelController.class);
 
     @Autowired
     private HotelService hotelService;
 
     /**
-    * 描述：根据Id 查询
-    *
-    */
+     * 描述：根据Id 查询
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse getById(@PathVariable("id") Long id)throws Exception {
-        Hotel  hotel =  hotelService.getById(id);
+    public JsonResponse getById(@PathVariable("id") Long id) throws Exception {
+        Hotel hotel = hotelService.getById(id);
         return JsonResponse.success(hotel);
     }
 
     /**
-    * 描述：根据Id删除
-    *
-    */
+     * 描述：根据Id删除
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public JsonResponse deleteById(@PathVariable("id") Long id) throws Exception {
@@ -61,9 +57,9 @@ public class HotelController {
 
 
     /**
-    * 描述：根据Id 更新
-    *
-    */
+     * 描述：根据Id 更新
+     *
+     */
 //    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 //    @ResponseBody
 //    public JsonResponse updateHotel(@PathVariable("id") Long  id,Hotel  hotel) throws Exception {
@@ -74,12 +70,11 @@ public class HotelController {
 
 
     /**
-    * 描述:创建Hotel
-    *
-    */
+     * 描述:创建Hotel
+     */
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResponse create(Hotel  hotel) throws Exception {
+    public JsonResponse create(Hotel hotel) throws Exception {
         hotelService.save(hotel);
         return JsonResponse.success(null);
     }
@@ -100,31 +95,33 @@ public class HotelController {
     //如果用户输入了房型则只计算对应房型
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse search(HttpServletRequest request, @RequestParam(value="name",required=false) String hotelName, @RequestParam(value="checkin",required=false)Date checkIn,
-                               @RequestParam(value="checkout",required=false) Date checkOut, @RequestParam(value="code",required=false) Integer code,
-                               @RequestParam(value="roomtype",required=false)String roomType) throws Exception {
+    public JsonResponse search(HttpServletRequest request, @RequestParam(value = "name", required = false) String hotelName, @RequestParam(value = "checkin", required = false) Date checkIn,
+                               @RequestParam(value = "checkout", required = false) Date checkOut, @RequestParam(value = "code", required = false) Integer code,
+                               @RequestParam(value = "roomtype", required = false) String roomType) throws Exception {
 //        hotelService.save();
         HttpSession session = request.getSession();
-        session.setAttribute("checkin",checkIn);
-        session.setAttribute("checkout",checkOut);
-        List<Hotel> hotel1 =  hotelService.searchResult(hotelName,checkIn,checkOut,code,roomType);
+        session.setAttribute("checkin", checkIn);
+        session.setAttribute("checkout", checkOut);
+        List<Hotel> hotel1 = hotelService.searchResult(hotelName, checkIn, checkOut, code, roomType);
         return JsonResponse.success(hotel1);
     }
+
     //酒店推荐
     //gzx
     @GetMapping("/recommend")
     @ResponseBody
-    public JsonResponse recommend()throws Exception {
+    public JsonResponse recommend() throws Exception {
         List<Hotel> hotelList = hotelService.listrem();
         return JsonResponse.success(hotelList);
     }
+
     @PostMapping("/test")
     @ResponseBody
-    public JsonResponse test(@RequestBody Hotelinfo hotelinfo){
-       System.out.println(hotelinfo);
-       hotelService.saveHotelInfo(hotelinfo);
-        return JsonResponse.success(hotelinfo);
+    public JsonResponse test(@RequestBody Hotelinfo hotelinfo) {
+        System.out.println(hotelinfo);
+        return JsonResponse.success(hotelService.saveHotelInfo(hotelinfo));
     }
+
     //酒店详情
     //gzx
     @GetMapping("/detail")
@@ -133,8 +130,8 @@ public class HotelController {
         HttpSession session = request.getSession();
         Date checkin = (Date) session.getAttribute("checkin");
         Date checkout = (Date) session.getAttribute("checkout");
-        session.setAttribute("hotelId",hId);
-        List<Hotel> hotel = hotelService.detail(hId,checkin,checkout);
+        session.setAttribute("hotelId", hId);
+        List<Hotel> hotel = hotelService.detail(hId, checkin, checkout);
 //        List<Hotel> hotel2=hotelService.detail2(hId);
 //        for(Hotel h:hotel2){
 //            hotel.add(h);
@@ -143,16 +140,14 @@ public class HotelController {
     }
 
 
-
     //管理员查看酒店
     //gzx
     @GetMapping("/hotellist")
     @ResponseBody
-    public JsonResponse hotellist()throws Exception{
+    public JsonResponse hotellist() throws Exception {
         List<Hotel> hotelList = hotelService.showlist();
         return JsonResponse.success(hotelList);
     }
-
 
 
 }

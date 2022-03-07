@@ -31,6 +31,14 @@ public class Detail extends Model<Detail> {
 
     private Integer remain;
 
+    public Detail(LocalDate date, Long rId, Integer amount) {
+        this.rDate = date;
+        this.rId = rId;
+        this.remain = amount;
+    }
+    public Detail(){
+
+    }
 
     @Override
     protected Serializable pkVal() {
