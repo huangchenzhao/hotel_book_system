@@ -1,3 +1,4 @@
+/*
 package com.example.mybatisplus;
 
 import com.example.mybatisplus.mapper.HotelMapper;
@@ -99,3 +100,4 @@ class MybatisplusApplicationTests {
 //        }
     }
 }
+*/
