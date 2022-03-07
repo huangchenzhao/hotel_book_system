@@ -261,6 +261,8 @@ public class UserController {
         return JsonResponse.success(allusers);
     }
 
+    //添加酒店，接收前端酒店信息，地址信息，房间信息，图片信息，如果酒店已存在数据库则返回酒店已注册，否则写入数据库
+    //具体传参格式参考我在群里传的图片
     @PostMapping("/addHotel")
     @ResponseBody
     public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo){
