@@ -45,8 +45,8 @@ class MybatisplusApplicationTests {
 
     @Test
     void test(){
-        long l = Date.parse("1 Feb 2022");
-        long ll = Date.parse("3 Feb 2022");
+        long l = Date.parse("28 Feb 2022");
+        long ll = Date.parse("4 Mar 2022");
         Date date1= new Date(l);
         Date date2= new Date(ll);
         java.sql.Date checkinSql=null;
@@ -60,8 +60,10 @@ class MybatisplusApplicationTests {
             checkoutSql= new java.sql.Date(date2.getTime());
         }catch(Exception e) {
         }
-        List<Hotel> abc =hotelMapper.showDetails(1L,checkinSql,checkoutSql);
+        List<Hotel> abc =hotelMapper.showDetails(null,checkinSql,checkoutSql);
+        List<Hotel> result = hotelMapper.test(abc);
         System.out.println(abc);
+        System.out.println(result);
     }
 
 //    @Test

@@ -199,6 +199,9 @@
         </if>
         inner join address on hotel.a_id=address.a_id
     </select>
+    <select id="test" resultMap="SearchResultMap">
+        select * from #{datas} where datas.h_id=2;
+    </select>
 
     <!--</select>-->
     <!--<select id="showDetails2" resultMap="HotelDetailMap">-->

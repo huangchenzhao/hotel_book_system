@@ -1,5 +1,7 @@
 package com.example.mybatisplus.web.controller;
 
+import com.example.mybatisplus.model.domain.Hotelinfo;
+import com.example.mybatisplus.model.domain.Room;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -114,6 +117,13 @@ public class HotelController {
     public JsonResponse recommend()throws Exception {
         List<Hotel> hotelList = hotelService.listrem();
         return JsonResponse.success(hotelList);
+    }
+    @PostMapping("/test")
+    @ResponseBody
+    public JsonResponse test(@RequestBody Hotelinfo hotelinfo){
+       System.out.println(hotelinfo);
+       hotelService.saveHotelInfo(hotelinfo);
+        return JsonResponse.success(hotelinfo);
     }
     //酒店详情
     //gzx

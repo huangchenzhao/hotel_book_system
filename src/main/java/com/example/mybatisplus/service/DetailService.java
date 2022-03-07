@@ -15,4 +15,5 @@ import java.time.LocalDate;
  */
 public interface DetailService extends IService<Detail> {
     Detail updateRemain(Long roomId, LocalDate checkIn, LocalDate checkOut, Integer quantity)throws Exception;
+    String saveDetail(Long rId, Integer amount);
 }
