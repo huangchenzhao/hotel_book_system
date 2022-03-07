@@ -115,6 +115,7 @@
                                             <el-table-column
                                                     prop="roomcount"
                                                     label="预订次数"
+                                                    :formatter="roomcountFormat"
                                                     width="100" align="center" header-align="center">
                                             </el-table-column>
                                             <el-table-column
@@ -184,6 +185,9 @@ export default {
     },
     counttFormat (row) {
       return row.countt == null ? '0' : row.countt
+    },
+    roomcountFormat (row) {
+      return row.roomcount == null ? '0' : row.roomcount
     }
   }
 }

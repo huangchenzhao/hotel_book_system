@@ -84,7 +84,7 @@
                                         @zoomend="syncCenterAndZoom"
                                         @ready="handler">
                                     <bm-marker :position="center" :dragging="false">
-                                        <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
+                                        <bm-label content="新增酒店的位置" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>
                                     </bm-marker>
                                 </baidu-map>
                             </el-col>
@@ -272,7 +272,8 @@
 
 <script>
 import Header from '../../../../components/Header'
-import { regionData, CodeToText, addHotel } from 'element-china-area-data'
+import { regionData, CodeToText } from 'element-china-area-data'
+import {addHotel} from '@/api/api'
 export default {
   name: 'addHotel',
   components: {Header},
@@ -386,20 +387,6 @@ export default {
       }
       return isJPG && isLt2M
     },
-    commitHotel () {
-      let newHotel = {name: this.hotelForm.name,
-        detail: this.hotelForm.address,
-        province: this.hotelForm.province,
-        city: this.hotelForm.city,
-        district: this.hotelForm.district,
-        areaCode: this.hotelForm.areaCode,
-        longitude: this.center.lng,
-        latitude: this.center.lat
-      }
-      addHotel(newHotel).then(res => {
-        console.info(res.data)
-      })
-    },
     syncCenterAndZoom (e) {
       const {lng, lat} = e.target.getCenter()
       this.center.lng = lng
@@ -412,9 +399,6 @@ export default {
       this.center.lat = 39.915
       this.zoom = 15
     },
-    handleRoom1Num (value) {
-      console.log(value)
-    },
     hotelSubmit () {
       if ((this.hotelForm.quantity1 +
           this.hotelForm.quantity2 +
@@ -423,7 +407,53 @@ export default {
           this.hotelForm.quantity5) === 0) {
         this.$message.error({message: '请添加至少一间房型！', center: true})
       } else {
-
+        let photoUrl = {
+          photoUrl: 'newhotelphoto'
+        }
+        let hotel = {
+          longitude: this.center.lng,
+          latitude: this.center.lat,
+          star: 1,
+          name: this.hotelForm.name,
+          photo: photoUrl
+        }
+        let address = {
+          detail: this.hotelForm.address,
+          province: this.hotelForm.province,
+          city: this.hotelForm.city,
+          district: this.hotelForm.district,
+          code: this.hotelForm.areaCode
+        }
+        let room1 = {
+          price: 800,
+          roomtype: '大床房',
+          amount: 10,
+          photo: photoUrl
+        }
+        let room2 = {
+          price: 800,
+          roomtype: '大床房',
+          amount: 10,
+          photo: photoUrl
+        }
+        let room3 = {
+          price: 800,
+          roomtype: '大大大床房',
+          amount: 10,
+          photo: photoUrl
+        }
+        let room = []
+        room.push(room1)
+        room.push(room2)
+        room.push(room3)
+        let newHotel = {
+          hotel: hotel,
+          address: address,
+          room: room
+        }
+        addHotel(newHotel).then(res => {
+          console.info(res.data)
+        })
       }
     }
   }
