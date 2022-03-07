@@ -71,6 +71,12 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
         return  hoteldetail;
     }
+
+    @Override
+    public List<Hotel> showlist(){
+        List<Hotel> hotelList = hotelMapper.showlist();
+        return hotelList;
+    }
 //    @Override
 //    public List<Hotel> detail2(Long hId) {
 //        List<Hotel> hoteldetail2 = hotelMapper.showDetails2(hId);

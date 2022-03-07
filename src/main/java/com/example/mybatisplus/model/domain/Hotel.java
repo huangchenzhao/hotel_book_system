@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gzx
@@ -59,6 +59,9 @@ public class Hotel extends Model<Hotel> {
 
     @TableField(exist=false)
     private Date checkOut;
+
+    @TableField(exist = false)
+    private Integer countt;
 
 
 
