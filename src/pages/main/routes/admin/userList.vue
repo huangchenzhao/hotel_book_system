@@ -22,7 +22,7 @@
                                 <i class="el-icon-sell"></i>
                                 <span>订单信息</span>
                             </template>
-                            <el-menu-item index="2-1">订单列表</el-menu-item>
+                            <el-menu-item index="/order/list">订单列表</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title">
@@ -78,9 +78,9 @@
                                 <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
                             </el-popconfirm>
                             <el-button
-                                    type="primary" icon="el-icon-edit" @click="dialogFormVisible = true">
+                                    type="primary" icon="el-icon-edit" @click="getUserDefault(scope.row)">
                             </el-button>
-                            <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+                            <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible">
                                 <el-form :model="userForm">
                                     <el-form-item label="用户名">
                                         <el-input v-model="userForm.name" autocomplete="off"></el-input>
@@ -88,10 +88,13 @@
                                     <el-form-item label="密码">
                                         <el-input v-model="userForm.pwd" autocomplete="off"></el-input>
                                     </el-form-item>
+                                    <el-form-item label="邮箱">
+                                        <el-input v-model="userForm.mail" autocomplete="off"></el-input>
+                                    </el-form-item>
                                 </el-form>
                                 <div slot="footer" class="dialog-footer">
                                     <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                                    <el-button type="primary" @click="editUser">确 定</el-button>
                                 </div>
                             </el-dialog>
                         </template>
@@ -124,7 +127,9 @@ export default {
       currentPage: 1,
       dialogFormVisible: false,
       userForm: {
-        name
+        name: '',
+        pwd: '',
+        mail: ''
       }
     }
   },
@@ -142,6 +147,15 @@ export default {
       this.pageSize = val
     },
     delUser (user) {
+    },
+    editUser () {
+      this.dialogFormVisible = false
+    },
+    getUserDefault (user) {
+      this.userForm.name = user.name
+      this.userForm.pwd = user.pwd
+      this.userForm.mail = user.mail
+      this.dialogFormVisible = true
     }
   }
 }
