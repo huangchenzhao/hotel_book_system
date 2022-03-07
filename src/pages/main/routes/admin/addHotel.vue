@@ -132,7 +132,7 @@
                                             class="avatar-uploader"
                                             action="/api/file/upload"
                                             :http-request="uploadImg"
-                                            :on-success="handleAvatarSuccess"
+                                            :on-success="handleAvatarSuccess1"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
 <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -169,7 +169,7 @@
                                             class="avatar-uploader"
                                             action="/api/file/upload"
                                             :http-request="uploadImg"
-                                            :on-success="handleAvatarSuccess"
+                                            :on-success="handleAvatarSuccess2"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
                                         <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -206,7 +206,7 @@
                                             class="avatar-uploader"
                                             action="/api/file/upload"
                                             :http-request="uploadImg"
-                                            :on-success="handleAvatarSuccess"
+                                            :on-success="handleAvatarSuccess3"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
                                         <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -243,7 +243,7 @@
                                             class="avatar-uploader"
                                             action="/api/file/upload"
                                             :http-request="uploadImg"
-                                            :on-success="handleAvatarSuccess"
+                                            :on-success="handleAvatarSuccess4"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
                                         <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -280,7 +280,7 @@
                                             class="avatar-uploader"
                                             action="/api/file/upload"
                                             :http-request="uploadImg"
-                                            :on-success="handleAvatarSuccess"
+                                            :on-success="handleAvatarSuccess5"
                                             :before-upload="beforeAvatarUpload">
                                         <el-button type="primary">点击上传</el-button>
                                         <!--                                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
@@ -318,11 +318,10 @@ export default {
         address: '',
         photo: '',
         imageUrl: '',
-        room1: '标准间',
+        hotelPhoto: '',
         lng: 1,
         lat: 1,
-        quantity1: 0,
-        roomPhoto1: '',
+        room1: '标准间',
         room2: '双人间',
         room3: '大床房',
         room4: '亲子房',
@@ -332,14 +331,16 @@ export default {
         price3: 1,
         price4: 1,
         price5: 1,
+        quantity1: 0,
         quantity2: 0,
         quantity3: 0,
         quantity4: 0,
         quantity5: 0,
-        roomPhoto5: '',
+        roomPhoto1: '',
         roomPhoto2: '',
         roomPhoto3: '',
         roomPhoto4: '',
+        roomPhoto5: '',
         areaCode: '',
         province: '',
         city: '',
@@ -406,11 +407,42 @@ export default {
       this.hotelForm.province = CodeToText[this.hotelForm.selectedOptions[0]]
       this.hotelForm.city = CodeToText[this.hotelForm.selectedOptions[1]]
       this.hotelForm.district = CodeToText[this.hotelForm.selectedOptions[2]]
+      this.hotelForm.areaCode = this.hotelForm.selectedOptions[this.hotelForm.selectedOptions.length - 1]
     },
     handleAvatarSuccess (res, file) {
       this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
       this.imgReturn = res.url.slice(1)
-      console.info(this.imgReturn)
+      this.hotelForm.hotelPhoto = res.url
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    handleAvatarSuccess1 (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      this.hotelForm.roomPhoto1 = res.url
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    handleAvatarSuccess2 (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      this.hotelForm.roomPhoto2 = res.url
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    handleAvatarSuccess3 (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      this.hotelForm.roomPhoto3 = res.url
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    handleAvatarSuccess4 (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      this.hotelForm.roomPhoto4 = res.url
+      // document.setElementById('imgid').setAttribute('src', this.imgReturn)
+    },
+    handleAvatarSuccess5 (res, file) {
+      this.hotelForm.imageUrl = URL.createObjectURL(file.raw)
+      this.imgReturn = res.url.slice(1)
+      this.hotelForm.roomPhoto5 = res.url
       // document.setElementById('imgid').setAttribute('src', this.imgReturn)
     },
     beforeAvatarUpload (file) {
@@ -446,12 +478,12 @@ export default {
         this.$message.error({message: '请添加至少一间房型！', center: true})
       } else {
         let photoUrl = {
-          photoUrl: 'newhotelphoto'
+          photoUrl: this.hotelForm.hotelPhoto
         }
         let hotel = {
           longitude: this.center.lng,
           latitude: this.center.lat,
-          star: 1,
+          star: this.hotelForm.star,
           name: this.hotelForm.name,
           photo: photoUrl
         }
@@ -462,28 +494,69 @@ export default {
           district: this.hotelForm.district,
           code: this.hotelForm.areaCode
         }
+        photoUrl = {
+          photoUrl: this.hotelForm.roomPhoto1
+        }
         let room1 = {
-          price: 800,
-          roomtype: '大床房',
-          amount: 10,
+          price: this.hotelForm.price1,
+          roomtype: '标准间',
+          amount: this.hotelForm.quantity1,
           photo: photoUrl
+        }
+        photoUrl = {
+          photoUrl: this.hotelForm.roomPhoto2
         }
         let room2 = {
-          price: 800,
-          roomtype: '大床房',
-          amount: 10,
+          price: this.hotelForm.price2,
+          roomtype: '双人间',
+          amount: this.hotelForm.quantity2,
           photo: photoUrl
+        }
+        photoUrl = {
+          photoUrl: this.hotelForm.roomPhoto3
         }
         let room3 = {
-          price: 800,
-          roomtype: '大大大床房',
-          amount: 10,
+          price: this.hotelForm.price3,
+          roomtype: '大床房',
+          amount: this.hotelForm.quantity3,
           photo: photoUrl
         }
+        photoUrl = {
+          photoUrl: this.hotelForm.roomPhoto4
+        }
+        let room4 = {
+          price: this.hotelForm.price4,
+          roomtype: '亲子房',
+          amount: this.hotelForm.quantity4,
+          photo: photoUrl
+        }
+        photoUrl = {
+          photoUrl: this.hotelForm.roomPhoto5
+        }
+        let room5 = {
+          price: this.hotelForm.price5,
+          roomtype: '总统套房',
+          amount: this.hotelForm.quantity5,
+          photo: photoUrl
+        }
+        let allRoom = []
+        allRoom.push(room1)
+        allRoom.push(room2)
+        allRoom.push(room3)
+        allRoom.push(room4)
+        allRoom.push(room5)
+        let quantities = []
+        quantities.push(this.hotelForm.quantity1)
+        quantities.push(this.hotelForm.quantity2)
+        quantities.push(this.hotelForm.quantity3)
+        quantities.push(this.hotelForm.quantity4)
+        quantities.push(this.hotelForm.quantity5)
         let room = []
-        room.push(room1)
-        room.push(room2)
-        room.push(room3)
+        for (let i = 0; i < 5; i++) {
+          if (quantities[i] > 0) {
+            room.push(allRoom[i])
+          }
+        }
         let newHotel = {
           hotel: hotel,
           address: address,
@@ -491,6 +564,11 @@ export default {
         }
         addHotel(newHotel).then(res => {
           console.info(res.data)
+          this.$message({
+            message: '添加酒店成功~',
+            type: 'success',
+            center: true
+          })
         })
       }
     }
