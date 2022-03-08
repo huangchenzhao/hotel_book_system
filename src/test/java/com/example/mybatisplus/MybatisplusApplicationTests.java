@@ -111,11 +111,11 @@ class MybatisplusApplicationTests {
     @Test
     void test5 (){
         User user = new User();
-        user.setUsername("张三");
+        user.setUsername("张iahfha");
         user.setPassword("456");
-//        user.setMail("123@qq.com");
-//        System.out.println(userController.addUser(user));
-        System.out.println(userController.alluser());
+        user.setMail("123gag@qq.com");
+        System.out.println(userController.addUser(user));
+        //System.out.println(userController.alluser());
     }
     /*@Test
     void test6(){

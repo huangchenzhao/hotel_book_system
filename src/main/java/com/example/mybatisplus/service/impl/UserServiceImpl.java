@@ -259,6 +259,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 }catch(Exception e){
                     return "数据库错误";
                 }
+                user.setUsertype(1);
                 saveOrUpdate(user);
             }
         } catch (Exception e) {
