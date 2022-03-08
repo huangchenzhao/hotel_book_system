@@ -81,17 +81,17 @@
                                 align="center" header-align="center" width="150">
                         </el-table-column>
                         <el-table-column
-                                prop="userName"
+                                prop="truename"
                                 label="入住人姓名"
                                 align="center" header-align="center" width="100">
                         </el-table-column>
                         <el-table-column
-                                prop="userPhone"
+                                prop="phonenumber"
                                 label="入住人联系方式"
                                 align="center" header-align="center" width="130">
                         </el-table-column>
                         <el-table-column
-                                prop="userID"
+                                prop="idcard"
                                 label="入住人身份证号"
                                 align="center" header-align="center" >
                         </el-table-column>
@@ -112,6 +112,7 @@
 
 <script>
 import Header from '../../../../components/Header'
+import {adminGetOrderList} from '@/api/api'
 export default {
   name: 'orderList',
   components: {Header},
@@ -120,12 +121,18 @@ export default {
       openeds: ['1'],
       order: [],
       currentPage: 1,
-      pageSize: 8,
+      pageSize: 4,
       stateTag: {
         0: '未完成',
         1: '已完成'
       }
     }
+  },
+  created () {
+    adminGetOrderList().then(res => {
+      this.order = res.data
+      console.info(res.data)
+    })
   },
   methods: {
     handleOpen (key, keyPath) {
@@ -133,6 +140,12 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleCurrentChange1 (currentPage) {
+      this.currentPage = currentPage
+    },
+    handleSizeChange1 (val) {
+      this.pageSize = val
     }
   }
 }

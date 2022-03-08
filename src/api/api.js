@@ -43,3 +43,5 @@ export const adminGetUserList = () => http.GET('/api/user/alluser')
 export const adminDelUser = (obj) => http.GET('/api/user/alluser', obj)
 // 管理员删除指定酒店
 export const adminDelHotel = (obj) => http.GET('/api/user/alluser', obj)
+// 管理员获取订单列表
+export const adminGetOrderList = () => http.GET('/api/userorder/allorder')
