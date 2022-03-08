@@ -40,7 +40,7 @@
                             stripe
                             style="width: 100%">
                     <el-table-column
-                            prop="name"
+                            prop="username"
                             label="用户名"
                             width="150" align="center" header-align="center" >
                     </el-table-column>
@@ -55,18 +55,23 @@
                             width="150" align="center" header-align="center" >
                     </el-table-column>
                     <el-table-column
-                            prop="photo"
+                            prop="photoUrl"
                             label="头像"
                             width="250" align="center" header-align="center" >
+                      <template slot-scope="scope">
+                        <img :src="scope.row.photoUrl" alt="" width="90" height="90">
+                      </template>
                     </el-table-column>
                     <el-table-column
-                            prop="order"
+                            prop="countt"
                             label="预约次数"
+                            :formatter="counttFormat"
                             width="200" align="center" sortable header-align="center" >
                     </el-table-column>
                         <el-table-column
-                                prop="money"
+                                prop="summ"
                                 label="消费金额"
+                                :formatter="summFormat"
                                 width="200" align="center" sortable header-align="center" >
                         </el-table-column>
                     <el-table-column
@@ -74,7 +79,7 @@
                             align="center" header-align="center" >
                         <template slot-scope="scope">
                             <el-popconfirm
-                                    title="确定删除这个用户吗?" @onConfirm="delUser">
+                                    title="确定删除这个用户吗?" @confirm="delUser(scope.row)">
                                 <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
                             </el-popconfirm>
                             <el-button
@@ -116,6 +121,7 @@
 
 <script>
 import Header from '../../../../components/Header'
+import { adminGetUserList, adminDelUser } from '@/api/api'
 export default {
   name: 'userList',
   components: {Header},
@@ -123,7 +129,7 @@ export default {
     return {
       openeds: ['1'],
       user: [],
-      pageSize: 10,
+      pageSize: 3,
       currentPage: 1,
       dialogFormVisible: false,
       userForm: {
@@ -132,6 +138,12 @@ export default {
         mail: ''
       }
     }
+  },
+  created () {
+    adminGetUserList().then(res => {
+      this.user = res.data
+      console.info(res.data)
+    })
   },
   methods: {
     handleOpen (key, keyPath) {
@@ -146,7 +158,11 @@ export default {
     handleSizeChange (val) {
       this.pageSize = val
     },
-    delUser (user) {
+    delUser (myRow) {
+      let deletedUser = {uId: myRow.uId}
+      adminDelUser(deletedUser).then(res => {
+        console.info(res.data)
+      })
     },
     editUser () {
       this.dialogFormVisible = false
@@ -156,6 +172,12 @@ export default {
       this.userForm.pwd = user.pwd
       this.userForm.mail = user.mail
       this.dialogFormVisible = true
+    },
+    counttFormat (row) {
+      return row.countt == null ? '0' : row.countt
+    },
+    summFormat (row) {
+      return row.summ == null ? '0' : row.summ
     }
   }
 }
