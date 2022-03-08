@@ -270,6 +270,15 @@ public class UserController {
         return JsonResponse.success(hotelService.saveHotelInfo(hotelinfo));
     }
 
+    //管理员修改密码
+    //
+    @GetMapping("/newpass")
+    @ResponseBody
+    public JsonResponse newpass(Long uid,String pass){
+        userService.newPass(uid,pass);
+        return JsonResponse.success("成功");
+    }
+
 
 }
 

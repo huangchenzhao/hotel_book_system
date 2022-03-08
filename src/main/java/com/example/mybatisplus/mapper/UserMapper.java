@@ -20,4 +20,5 @@ public interface UserMapper extends BaseMapper<User> {
     void newPassword(Long uid, String newpaw);
     List<User> getalluser();
     void updatePassword(String mail,String password)throws Exception ;
+    void newPass(Long uid, String pass);
 }

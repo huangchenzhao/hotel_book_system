@@ -11,6 +11,9 @@
         <result column="mail" property="mail" />
         <result column="usertype" property="usertype" />
     </resultMap>
+    <update id="newPass">
+        update user set password = #{pass} where u_id = #{uid}
+    </update>
     <update id="newPassword">
         update user set password = #{newpaw} where u_id = #{uid}
     </update>
