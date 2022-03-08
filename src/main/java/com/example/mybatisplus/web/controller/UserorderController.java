@@ -154,6 +154,15 @@ public class UserorderController {
         return JsonResponse.success(detaillist);
     }
 
+    //管理员查看订单详情
+    //gzx
+    @GetMapping("/allorder")
+    @ResponseBody
+    public JsonResponse allorder()throws Exception{
+        List<Userorder> orderlist = userorderService.showorderlist();
+        return JsonResponse.success(orderlist);
+    }
+
 
 }
 

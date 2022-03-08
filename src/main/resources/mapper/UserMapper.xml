@@ -30,8 +30,8 @@
         <result column="photo_url" property="photoUrl" />
         <result column="mail" property="mail" />
         <result column="usertype" property="usertype" />
-        <result column="countt" property="countt"/>
-        <result column="summ" property="summ"/>
+        <result column="countt" property="countt" />
+        <result column="summ" property="summ" />
     </resultMap>
     <select id="getalluser" resultMap="ResultMap">
         SELECT
