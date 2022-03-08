@@ -118,12 +118,12 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间数量" prop="quantity1">
-                                    <el-input-number v-model="hotelForm.quantity1" :min="0" :max="100"></el-input-number>
+                                    <el-input-number size="medium" v-model="hotelForm.quantity1" :min="0" :max="100"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间价格" prop="price1">
-                                    <el-input-number v-model="hotelForm.price1" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                    <el-input-number v-model="hotelForm.price1" :precision="2" :step="10" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -160,7 +160,7 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间价格" prop="price2">
-                                    <el-input-number v-model="hotelForm.price2" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                    <el-input-number v-model="hotelForm.price2" :precision="2" :step="10" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -197,7 +197,7 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间价格" prop="price3">
-                                    <el-input-number v-model="hotelForm.price3" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                    <el-input-number v-model="hotelForm.price3" :precision="2" :step="10" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -234,7 +234,7 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间价格" prop="price4">
-                                    <el-input-number v-model="hotelForm.price4" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                    <el-input-number v-model="hotelForm.price4" :precision="2" :step="10" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">
@@ -271,7 +271,7 @@
                             </el-col>
                             <el-col :span="6">
                                 <el-form-item label="房间价格" prop="price5">
-                                    <el-input-number v-model="hotelForm.price5" :precision="2" :step="0.1" :max="5000"></el-input-number>
+                                    <el-input-number v-model="hotelForm.price5" :precision="2" :step="10" :max="5000"></el-input-number>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="6">

@@ -42,7 +42,7 @@
                     <el-table-column
                             prop="name"
                             label="用户名"
-                            width="150" align="center" header-align="center" >
+                            width="100" align="center" header-align="center" >
                     </el-table-column>
                     <el-table-column
                             prop="password"
@@ -57,12 +57,12 @@
                     <el-table-column
                             prop="photo"
                             label="头像"
-                            width="250" align="center" header-align="center" >
+                            width="200" align="center" header-align="center" >
                     </el-table-column>
                     <el-table-column
                             prop="order"
                             label="预约次数"
-                            width="200" align="center" sortable header-align="center" >
+                            width="150" align="center" sortable header-align="center" >
                     </el-table-column>
                         <el-table-column
                                 prop="money"
@@ -70,8 +70,26 @@
                                 width="200" align="center" sortable header-align="center" >
                         </el-table-column>
                     <el-table-column
-                            label="操作"
                             align="center" header-align="center" >
+                        <template slot="header" slot-scope="scope">
+                        <el-button round @click="addUser">新增用户</el-button>
+                            <el-dialog title="新增用户" :visible.sync="addUserFormVisible">
+                                <el-form :model="addUserForm">
+                                    <el-form-item label="用户名" :label-width="addFormLabelWidth">
+                                        <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone" :rules="[
+      { required: true, message: '请输入用户名', trigger: 'blur' }
+    ]"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="用户密码" :label-width="addFormLabelWidth">
+                                        <el-input v-model="form.pwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button @click="addUserFormVisible = false">取 消</el-button>
+                                    <el-button type="primary" @click="addUserFormVisible = false">确 定</el-button>
+                                </div>
+                            </el-dialog>
+                        </template>
                         <template slot-scope="scope">
                             <el-popconfirm
                                     title="确定删除这个用户吗?" @onConfirm="delUser">
@@ -83,13 +101,10 @@
                             <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible">
                                 <el-form :model="userForm">
                                     <el-form-item label="用户名">
-                                        <el-input v-model="userForm.name" autocomplete="off"></el-input>
+                                        <el-input disabled="true" v-model="userForm.name" autocomplete="off"></el-input>
                                     </el-form-item>
                                     <el-form-item label="密码">
                                         <el-input v-model="userForm.pwd" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="邮箱">
-                                        <el-input v-model="userForm.mail" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                                 <div slot="footer" class="dialog-footer">
@@ -130,6 +145,13 @@ export default {
         name: '',
         pwd: '',
         mail: ''
+      },
+      addUserFormVisible: false,
+      addFormLabelWidth: '120px',
+      addUserForm: {
+        name: '',
+        pwd: '',
+        mail: ''
       }
     }
   },
@@ -154,8 +176,10 @@ export default {
     getUserDefault (user) {
       this.userForm.name = user.name
       this.userForm.pwd = user.pwd
-      this.userForm.mail = user.mail
       this.dialogFormVisible = true
+    },
+    addUser () {
+      this.addUserFormVisible = true
     }
   }
 }
