@@ -79,7 +79,7 @@
                                 align="center" header-align="center" >
                             <template slot-scope="scope">
                                 <el-popconfirm
-                                        title="确定删除这家酒店吗?" @onConfirm="delHotel">
+                                        title="确定删除这家酒店吗?" @confirm="delHotel(scope.row)">
                                     <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
                                 </el-popconfirm>
                                 <el-button
@@ -165,7 +165,7 @@
 <script>
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import Header from '../../../../components/Header'
-import {adminGetHotelList, adminGetDetail} from '@/api/api'
+import {adminGetHotelList, adminGetDetail, adminDelHotel} from '@/api/api'
 
 export default {
   name: 'hotelList',
@@ -173,7 +173,7 @@ export default {
   data () {
     return {
       hotel: [],
-      pageSize: 10,
+      pageSize: 3,
       currentPage: 1,
       returnDetail: [],
       dialogVisible: false,
@@ -186,6 +186,7 @@ export default {
   created () {
     adminGetHotelList().then(res => {
       this.hotel = res.data
+      console.info(res.data)
     })
   },
   methods: {
@@ -219,6 +220,12 @@ export default {
     },
     priceFinish () {
       this.priceDialog = false
+    },
+    delHotel (myRow) {
+      let deletedHotel = {hId: myRow.hid}
+      adminDelHotel(deletedHotel).then(res => {
+        console.info(res.data)
+      })
     }
   }
 }
