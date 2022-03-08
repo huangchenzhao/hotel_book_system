@@ -1,4 +1,3 @@
-/*
 package com.example.mybatisplus;
 
 import com.example.mybatisplus.mapper.HotelMapper;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.*;
 
@@ -113,8 +113,27 @@ class MybatisplusApplicationTests {
         User user = new User();
         user.setUsername("张三");
         user.setPassword("456");
-        user.setMail("12aff3@qq.com");
+        user.setMail("123@qq.com");
         System.out.println(userController.addUser(user));
     }
+    /*@Test
+    void test6(){
+        //插入房间
+        List<String> room=new ArrayList<>();
+        room.add("标准间");
+        room.add("大床房");
+        room.add("双人间");
+        room.add("亲子房");
+        room.add("总统套房");
+
+        List<String> hotel=new ArrayList<>();
+        hotel.add("如家");
+        hotel.add("七天");
+
+        for(Long i=1L;i<10L;i++){
+            for(Long j=1L;j<5L;j++){
+
+            }
+        }
+    }*/
 }
-*/

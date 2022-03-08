@@ -214,7 +214,7 @@
                            GROUP BY
                                userorder.r_id)as ooo ON ooo.r_id = room.r_id
                 INNER JOIN detail ON detail.r_id = room.r_id
-        WHERE hotel.h_id = #{hid} AND detail.r_date = #{todaySql}
+        WHERE hotel.h_id = #{hid} AND detail.r_date = #{todaySql} and hotel.is_deleted=0
     </select>
     <resultMap id="orderdetail" type="com.example.mybatisplus.model.domain.Userorder" >
         <id column="o_id" property="oId" />

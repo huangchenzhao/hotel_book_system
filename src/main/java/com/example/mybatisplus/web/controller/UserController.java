@@ -311,5 +311,15 @@ public class UserController {
         System.out.println(userService.addUser(user));
         return JsonResponse.success(null);
     }
+    @GetMapping("/salesByWeek")
+    @ResponseBody
+    public JsonResponse salesByWeek(){
+        return JsonResponse.success(userService.salesByWeek());
+    }
+    @GetMapping("/updatePrice")
+    @ResponseBody
+    public JsonResponse updatePrice(Long rId,Double price){
+        return JsonResponse.success(userService.updatePrice(rId,price));
+    }
 }
 

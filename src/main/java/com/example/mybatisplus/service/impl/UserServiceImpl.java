@@ -1,8 +1,12 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplus.mapper.RoomMapper;
+import com.example.mybatisplus.model.domain.Hotel;
+import com.example.mybatisplus.model.domain.Room;
 import com.example.mybatisplus.model.domain.User;
 import com.example.mybatisplus.mapper.UserMapper;
+import com.example.mybatisplus.service.RoomService;
 import com.example.mybatisplus.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +40,13 @@ import com.sun.mail.util.MailSSLSocketFactory;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
     @Autowired(required = false)
     private UserMapper userMapper;
+    @Autowired(required = false)
+    private RoomService roomService;
+    @Autowired(required = false)
+    private RoomMapper roomMapper;
 
     @Override
     public User login(User a) {
@@ -268,6 +277,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public void newPass(Long uid, String pass){
         userMapper.newPass(uid,pass);
+    }
+
+    @Override
+    public List<Hotel> salesByWeek() {
+        return null;
+    }
+
+    @Override
+    public String updatePrice(Long rId, Double price) {
+        QueryWrapper<Room> wrapper = new QueryWrapper<>();
+        wrapper.eq("r_id",rId);
+        if(roomMapper.selectOne(wrapper)==null)
+        {
+
+        }
+        return null;
     }
 
 }

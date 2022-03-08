@@ -58,7 +58,7 @@
                               userorder.u_id
             )AS bbb ON bbb.u_id = `user`.u_id
         WHERE
-            `user`.usertype = 1
+            `user`.usertype = 1 and `user`.is_deleted=0
     </select>
     <select id="isExist" resultType="java.lang.Boolean">
         select is_deleted from user where mail=uId;

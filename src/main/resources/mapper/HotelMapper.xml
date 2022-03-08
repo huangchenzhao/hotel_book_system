@@ -246,6 +246,7 @@
             <result column="created_time" property="createdTime" />
         </association>
     </resultMap>
+    <!--逻辑删除酒店-->
     <select id="showlist" resultMap="HotelorderMap">
         SELECT
             hotel.h_id,
@@ -267,6 +268,23 @@
                                 userorder.h_id) AS orderr ON orderr.h_id= hotel.h_id
                 INNER JOIN address ON hotel.a_id = address.a_id
                 INNER JOIN photo ON photo.h_id = hotel.h_id AND photo.r_id is NULL
+                where hotel.is_deleted=0
+
+    </select>
+    <resultMap id="SalesMap" type="com.example.mybatisplus.model.domain.Hotel">
+        <id column="id" property="Id" />
+        <result column="h_id" property="hId" />
+        <result column="a_id" property="aId" />
+        <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
+            <id column="h_id" property="hId"/>
+            <result column="ha_id" property="aId"/>
+            <result column="longitude" property="longitude"/>
+            <result column="latitude" property="latitude"/>
+            <result column="star" property="star"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="salesByWeek" resultMap="SalesMap">
 
     </select>
 

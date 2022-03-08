@@ -25,4 +25,5 @@ public interface HotelMapper extends BaseMapper<Hotel> {
     List<Hotel> showlist();
 //    List<Hotel> showDetails2(Long hId);
     List<Hotel> test(List<Hotel> datas);
+    List<Hotel> salesByWeek(java.util.Date date);
 }
