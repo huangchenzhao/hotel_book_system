@@ -133,6 +133,12 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    handleCurrentChange1 (currentPage) {
+      this.currentPage = currentPage
+    },
+    handleSizeChange1 (val) {
+      this.pageSize = val
     }
   }
 }

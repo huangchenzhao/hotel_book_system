@@ -78,15 +78,23 @@
                             align="center" header-align="center" >
                         <template slot="header" slot-scope="scope">
                         <el-button round @click="addUser">新增用户</el-button>
-                            <el-dialog title="新增用户" :visible.sync="addUserFormVisible">
+                            <el-dialog title="新增用户" :visible.sync="addUserFormVisible" width="40%">
                                 <el-form :model="addUserForm">
-                                    <el-form-item label="用户名" :label-width="addFormLabelWidth">
-                                        <el-input v-model="form.name" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone" :rules="[
+                                    <el-form-item label="用户名" :label-width="FormLabelWidth">
+                                        <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur' }
     ]"></el-input>
                                     </el-form-item>
-                                    <el-form-item label="用户密码" :label-width="addFormLabelWidth">
-                                        <el-input v-model="form.pwd" autocomplete="off" show-password placeholder="请输入密码" prefix-icon="el-icon-lock"></el-input>
+                                    <el-form-item label="用户密码" :label-width="FormLabelWidth">
+                                        <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码" prefix-icon="el-icon-lock" :rules="[
+      { required: true, message: '请输入密码', trigger: 'blur' }
+    ]"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="用户邮箱" :label-width="FormLabelWidth">
+                                        <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱" prefix-icon="el-icon-lock" :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]"></el-input>
                                     </el-form-item>
                                 </el-form>
                                 <div slot="footer" class="dialog-footer">
@@ -103,12 +111,12 @@
                             <el-button
                                     type="primary" icon="el-icon-edit" @click="getUserDefault(scope.row)">
                             </el-button>
-                            <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible">
+                            <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible" width="40%">
                                 <el-form :model="userForm">
-                                    <el-form-item label="用户名">
+                                    <el-form-item label="用户名" :label-width="FormLabelWidth">
                                         <el-input disabled="true" v-model="userForm.name" autocomplete="off"></el-input>
                                     </el-form-item>
-                                    <el-form-item label="密码">
+                                    <el-form-item label="密码" :label-width="FormLabelWidth">
                                         <el-input v-model="userForm.pwd" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
@@ -153,7 +161,7 @@ export default {
         mail: ''
       },
       addUserFormVisible: false,
-      addFormLabelWidth: '120px',
+      FormLabelWidth: '120px',
       addUserForm: {
         name: '',
         pwd: '',
