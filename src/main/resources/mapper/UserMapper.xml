@@ -11,6 +11,9 @@
         <result column="mail" property="mail" />
         <result column="usertype" property="usertype" />
     </resultMap>
+    <update id="newPass">
+        update user set password = #{pass} where u_id = #{uid}
+    </update>
     <update id="newPassword">
         update user set password = #{newpaw} where u_id = #{uid}
     </update>
@@ -26,8 +29,36 @@
     <select id="selectLogin" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where username = #{username} and password = #{password} and usertype = #{usertype}
     </select>
-    <select id="getalluser" resultType="com.example.mybatisplus.model.domain.User">
-        select * from user where usertype = 1
+    <resultMap id="ResultMap" type="com.example.mybatisplus.model.domain.User">
+        <id column="u_id" property="uId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="photo_url" property="photoUrl" />
+        <result column="mail" property="mail" />
+        <result column="usertype" property="usertype" />
+        <result column="countt" property="countt" />
+        <result column="summ" property="summ" />
+    </resultMap>
+    <select id="getalluser" resultMap="ResultMap">
+        SELECT
+            `user`.*,
+            bbb.countt,
+            bbb.summ
+        FROM
+            `user`
+                left JOIN(SELECT
+                              userorder.r_id,
+                              userorder.h_id,
+                              userorder.u_id,
+                              Count(userorder.u_id) AS countt,
+                              SUM(userorder.totalprice)AS summ
+                          FROM
+                              userorder
+                          GROUP BY
+                              userorder.u_id
+            )AS bbb ON bbb.u_id = `user`.u_id
+        WHERE
+            `user`.usertype = 1
     </select>
     <select id="isExist" resultType="java.lang.Boolean">
         select is_deleted from user where mail=uId;

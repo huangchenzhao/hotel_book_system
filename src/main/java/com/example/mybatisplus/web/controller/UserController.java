@@ -195,6 +195,7 @@ public class UserController {
     }
 
 
+
     //修改密码
     //用户需输入原密码与新密码
     //若原密码不对，则返回提示
@@ -202,26 +203,30 @@ public class UserController {
     //新密码为null或""，返回提示
     @GetMapping("/newpassword")
     @ResponseBody
-    public JsonResponse newpassword(HttpServletRequest request, String oldpaw, String newpaw) {
+    public JsonResponse newpassword(HttpServletRequest request,String oldpaw,String newpaw){
         HttpSession session = request.getSession();
         Long uid = (Long) session.getAttribute("uId");
         User user = userService.getById(uid);
         System.out.println(user.getPassword());
-        if (oldpaw.equals(user.getPassword())) {
-            if (oldpaw.equals(newpaw)) {
+        if (oldpaw.equals(user.getPassword()) ){
+            if (oldpaw.equals(newpaw)){
                 return JsonResponse.failure("旧密码与新密码一致，请换一个新密码");
-            } else {
-                if (newpaw == null || newpaw.isEmpty()) {
+            }
+            else {
+                if (newpaw == null ||newpaw.isEmpty()){
                     return JsonResponse.failure("新密码不得为null或空字符串，请换一个新密码");
-                } else {
-                    userService.newPassword(uid, newpaw);
+                }
+                else {
+                    userService.newPassword(uid,newpaw);
                     return JsonResponse.success("修改密码成功");
                 }
             }
-        } else {
+        }
+        else{
             return JsonResponse.failure("旧密码与原密码不一致，请重新输入");
         }
     }
+
 
 
     //找回密码两个接口
@@ -242,17 +247,17 @@ public class UserController {
 
     @RequestMapping(value = "/forgetPassword", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse forgetPassword(HttpServletRequest request, @RequestParam(value = "email", required = false) String mail,
-                                       @RequestParam(value = "code", required = false) String code,
-                                       @RequestParam(value = "password", required = false) String password) {
-        return JsonResponse.success(userService.forgetPassword(request.getSession(), mail, password, code));
+    public JsonResponse forgetPassword(HttpServletRequest request,@RequestParam(value="email",required=false)String mail,
+                                       @RequestParam(value="code",required=false)String code,
+                                       @RequestParam(value="password",required=false)String password){
+        return JsonResponse.success(userService.forgetPassword(request.getSession(),mail,password,code));
     }
 
     //管理员看到user表的数据
     //
     @GetMapping("/alluser")
     @ResponseBody
-    public JsonResponse alluser() {
+    public JsonResponse alluser(){
         List<User> allusers = userService.getalluser();
         return JsonResponse.success(allusers);
     }
@@ -261,7 +266,7 @@ public class UserController {
     //具体传参格式参考我在群里传的图片
     @PostMapping("/addHotel")
     @ResponseBody
-    public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo) {
+    public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo){
         System.out.println(hotelinfo);
         return JsonResponse.success(hotelService.saveHotelInfo(hotelinfo));
     }
@@ -274,6 +279,15 @@ public class UserController {
     public JsonResponse removeHotel(@RequestParam(value = "h_id", required = false) Long hId) {
         return JsonResponse.success(hotelService.removeById(hId));
     }
+    //管理员修改密码
+    //
+    @GetMapping("/newpass")
+    @ResponseBody
+    public JsonResponse newpass(Long uid,String pass){
+        userService.newPass(uid,pass);
+        return JsonResponse.success("成功");
+    }
+
 
     //移除用户
     //移除后用户不可登录

@@ -130,4 +130,10 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
         List<Userorder> detailList = userorderMapper.showhoteldetail(hid,todaySql);
         return detailList;
     }
+
+    @Override
+    public List<Userorder> showorderlist(){
+        List<Userorder> orderlist = userorderMapper.showorderlist();
+        return orderlist;
+    }
 }

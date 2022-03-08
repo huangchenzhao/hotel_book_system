@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author gzx
@@ -44,6 +44,12 @@ public class User extends Model<User> {
     @TableLogic
     @TableField("is_deleted")
     private Boolean deleted;
+
+    @TableField(exist = false)
+    private Integer countt;
+
+    @TableField(exist = false)
+    private Float summ;
 
     public Long getuId() {
         return uId;

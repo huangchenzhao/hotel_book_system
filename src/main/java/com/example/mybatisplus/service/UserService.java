@@ -26,4 +26,5 @@ public interface UserService extends IService<User>  {
     List<User> getalluser();
     String sendMail(HttpSession session, String account);
     String addUser(User user);
+    void newPass(Long uid, String pass);
 }

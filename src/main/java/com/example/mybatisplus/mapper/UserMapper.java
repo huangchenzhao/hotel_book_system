@@ -3,6 +3,7 @@ package com.example.mybatisplus.mapper;
 import com.example.mybatisplus.model.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,4 +22,5 @@ public interface UserMapper extends BaseMapper<User> {
     void updatePassword(String mail,String password)throws Exception ;
     Boolean isExist(String mail);
     Boolean updateUser(User user);
+    void newPass(Long uid, String pass);
 }

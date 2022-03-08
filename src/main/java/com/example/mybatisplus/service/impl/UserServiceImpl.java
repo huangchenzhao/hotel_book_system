@@ -265,4 +265,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return allUsers;
     }
 
+    @Override
+    public void newPass(Long uid, String pass){
+        userMapper.newPass(uid,pass);
+    }
+
 }

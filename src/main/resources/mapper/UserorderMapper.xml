@@ -216,5 +216,61 @@
                 INNER JOIN detail ON detail.r_id = room.r_id
         WHERE hotel.h_id = #{hid} AND detail.r_date = #{todaySql}
     </select>
+    <resultMap id="orderdetail" type="com.example.mybatisplus.model.domain.Userorder" >
+        <id column="o_id" property="oId" />
+        <result column="r_id" property="rId" />
+        <result column="u_id" property="uId" />
+        <result column="h_id" property="hId" />
+        <result column="check_in" property="checkIn" />
+        <result column="check_out" property="checkOut" />
+        <result column="totalprice" property="totalprice" />
+        <result column="quantity" property="quantity" />
+        <result column="state" property="state" />
+        <result column="comment" property="comment" />
+        <result column="truename" property="truename" />
+        <result column="idcard" property="idcard" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="created_time" property="createdTime" />
+        <result column="roomcount" property="roomcount" />
+        <association property="hotel" javaType="com.example.mybatisplus.model.domain.Hotel">
+            <id column="h_id" property="hId"/>
+            <result column="ha_id" property="aId"/>
+            <result column="longitude" property="longitude"/>
+            <result column="latitude" property="latitude"/>
+            <result column="star" property="star"/>
+            <result column="name" property="name"/>
+        </association>
+        <association property="room" javaType="com.example.mybatisplus.model.domain.Room">
+            <id column="r_id" property="rId"/>
+            <result column="rh_id" property="hId"/>
+            <result column="price" property="price"/>
+            <result column="roomtype" property="roomtype"/>
+            <result column="amount" property="amount"/>
+            <result column="max_people" property="maxPeople"/>
+        </association>
+    </resultMap>
+    <select id="showorderlist" resultMap="orderdetail">
+        SELECT
+            userorder.o_id,
+            userorder.r_id,
+            userorder.u_id,
+            userorder.h_id,
+            userorder.totalprice,
+            userorder.quantity,
+            userorder.state,
+            userorder.`comment`,
+            userorder.truename,
+            userorder.idcard,
+            userorder.phonenumber,
+            userorder.created_time,
+            hotel.`name`,
+            room.roomtype
+        FROM
+            userorder
+                INNER JOIN room ON userorder.r_id = room.r_id
+                INNER JOIN hotel ON userorder.h_id = hotel.h_id
+        ORDER BY
+            userorder.o_id ASC
+    </select>
 
 </mapper>
