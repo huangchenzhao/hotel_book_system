@@ -52,7 +52,7 @@
     <select id="searchResult" resultMap="SearchResultMap">
         SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain,photo.photo_url FROM
         hotel
-        INNER JOIN photo ON photo.h_id = hotel.h_id
+        INNER JOIN photo ON photo.h_id = hotel.h_id  and photo.r_id is null
         INNER JOIN address ON hotel.a_id = address.a_id
         INNER JOIN ((SELECT min(price) AS price,hotel.h_id,room.roomtype
         FROM hotel INNER JOIN room ON hotel.h_id=room.h_id
