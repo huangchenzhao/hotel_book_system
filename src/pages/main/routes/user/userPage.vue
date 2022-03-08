@@ -1,6 +1,10 @@
 <template>
 <div>
-    <Header></Header>
+    <el-container class="el-container">
+        <el-header class="el-header" height="100px">
+            <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
+        </el-header>
+        <el-main>
     <el-tabs type="border-card">
         <el-tab-pane label="首页">
             <el-form ref="select-form" :model="selectForm" label-width="200px">
@@ -216,6 +220,8 @@
             <orderList></orderList>
         </el-tab-pane>
     </el-tabs>
+        </el-main>
+    </el-container>
 </div>
 </template>
 
@@ -470,5 +476,14 @@ export default {
         height: auto;
         max-width: 100%;
         max-height: 100%;
+    }
+
+    .el-header {
+        background: url('../../../../assets/images/header.png');
+        text-align: center;
+        color: #dcdfe6;
+        font-family:Arial,Helvetica,sans-serif;
+        font-size: large;
+        font-weight: bolder;
     }
 </style>

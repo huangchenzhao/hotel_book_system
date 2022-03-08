@@ -1,13 +1,15 @@
 <template xmlns:text-align="http://www.w3.org/1999/xhtml">
 <!--        <canvas class="cavs" width="100%" height="100%"></canvas>-->
     <div class="home">
-        <Header></Header>
-        <el-container>
-            <el-header></el-header>
+<!--        <Header></Header>-->
+        <el-container class="el-container">
+            <el-header class="el-header" height="100px">
+                <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
+            </el-header>
             <el-main>
                 <el-card class="login-card" shadow="always" style="margin: auto">
                     <div slot="header" class="clearfix">
-                        <span>微旅——您身边的酒店预订系统</span>
+                        <span>欢迎来到微旅</span>
                     </div>
                     <el-form class="loginForm" :model="loginForm">
                         <el-row>
@@ -298,6 +300,15 @@ export default {
     }
     .clearfix:after {
         clear: both
+    }
+
+    .el-header {
+        background: url('../../assets/images/header.png');
+        text-align: center;
+        color: #dcdfe6;
+        font-family:Arial,Helvetica,sans-serif;
+        font-size: large;
+        font-weight: bolder;
     }
 
     .login-card {
