@@ -316,6 +316,9 @@ public class UserController {
     public JsonResponse salesByWeek(){
         return JsonResponse.success(userService.salesByWeek());
     }
+    //管理员修改房间价格
+    //如果房间id存在则更新价格
+    //否则返回房间不存在
     @GetMapping("/updatePrice")
     @ResponseBody
     public JsonResponse updatePrice(Long rId,Float price){
