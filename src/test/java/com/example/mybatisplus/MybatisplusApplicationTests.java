@@ -5,11 +5,13 @@ import com.example.mybatisplus.mapper.HotelMapper;
 import com.example.mybatisplus.mapper.UserorderMapper;
 import com.example.mybatisplus.model.domain.Admin;
 import com.example.mybatisplus.model.domain.Hotel;
+import com.example.mybatisplus.model.domain.User;
 import com.example.mybatisplus.model.domain.Userorder;
 import com.example.mybatisplus.service.AdminService;
 import com.example.mybatisplus.service.DetailService;
 import com.example.mybatisplus.service.UserService;
 import com.example.mybatisplus.service.UserorderService;
+import com.example.mybatisplus.web.controller.UserController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,6 +45,9 @@ class MybatisplusApplicationTests {
     }
     @Autowired(required=false)
     private HotelMapper hotelMapper;
+
+    @Autowired(required=false)
+    private UserController userController;
 
     @Test
     void test(){
@@ -98,6 +103,18 @@ class MybatisplusApplicationTests {
 //        catch(Exception e){
 //            System.out.println("异常");
 //        }
+    }
+    @Test
+    void test4()throws Exception{
+        System.out.println(userController.removeHotel(1L));
+    }
+    @Test
+    void test5 (){
+        User user = new User();
+        user.setUsername("张三");
+        user.setPassword("456");
+        user.setMail("12aff3@qq.com");
+        System.out.println(userController.addUser(user));
     }
 }
 */

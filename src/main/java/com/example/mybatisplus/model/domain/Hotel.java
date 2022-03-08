@@ -3,6 +3,7 @@ package com.example.mybatisplus.model.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import java.sql.Date;
@@ -41,6 +42,10 @@ public class Hotel extends Model<Hotel> {
     private Integer star;
 
     private String name;
+
+    @TableLogic
+    @TableField("is_deleted")
+    private Boolean deleted;
 
     @TableField(exist=false)
     private Address address;

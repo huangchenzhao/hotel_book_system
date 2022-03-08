@@ -20,11 +20,17 @@
     <update id="updatePassword">
         update user set password = #{password} where mail=#{mail}
     </update>
+    <update id="updateUser">
+        update user set is_deleted=0,password=#{password} where username=#{username} and mail=#{mail}
+    </update>
     <select id="selectLogin" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where username = #{username} and password = #{password} and usertype = #{usertype}
     </select>
     <select id="getalluser" resultType="com.example.mybatisplus.model.domain.User">
         select * from user where usertype = 1
+    </select>
+    <select id="isExist" resultType="java.lang.Boolean">
+        select is_deleted from user where mail=uId;
     </select>
     <resultMap id="myMap" type="com.example.mybatisplus.model.domain.User">
         <id column="u_id" property="uId" />

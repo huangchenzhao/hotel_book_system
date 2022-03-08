@@ -64,6 +64,7 @@
     </resultMap>
     <insert id="submitOrder">
     </insert>
+    <!--添加了逻辑删除-酒店-->
     <select id="selectId" resultMap="userorderMap">
         SELECT
             *
@@ -73,7 +74,7 @@
                 INNER JOIN hotel ON userorder.h_id = hotel.h_id
                 INNER JOIN room ON userorder.r_id = room.r_id
         WHERE
-            userorder.u_id = #{uid}
+            userorder.u_id = #{uid} and hotel.is_deleted=0
     </select>
     <resultMap id="PlaceOrder" type="com.example.mybatisplus.model.domain.Userorder" >
         <id column="o_id" property="oId" />
@@ -118,6 +119,7 @@
             <result column="detail" property="detail" />
         </association>
     </resultMap>
+    <!--添加了逻辑删除-酒店-->
     <select id="placeOrder" resultMap="PlaceOrder">
         select *,hotel.a_id as ha_id,hotel.h_id as ah_id from hotel inner join
         ((select room.*,min(remain)as remain from detail inner join room on room.r_id = detail.r_id
@@ -130,7 +132,7 @@
             </if>
         </where>
         group by room.r_id)AS deroom)
-        ON deroom.h_id=hotel.h_id
+        ON deroom.h_id=hotel.h_id and hotel.is_deleted=0
         <if test="hotelId != null ">
             and hotel.h_id = #{hotelId}
         </if>

@@ -48,6 +48,7 @@
     </resultMap>
 
     <!--搜索功能sql语句-->
+    <!--添加了逻辑删除-->
     <select id="searchResult" resultMap="SearchResultMap">
         SELECT hotel.*,hotel.a_id as ha_id,address.*,min(price)as price,sum(remain)as remain,photo.photo_url FROM
         hotel
@@ -73,6 +74,8 @@
         group by room.r_id)AS deroom)
         ON deroom.h_id=hotel.h_id
         <where>
+            hotel.is_deleted=0
+
             <if test="hotelName != null and hotelName!=''">
                 and hotel.name like '%${hotelName}%'
             </if>
@@ -109,6 +112,7 @@
             <result column="photo_url" property="photoUrl" />
         </association>
     </resultMap>
+    <!--添加了逻辑删除-->
     <select id="getrem" resultMap="RemMap">
         SELECT *,
                address.a_id as aid,
@@ -116,7 +120,7 @@
         FROM hotel
                  INNER JOIN photo ON photo.h_id = hotel.h_id
                  INNER JOIN address ON hotel.a_id = address.a_id
-        WHERE photo.r_id is NULL
+        WHERE photo.r_id is NULL and hotel.is_deleted=0
         group by hotel.h_id
         ORDER BY hotel.star DESC
             LIMIT 3
@@ -263,6 +267,7 @@
                                 userorder.h_id) AS orderr ON orderr.h_id= hotel.h_id
                 INNER JOIN address ON hotel.a_id = address.a_id
                 INNER JOIN photo ON photo.h_id = hotel.h_id AND photo.r_id is NULL
+
     </select>
 
     <!--</select>-->

@@ -229,10 +229,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return "邮件发送成功请注意查收";
     }
 
+    @Override
+    public String addUser(User user) {
+        try {
+
+            if (userMapper.updateUser(user) == false) {
+                QueryWrapper<User> wrapper = new QueryWrapper<>();
+                wrapper.eq("mail",user.getMail());
+                QueryWrapper<User> wrapper2 = new QueryWrapper<>();
+                wrapper2.eq("username",user.getUsername());
+                try{
+                    if(userMapper.selectOne(wrapper)!=null)
+                    {
+                        return "邮箱已存在";
+                    }
+                    if(userMapper.selectOne(wrapper2)!=null)
+                    {
+                        return "用户名已存在";
+                    }
+                }catch(Exception e){
+                    return "数据库错误";
+                }
+                saveOrUpdate(user);
+            }
+        } catch (Exception e) {
+            return ("添加失败");
+        }
+        return "添加成功";
+    }
+
 
     @Override
     public List<User> getalluser(){
         List<User> allUsers = userMapper.getalluser();
         return allUsers;
     }
+
 }

@@ -1,7 +1,9 @@
 package com.example.mybatisplus.model.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -38,6 +40,10 @@ public class User extends Model<User> {
     private String mail;
 
     private Integer usertype;
+
+    @TableLogic
+    @TableField("is_deleted")
+    private Boolean deleted;
 
     public Long getuId() {
         return uId;

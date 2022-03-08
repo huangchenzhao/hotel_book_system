@@ -141,7 +141,7 @@ public class UserController {
 //            return JsonResponse.success(a);
 //        }
         HttpSession session = request.getSession();
-        String result = userService.register(session,code, a);
+        String result = userService.register(session, code, a);
         return JsonResponse.success(result);
     }
 
@@ -195,7 +195,6 @@ public class UserController {
     }
 
 
-
     //修改密码
     //用户需输入原密码与新密码
     //若原密码不对，则返回提示
@@ -203,30 +202,26 @@ public class UserController {
     //新密码为null或""，返回提示
     @GetMapping("/newpassword")
     @ResponseBody
-    public JsonResponse newpassword(HttpServletRequest request,String oldpaw,String newpaw){
+    public JsonResponse newpassword(HttpServletRequest request, String oldpaw, String newpaw) {
         HttpSession session = request.getSession();
         Long uid = (Long) session.getAttribute("uId");
         User user = userService.getById(uid);
         System.out.println(user.getPassword());
-        if (oldpaw.equals(user.getPassword()) ){
-            if (oldpaw.equals(newpaw)){
+        if (oldpaw.equals(user.getPassword())) {
+            if (oldpaw.equals(newpaw)) {
                 return JsonResponse.failure("旧密码与新密码一致，请换一个新密码");
-            }
-            else {
-                if (newpaw == null ||newpaw.isEmpty()){
+            } else {
+                if (newpaw == null || newpaw.isEmpty()) {
                     return JsonResponse.failure("新密码不得为null或空字符串，请换一个新密码");
-                }
-                else {
-                    userService.newPassword(uid,newpaw);
+                } else {
+                    userService.newPassword(uid, newpaw);
                     return JsonResponse.success("修改密码成功");
                 }
             }
-        }
-        else{
+        } else {
             return JsonResponse.failure("旧密码与原密码不一致，请重新输入");
         }
     }
-
 
 
     //找回密码两个接口
@@ -244,19 +239,20 @@ public class UserController {
 
         return JsonResponse.success(result);
     }
-    @RequestMapping(value="/forgetPassword",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/forgetPassword", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse forgetPassword(HttpServletRequest request,@RequestParam(value="email",required=false)String mail,
-                                       @RequestParam(value="code",required=false)String code,
-                                       @RequestParam(value="password",required=false)String password){
-        return JsonResponse.success(userService.forgetPassword(request.getSession(),mail,password,code));
+    public JsonResponse forgetPassword(HttpServletRequest request, @RequestParam(value = "email", required = false) String mail,
+                                       @RequestParam(value = "code", required = false) String code,
+                                       @RequestParam(value = "password", required = false) String password) {
+        return JsonResponse.success(userService.forgetPassword(request.getSession(), mail, password, code));
     }
 
     //管理员看到user表的数据
     //
     @GetMapping("/alluser")
     @ResponseBody
-    public JsonResponse alluser(){
+    public JsonResponse alluser() {
         List<User> allusers = userService.getalluser();
         return JsonResponse.success(allusers);
     }
@@ -265,11 +261,41 @@ public class UserController {
     //具体传参格式参考我在群里传的图片
     @PostMapping("/addHotel")
     @ResponseBody
-    public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo){
+    public JsonResponse addHotel(@RequestBody Hotelinfo hotelinfo) {
         System.out.println(hotelinfo);
         return JsonResponse.success(hotelService.saveHotelInfo(hotelinfo));
     }
 
+    //移除酒店
+    //移除后用户不可搜索到该酒店
+    //但用户订单信息中的被删除酒店信息仍旧存在
+    @GetMapping("/removeHotel")
+    @ResponseBody
+    public JsonResponse removeHotel(@RequestParam(value = "h_id", required = false) Long hId) {
+        return JsonResponse.success(hotelService.removeById(hId));
+    }
 
+    //移除用户
+    //移除后用户不可登录
+    //注册功能未修改，意味着移除用户后用户可通过自己的邮箱重新注册一个账号，即使重新用户名和原本的一模一样
+    //数据库会添加一条数据
+    //然后用户可以正常登录
+    @GetMapping("/removeUser")
+    @ResponseBody
+    public JsonResponse removeUser(@RequestParam(value = "u_id", required = false) Long uId) {
+        return JsonResponse.success(userService.removeById(uId));
+    }
+
+    //添加用户
+    //如果用户名和邮箱在数据库中有唯一匹配的数据则解除逻辑删除且更新密码
+    //如果没有唯一匹配的数据则查询用户名和邮箱是否已被使用（从没有被逻辑删除的用户中找）
+    //被使用则返回对应数据被使用
+    //否则添加进数据库并返回成功
+    @GetMapping("/addUser")
+    @ResponseBody
+    public JsonResponse addUser(User user) {
+        System.out.println(userService.addUser(user));
+        return JsonResponse.success(null);
+    }
 }
 
