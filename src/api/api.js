@@ -46,6 +46,6 @@ export const adminDelHotel = (obj) => http.GET('/api/user/alluser', obj)
 // 管理员获取订单列表
 export const adminGetOrderList = () => http.GET('/api/userorder/allorder')
 // 管理员修改指定用户的密码
-export const adminChangeUserPwd = (obj) => http.GET('/api/user/alluser', obj)
+export const adminChangeUserPwd = (obj) => http.GET('/api/user/newpass', obj)
 // 管理员修改酒店某个room的价格
 export const adminChangePrice = (obj) => http.GET('/api/user/alluser', obj)

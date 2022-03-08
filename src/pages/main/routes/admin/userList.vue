@@ -199,12 +199,20 @@ export default {
       })
     },
     editUser () {
-      let updatedUser = {id: this.userForm.id, password: this.userForm.pwd}
-      console.info(updatedUser)
-      adminChangeUserPwd(updatedUser).then(res => {
-        console.info(res.data)
-      })
-      this.dialogFormVisible = false
+      if (this.userForm.pwd === '') {
+        this.$message.error({message: '密码不能为空噢~', center: true})
+      } else {
+        let updatedUser = {uid: this.userForm.id, pass: this.userForm.pwd}
+        console.info(updatedUser)
+        adminChangeUserPwd(updatedUser).then(res => {
+          this.$message({
+            message: '修改成功~',
+            type: 'success',
+            center: true
+          })
+          this.dialogFormVisible = false
+        })
+      }
     },
     getUserDefault (user) {
       console.info(user)
