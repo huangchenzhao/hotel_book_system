@@ -1,150 +1,154 @@
 <template>
-    <div>
-        <el-container class="el-container">
-            <el-header class="el-header" height="100px">
-                <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
-            </el-header>
-            <el-container>
-                <el-aside width="200px" class="el-aside">
-                    <el-menu class="el-menu" @open="handleOpen"
-                             @close="handleClose" :default-openeds="openeds" router :default-active="$route.path">
-                        <el-submenu index="1">
-                            <template slot="title">
-                                <i class="el-icon-office-building"></i>
-                                <span>酒店信息</span>
-                            </template>
-                            <el-menu-item index="/hotel/list">酒店列表</el-menu-item>
-                            <el-menu-item index="/hotel/add">增加酒店</el-menu-item>
-                            <el-menu-item index="/hotel/manage">酒店管理</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="2">
-                            <template slot="title">
-                                <i class="el-icon-sell"></i>
-                                <span>订单信息</span>
-                            </template>
-                            <el-menu-item index="/order/list">订单列表</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="3">
-                            <template slot="title">
-                                <i class="el-icon-user"></i>
-                                <span>用户信息</span>
-                            </template>
-                            <el-menu-item index="/user/list">用户列表</el-menu-item>
-                            <el-menu-item index="3-2">用户管理</el-menu-item>
-                        </el-submenu>
-                    </el-menu>
-                </el-aside>
-                <el-main class="el-main">
-                    <el-table
-                            :data="user.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                            stripe
-                            style="width: 100%">
-                    <el-table-column
-                            prop="username"
-                            label="用户名"
-                            width="100" align="center" header-align="center" >
-                    </el-table-column>
-                    <el-table-column
-                            prop="password"
-                            label="密码"
-                            width="150" align="center" header-align="center" >
-                    </el-table-column>
-                    <el-table-column
-                            prop="mail"
-                            label="邮箱"
-                            width="150" align="center" header-align="center" >
-                    </el-table-column>
-                    <el-table-column
-                            prop="photoUrl"
-                            label="头像"
-                            width="200" align="center" header-align="center" >
-                      <template slot-scope="scope">
-                        <img :src="scope.row.photoUrl" alt="" width="90" height="90">
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="countt"
-                            label="预约次数"
-                            :formatter="counttFormat"
-                            width="150" align="center" sortable header-align="center" >
-                    </el-table-column>
-                        <el-table-column
-                                prop="summ"
-                                label="消费金额"
-                                :formatter="summFormat"
-                                width="200" align="center" sortable header-align="center" >
-                        </el-table-column>
-                    <el-table-column
-                            align="center" header-align="center" >
-                        <template slot="header" slot-scope="scope">
-                        <el-button round @click="addUser">新增用户</el-button>
-                            <el-dialog title="新增用户" :visible.sync="addUserFormVisible" width="40%">
-                                <el-form :model="addUserForm">
-                                    <el-form-item label="用户名" :label-width="FormLabelWidth">
-                                        <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名" prefix-icon="el-icon-mobile-phone" :rules="[
+  <div>
+    <el-container class="el-container">
+      <el-header class="el-header" height="100px">
+        <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
+      </el-header>
+      <el-container>
+        <el-aside width="200px" class="el-aside">
+          <el-menu class="el-menu" @open="handleOpen"
+                   @close="handleClose" :default-openeds="openeds" router :default-active="$route.path">
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-office-building"></i>
+                <span>酒店信息</span>
+              </template>
+              <el-menu-item index="/hotel/list">酒店列表</el-menu-item>
+              <el-menu-item index="/hotel/add">增加酒店</el-menu-item>
+              <el-menu-item index="/hotel/manage">酒店管理</el-menu-item>
+            </el-submenu>
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-sell"></i>
+                <span>订单信息</span>
+              </template>
+              <el-menu-item index="/order/list">订单列表</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-user"></i>
+                <span>用户信息</span>
+              </template>
+              <el-menu-item index="/user/list">用户列表</el-menu-item>
+              <el-menu-item index="3-2">用户管理</el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <el-main class="el-main">
+          <el-table
+              :data="user.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+              stripe
+              style="width: 100%">
+            <el-table-column
+                prop="username"
+                label="用户名"
+                width="100" align="center" header-align="center">
+            </el-table-column>
+            <el-table-column
+                prop="password"
+                label="密码"
+                width="150" align="center" header-align="center">
+            </el-table-column>
+            <el-table-column
+                prop="mail"
+                label="邮箱"
+                width="150" align="center" header-align="center">
+            </el-table-column>
+            <el-table-column
+                prop="photoUrl"
+                label="头像"
+                width="200" align="center" header-align="center">
+              <template slot-scope="scope">
+                <img :src="scope.row.photoUrl" alt="" width="90" height="90">
+              </template>
+            </el-table-column>
+            <el-table-column
+                prop="countt"
+                label="预约次数"
+                :formatter="counttFormat"
+                width="150" align="center" sortable header-align="center">
+            </el-table-column>
+            <el-table-column
+                prop="summ"
+                label="消费金额"
+                :formatter="summFormat"
+                width="200" align="center" sortable header-align="center">
+            </el-table-column>
+            <el-table-column
+                align="center" header-align="center">
+              <template slot="header" slot-scope="scope">
+                <el-button round @click="addUser">新增用户</el-button>
+                <el-dialog title="新增用户" :visible.sync="addUserFormVisible" width="40%">
+                  <el-form :model="addUserForm">
+                    <el-form-item label="用户名" :label-width="FormLabelWidth">
+                      <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名"
+                                prefix-icon="el-icon-mobile-phone" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur' }
     ]"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="用户密码" :label-width="FormLabelWidth">
-                                        <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码" prefix-icon="el-icon-lock" :rules="[
+                    </el-form-item>
+                    <el-form-item label="用户密码" :label-width="FormLabelWidth">
+                      <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码"
+                                prefix-icon="el-icon-lock" :rules="[
       { required: true, message: '请输入密码', trigger: 'blur' }
     ]"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="用户邮箱" :label-width="FormLabelWidth">
-                                        <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱" prefix-icon="el-icon-lock" :rules="[
+                    </el-form-item>
+                    <el-form-item label="用户邮箱" :label-width="FormLabelWidth">
+                      <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱"
+                                prefix-icon="el-icon-lock" :rules="[
       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ]"></el-input>
-                                    </el-form-item>
-                                </el-form>
-                                <div slot="footer" class="dialog-footer">
-                                    <el-button @click="addUserFormVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="addUserFormVisible = false">确 定</el-button>
-                                </div>
-                            </el-dialog>
-                        </template>
-                        <template slot-scope="scope">
-                            <el-popconfirm
-                                    title="确定删除这个用户吗?" @confirm="delUser(scope.row)">
-                                <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
-                            </el-popconfirm>
-                            <el-button
-                                    type="primary" icon="el-icon-edit" @click="getUserDefault(scope.row)">
-                            </el-button>
-                            <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible" width="40%">
-                                <el-form :model="userForm">
-                                    <el-form-item label="用户名" :label-width="FormLabelWidth">
-                                        <el-input disabled="true" v-model="userForm.name" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="密码" :label-width="FormLabelWidth">
-                                        <el-input v-model="userForm.pwd" autocomplete="off"></el-input>
-                                    </el-form-item>
-                                </el-form>
-                                <div slot="footer" class="dialog-footer">
-                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="editUser">确 定</el-button>
-                                </div>
-                            </el-dialog>
-                        </template>
-                    </el-table-column>
-                    </el-table>
-                    <el-col :span="24" class="toolbar" style="text-align:center">
-                        <el-pagination
-                                @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page="currentPage"
-                                layout="total, prev, pager, next"
-                                :page-size="pageSize"
-                                :total="this.user.length"
-                        ></el-pagination>
-                    </el-col>
-                </el-main>
-            </el-container>
-        </el-container>
-    </div>
+                    </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="addUserFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="addUserFormVisible = false">确 定</el-button>
+                  </div>
+                </el-dialog>
+              </template>
+              <template slot-scope="scope">
+                <el-popconfirm
+                    title="确定删除这个用户吗?" @confirm="delUser(scope.row)">
+                  <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
+                </el-popconfirm>
+                <el-button
+                    type="primary" icon="el-icon-edit" @click="getUserDefault(scope.row)">
+                </el-button>
+                <el-dialog title="管理用户信息" :visible.sync="dialogFormVisible" width="40%">
+                  <el-form :model="userForm">
+                    <el-form-item label="用户名" :label-width="FormLabelWidth">
+                      <el-input disabled="true" v-model="userForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" :label-width="FormLabelWidth">
+                      <el-input v-model="userForm.pwd" autocomplete="off"></el-input>
+                    </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="editUser">确 定</el-button>
+                  </div>
+                </el-dialog>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-col :span="24" class="toolbar" style="text-align:center">
+            <el-pagination
+                @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page="currentPage"
+                layout="total, prev, pager, next"
+                :page-size="pageSize"
+                :total="this.user.length"
+            ></el-pagination>
+          </el-col>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
 import Header from '../../../../components/Header'
-import { adminGetUserList, adminDelUser } from '@/api/api'
+import {adminGetUserList, adminDelUser, adminChangeUserPwd} from '@/api/api'
+
 export default {
   name: 'userList',
   components: {Header},
@@ -158,7 +162,7 @@ export default {
       userForm: {
         name: '',
         pwd: '',
-        mail: ''
+        id: ''
       },
       addUserFormVisible: false,
       FormLabelWidth: '120px',
@@ -195,11 +199,18 @@ export default {
       })
     },
     editUser () {
+      let updatedUser = {id: this.userForm.id, password: this.userForm.pwd}
+      console.info(updatedUser)
+      adminChangeUserPwd(updatedUser).then(res => {
+        console.info(res.data)
+      })
       this.dialogFormVisible = false
     },
     getUserDefault (user) {
-      this.userForm.name = user.name
-      this.userForm.pwd = user.pwd
+      console.info(user)
+      this.userForm.name = user.username
+      this.userForm.pwd = user.password
+      this.userForm.id = user.uId
       this.dialogFormVisible = true
     },
     addUser () {
@@ -216,43 +227,47 @@ export default {
 </script>
 
 <style scoped>
-    .el-header {
-        background: url('../../../../assets/images/header.png');
-        text-align: center;
-        color: #dcdfe6;
-        font-family:Arial,Helvetica,sans-serif;
-        font-size: large;
-        font-weight: bolder;
-    }
+.el-header {
+  background: url('../../../../assets/images/header.png');
+  text-align: center;
+  color: #dcdfe6;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  font-weight: bolder;
+}
 
-    .el-aside {
-        background-color: #336699;
-        text-align: center;
-        line-height: 200px;
-        height:135vh;
-    }
-    .el-submenu {
-        background-color: #FFFFCC;
-    }
-    .el-menu-item {
-        background-color: #99CCCC !important;
-    }
-    .el-menu {
-        background-color: #FFFFCC;
-    }
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        /*line-height: 160px;*/
-    }
+.el-aside {
+  background-color: #336699;
+  text-align: center;
+  line-height: 200px;
+  height: 135vh;
+}
 
-    .el-container:nth-child(5) .el-aside,
-    .el-container:nth-child(6) .el-aside {
-        line-height: 260px;
-    }
+.el-submenu {
+  background-color: #FFFFCC;
+}
 
-    .el-container:nth-child(7) .el-aside {
-        line-height: 320px;
-    }
+.el-menu-item {
+  background-color: #99CCCC !important;
+}
+
+.el-menu {
+  background-color: #FFFFCC;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  /*line-height: 160px;*/
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
 </style>

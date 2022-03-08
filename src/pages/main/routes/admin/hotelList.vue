@@ -165,7 +165,7 @@
 <script>
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
 import Header from '../../../../components/Header'
-import {adminGetHotelList, adminGetDetail, adminDelHotel} from '@/api/api'
+import {adminGetHotelList, adminGetDetail, adminDelHotel, adminChangePrice} from '@/api/api'
 
 export default {
   name: 'hotelList',
@@ -179,7 +179,8 @@ export default {
       dialogVisible: false,
       priceDialog: false,
       roomForm: {
-        price: 100
+        rid: 0,
+        price: 0
       }
     }
   },
@@ -216,9 +217,16 @@ export default {
       return row.roomcount == null ? '0' : row.roomcount
     },
     editPrice (myRow) {
+      this.roomForm.rid = myRow.room.rid
+      this.roomForm.price = myRow.room.price
       this.priceDialog = true
     },
     priceFinish () {
+      let changedRoom = {rid: this.roomForm.rid, price: this.roomForm.price}
+      console.info(changedRoom)
+      adminChangePrice(changedRoom).then(res => {
+        console.info(res.data)
+      })
       this.priceDialog = false
     },
     delHotel (myRow) {
