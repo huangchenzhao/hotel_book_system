@@ -272,5 +272,8 @@
         ORDER BY
             userorder.o_id ASC
     </select>
+    <select id="salesByWeek" resultMap="BaseResultMap">
+        select h_id,sum(totalprice) as totalprice,check_in  from userorder  where check_in &gt;= #{start} and check_in &lt; #{end}  group by h_id,check_in;
+    </select>
 
 </mapper>

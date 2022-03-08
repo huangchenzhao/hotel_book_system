@@ -3,6 +3,7 @@ package com.example.mybatisplus.service;
 import com.example.mybatisplus.model.domain.Hotel;
 import com.example.mybatisplus.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.mybatisplus.model.domain.Userorder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,6 @@ public interface UserService extends IService<User>  {
     String sendMail(HttpSession session, String account);
     String addUser(User user);
     void newPass(Long uid, String pass);
-    List<Hotel> salesByWeek();
+    List<Userorder> salesByWeek();
     String updatePrice(Long rId, Float price);
 }

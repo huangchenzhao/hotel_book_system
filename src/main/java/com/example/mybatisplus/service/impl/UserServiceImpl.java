@@ -1,10 +1,10 @@
 package com.example.mybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.mybatisplus.mapper.HotelMapper;
 import com.example.mybatisplus.mapper.RoomMapper;
-import com.example.mybatisplus.model.domain.Hotel;
-import com.example.mybatisplus.model.domain.Room;
-import com.example.mybatisplus.model.domain.User;
+import com.example.mybatisplus.mapper.UserorderMapper;
+import com.example.mybatisplus.model.domain.*;
 import com.example.mybatisplus.mapper.UserMapper;
 import com.example.mybatisplus.service.RoomService;
 import com.example.mybatisplus.service.UserService;
@@ -12,6 +12,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -47,6 +51,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RoomService roomService;
     @Autowired(required = false)
     private RoomMapper roomMapper;
+    @Autowired(required = false)
+    private HotelMapper hotelMapper;
+    @Autowired(required = false)
+    private UserorderMapper userorderMapper;
 
     @Override
     public User login(User a) {
@@ -281,8 +289,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<Hotel> salesByWeek() {
-        return null;
+    public List<Userorder> salesByWeek() {
+        Calendar begin = Calendar.getInstance();// 得到一个Calendar的实例
+        begin.setTime(new java.util.Date()); // 设置时间为当前时间
+        begin.add(Calendar.DATE, -7);// 日期加-7
+        Calendar end = Calendar.getInstance();
+        //获得起止时间
+        //查询数据
+        return userorderMapper.salesByWeek(new java.util.Date(begin.getTimeInMillis()),new java.util.Date(end.getTimeInMillis()));
     }
 
     @Override

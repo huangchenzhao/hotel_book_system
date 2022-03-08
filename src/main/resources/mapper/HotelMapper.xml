@@ -285,7 +285,6 @@
         </association>
     </resultMap>
     <select id="salesByWeek" resultMap="SalesMap">
-
     </select>
 
     <!--</select>-->
