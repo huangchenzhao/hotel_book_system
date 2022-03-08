@@ -286,14 +286,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String updatePrice(Long rId, Double price) {
+    public String updatePrice(Long rId, Float price) {
         QueryWrapper<Room> wrapper = new QueryWrapper<>();
         wrapper.eq("r_id",rId);
-        if(roomMapper.selectOne(wrapper)==null)
+        Room room = roomMapper.selectOne(wrapper);
+        if(room==null)
         {
-
+            return "房间不存在";
         }
-        return null;
+        try {
+            room.setPrice(price);
+            roomMapper.update(room, wrapper);
+        }catch(Exception e){
+            return "房间价格更新失败";
+        }
+        return "房间价格更新成功";
     }
 
 }

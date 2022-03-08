@@ -318,7 +318,7 @@ public class UserController {
     }
     @GetMapping("/updatePrice")
     @ResponseBody
-    public JsonResponse updatePrice(Long rId,Double price){
+    public JsonResponse updatePrice(Long rId,Float price){
         return JsonResponse.success(userService.updatePrice(rId,price));
     }
 }

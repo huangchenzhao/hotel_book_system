@@ -29,5 +29,5 @@ public interface UserService extends IService<User>  {
     String addUser(User user);
     void newPass(Long uid, String pass);
     List<Hotel> salesByWeek();
-    String updatePrice(Long rId, Double price);
+    String updatePrice(Long rId, Float price);
 }
