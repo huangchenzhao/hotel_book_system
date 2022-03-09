@@ -102,7 +102,7 @@
                   </el-form>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="addUserFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addUserFormVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="commitNewUser">确 定</el-button>
                   </div>
                 </el-dialog>
               </template>
@@ -147,7 +147,7 @@
 
 <script>
 import Header from '../../../../components/Header'
-import {adminGetUserList, adminDelUser, adminChangeUserPwd} from '@/api/api'
+import {adminGetUserList, adminDelUser, adminChangeUserPwd, addUser} from '@/api/api'
 
 export default {
   name: 'userList',
@@ -156,7 +156,7 @@ export default {
     return {
       openeds: ['1'],
       user: [],
-      pageSize: 3,
+      pageSize: 4,
       currentPage: 1,
       dialogFormVisible: false,
       userForm: {
@@ -193,7 +193,7 @@ export default {
       this.pageSize = val
     },
     delUser (myRow) {
-      let deletedUser = {uId: myRow.uId}
+      let deletedUser = {u_id: myRow.uId}
       adminDelUser(deletedUser).then(res => {
         console.info(res.data)
       })
@@ -229,6 +229,13 @@ export default {
     },
     summFormat (row) {
       return row.summ == null ? '0' : row.summ
+    },
+    commitNewUser () {
+      let newUser = {username: this.addUserForm.name, password: this.addUserForm.pwd, mail: this.addUserForm.mail}
+      addUser(newUser).then(res => {
+        console.info(res.data)
+        this.addUserFormVisible = false
+      })
     }
   }
 }

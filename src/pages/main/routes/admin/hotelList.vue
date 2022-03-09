@@ -222,15 +222,24 @@ export default {
       this.priceDialog = true
     },
     priceFinish () {
-      let changedRoom = {rid: this.roomForm.rid, price: this.roomForm.price}
-      console.info(changedRoom)
-      adminChangePrice(changedRoom).then(res => {
-        console.info(res.data)
-      })
-      this.priceDialog = false
+      if (this.roomForm.price === '') {
+        this.$message.error({message: '价格不能为空噢~', center: true})
+      } else {
+        let changedRoom = {rid: this.roomForm.rid, price: this.roomForm.price}
+        console.info(changedRoom)
+        adminChangePrice(changedRoom).then(res => {
+          console.info(res.data)
+          this.$message({
+            message: '修改成功~',
+            type: 'success',
+            center: true
+          })
+          this.priceDialog = false
+        })
+      }
     },
     delHotel (myRow) {
-      let deletedHotel = {hId: myRow.hid}
+      let deletedHotel = {h_id: myRow.hid}
       adminDelHotel(deletedHotel).then(res => {
         console.info(res.data)
       })
