@@ -91,6 +91,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else if (verify(session, a.getMail(), code) == null) {//不存在则录入返回登陆信息
             return "邮箱或验证码错误！";
         } else {
+            //设置默认头像
+            a.setPhotoUrl("./image/202203/-352ab266285b4dd28e22dafe5c1b2e9f.jpeg");
             userMapper.insert(a);
             return "注册成功！";
         }
