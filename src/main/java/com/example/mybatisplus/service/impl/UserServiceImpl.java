@@ -292,7 +292,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Map<String, Map<LocalDate, Float>> salesByWeek() {
+    public Map<String, List<Float>> salesByWeek() {
         Calendar begin = Calendar.getInstance();// 得到一个Calendar的实例
         begin.setTime(java.util.Date.from((LocalDate.now()).atStartOfDay(ZoneOffset.ofHours(8)).toInstant())); // 设置时间为当前时间
         begin.add(Calendar.DATE, -7);// 日期加-7
@@ -305,7 +305,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         for(int i=0;i<userorder.size();i++){
             hotelDataSet.add(userorder.get(i).getHotelName());
         }
-        Map<String, Map<LocalDate, Float>> hotelDataMap=new HashMap<>();
+        Map<String, List<Float>> hotelDataMap=new HashMap<>();
         for(String name:hotelDataSet){
             Map<LocalDate, Float> dayprice=new HashMap<>();
             for(int i=0;i<7;i++){
@@ -317,9 +317,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     dayprice.put(userorder.get(i).getSalesTime(),userorder.get(i).getTotalprice());
                 }
             }
-            hotelDataMap.put(name,dayprice);
+            List<Float> priceList=new ArrayList<>();
+            for(int i=0;i<7;i++){
+                priceList.add(dayprice.get((new Date(begin.getTimeInMillis()+i*1000 * 60 * 60 * 24L)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            }
+            hotelDataMap.put(name,priceList);
         }
-        System.out.println(hotelDataMap);
         return hotelDataMap;
     }
 
