@@ -54,6 +54,8 @@ public class Userorder extends Model<Userorder> {
 
     @TableField(exist = false)
     private String HotelName;
+    @TableField(exist = false)
+    private LocalDate salesTime;
 
     public Userorder(Userorder a) {
         try {

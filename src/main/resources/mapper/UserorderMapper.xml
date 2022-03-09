@@ -17,7 +17,7 @@
         <result column="truename" property="truename" />
         <result column="idcard" property="idcard" />
         <result column="phonenumber" property="phonenumber" />
-        <result column="created_time" property="createdTime" />
+        <result column="created_time" property="salesTime" />
         <result column="name" property="hotelName"/>
     </resultMap>
     <update id="usercomment">
