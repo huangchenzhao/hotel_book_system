@@ -274,9 +274,9 @@
             userorder.o_id ASC
     </select>
     <select id="salesByWeek" resultMap="BaseResultMap">
-        select hotel.name,sum(totalprice) as totalprice,created_time  from userorder inner join hotel
+        select hotel.name,sum(totalprice) as totalprice,DATE_FORMAT(created_time,'%Y-%m-%d')as created_time  from userorder inner join hotel
         on userorder.h_id=hotel.h_id and hotel.is_deleted=0
-        where created_time &gt;= #{start} and created_time &lt; #{end}  group by hotel.h_id,created_time;
+        where created_time &gt;= #{start} and created_time &lt; #{end}  group by hotel.h_id,DATE_FORMAT(created_time,'%Y-%m-%d');
     </select>
 
 </mapper>

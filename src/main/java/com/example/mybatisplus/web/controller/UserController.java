@@ -3,6 +3,7 @@ package com.example.mybatisplus.web.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.mapper.UserMapper;
 import com.example.mybatisplus.model.domain.Hotelinfo;
+import com.example.mybatisplus.model.domain.Userorder;
 import com.example.mybatisplus.service.HotelService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -315,7 +316,8 @@ public class UserController {
     @GetMapping("/salesByWeek")
     @ResponseBody
     public JsonResponse salesByWeek(){
-        return JsonResponse.success(userService.salesByWeek());
+        List<Userorder> u=userService.salesByWeek();
+        return JsonResponse.success(u);
     }
     //管理员修改房间价格
     //如果房间id存在则更新价格

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
@@ -29,6 +31,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalTime;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 
@@ -215,18 +218,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void newPassword(Long uid, String newpaw) {
-        userMapper.newPassword(uid,newpaw);
+        userMapper.newPassword(uid, newpaw);
     }
 
     @Override
-    public String forgetPassword(HttpSession request, String mail, String password,String code) {
+    public String forgetPassword(HttpSession request, String mail, String password, String code) {
 
-        try{
-            if(verify(request,mail,code)==null){
+        try {
+            if (verify(request, mail, code) == null) {
                 return "验证码或邮箱错误";
             }
-            userMapper.updatePassword(mail,password);
-        }catch(Exception e){
+            userMapper.updatePassword(mail, password);
+        } catch (Exception e) {
             return "找回失败";
         }
         return "找回成功";
@@ -235,14 +238,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String sendMail(HttpSession session, String account) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("mail",account);
-        if(userMapper.selectOne(wrapper)==null)
-        {
+        wrapper.eq("mail", account);
+        if (userMapper.selectOne(wrapper) == null) {
             return "邮箱未注册";
         }
-        try{
-            sendVerification(session,account);
-        }catch(Exception e){
+        try {
+            sendVerification(session, account);
+        } catch (Exception e) {
             return "邮件发送失败";
         }
         return "邮件发送成功请注意查收";
@@ -254,19 +256,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             if (userMapper.updateUser(user) == false) {
                 QueryWrapper<User> wrapper = new QueryWrapper<>();
-                wrapper.eq("mail",user.getMail());
+                wrapper.eq("mail", user.getMail());
                 QueryWrapper<User> wrapper2 = new QueryWrapper<>();
-                wrapper2.eq("username",user.getUsername());
-                try{
-                    if(userMapper.selectOne(wrapper)!=null)
-                    {
+                wrapper2.eq("username", user.getUsername());
+                try {
+                    if (userMapper.selectOne(wrapper) != null) {
                         return "邮箱已存在";
                     }
-                    if(userMapper.selectOne(wrapper2)!=null)
-                    {
+                    if (userMapper.selectOne(wrapper2) != null) {
                         return "用户名已存在";
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     return "数据库错误";
                 }
                 user.setUsertype(1);
@@ -280,40 +280,43 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public List<User> getalluser(){
+    public List<User> getalluser() {
         List<User> allUsers = userMapper.getalluser();
         return allUsers;
     }
 
     @Override
-    public void newPass(Long uid, String pass){
-        userMapper.newPass(uid,pass);
+    public void newPass(Long uid, String pass) {
+        userMapper.newPass(uid, pass);
     }
 
     @Override
     public List<Userorder> salesByWeek() {
         Calendar begin = Calendar.getInstance();// 得到一个Calendar的实例
-        begin.setTime(new java.util.Date()); // 设置时间为当前时间
+        begin.setTime(java.util.Date.from((LocalDate.now()).atStartOfDay(ZoneOffset.ofHours(8)).toInstant())); // 设置时间为当前时间
         begin.add(Calendar.DATE, -7);// 日期加-7
         Calendar end = Calendar.getInstance();
+        end.setTime(java.util.Date.from((LocalDate.now()).atStartOfDay(ZoneOffset.ofHours(8)).toInstant()));
         //获得起止时间
         //查询数据
-        return userorderMapper.salesByWeek(new java.util.Date(begin.getTimeInMillis()),new java.util.Date(end.getTimeInMillis()));
+        System.out.println(new java.util.Date(begin.getTimeInMillis()));
+        System.out.println(new java.util.Date(end.getTimeInMillis()));
+        List<Userorder> u=userorderMapper.salesByWeek(new java.util.Date(begin.getTimeInMillis()), new java.util.Date(end.getTimeInMillis()));
+        return u;
     }
 
     @Override
     public String updatePrice(Long rId, Float price) {
         QueryWrapper<Room> wrapper = new QueryWrapper<>();
-        wrapper.eq("r_id",rId);
+        wrapper.eq("r_id", rId);
         Room room = roomMapper.selectOne(wrapper);
-        if(room==null)
-        {
+        if (room == null) {
             return "房间不存在";
         }
         try {
             room.setPrice(price);
             roomMapper.update(room, wrapper);
-        }catch(Exception e){
+        } catch (Exception e) {
             return "房间价格更新失败";
         }
         return "房间价格更新成功";
