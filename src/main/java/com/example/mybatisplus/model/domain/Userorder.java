@@ -52,6 +52,9 @@ public class Userorder extends Model<Userorder> {
 
     private Date createdTime;
 
+    @TableField(exist = false)
+    private String HotelName;
+
     public Userorder(Userorder a) {
         try {
             this.comment = "暂无评论";
@@ -66,6 +69,7 @@ public class Userorder extends Model<Userorder> {
         }
 
     }
+
     public Userorder() {
     }
 

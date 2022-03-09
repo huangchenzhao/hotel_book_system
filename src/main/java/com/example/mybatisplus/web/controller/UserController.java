@@ -311,7 +311,7 @@ public class UserController {
         return JsonResponse.success(userService.addUser(user));
     }
 
-    //返回每个酒店前七天的每天销售额
+    //返回每个酒店前七天的每天销售额+++++++++++++++++++++++++++++++++++++++++++++
     @GetMapping("/salesByWeek")
     @ResponseBody
     public JsonResponse salesByWeek(){

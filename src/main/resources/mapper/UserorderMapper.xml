@@ -18,6 +18,7 @@
         <result column="idcard" property="idcard" />
         <result column="phonenumber" property="phonenumber" />
         <result column="created_time" property="createdTime" />
+        <result column="name" property="hotelName"/>
     </resultMap>
     <update id="usercomment">
         update userorder set comment = #{comments} , state = 1 where o_id = #{orderId}
@@ -273,7 +274,9 @@
             userorder.o_id ASC
     </select>
     <select id="salesByWeek" resultMap="BaseResultMap">
-        select h_id,sum(totalprice) as totalprice,check_in  from userorder  where check_in &gt;= #{start} and check_in &lt; #{end}  group by h_id,check_in;
+        select hotel.name,sum(totalprice) as totalprice,created_time  from userorder inner join hotel
+        on userorder.h_id=hotel.h_id and hotel.is_deleted=0
+        where created_time &gt;= #{start} and created_time &lt; #{end}  group by hotel.h_id,created_time;
     </select>
 
 </mapper>
