@@ -201,7 +201,7 @@ export default {
           if (myUser.usertype === '1') {
             this.$router.push({name: 'userPage'})
           } else {
-            this.$router.push({name: 'list'})
+            this.$router.push({name: 'hotelList'})
           }
         }
       })
