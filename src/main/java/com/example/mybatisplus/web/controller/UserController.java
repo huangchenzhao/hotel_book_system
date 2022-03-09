@@ -308,8 +308,7 @@ public class UserController {
     @GetMapping("/addUser")
     @ResponseBody
     public JsonResponse addUser(User user) {
-        System.out.println(userService.addUser(user));
-        return JsonResponse.success(null);
+        return JsonResponse.success(userService.addUser(user));
     }
 
     //返回每个酒店前七天的每天销售额
