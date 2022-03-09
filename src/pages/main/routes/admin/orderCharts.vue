@@ -49,13 +49,34 @@
 
 <script>
 import Header from '../../../../components/Header'
+import {getHotelData} from '@/api/api'
 export default {
   name: 'orderCharts',
   components: {Header},
   data () {
     return {
-      openeds: ['1']
+      openeds: ['1'],
+      pre7date: [],
+      hotel: [],
+      hotel2: [],
+      item: {
+        name: '',
+        type: '',
+        data: []
+      },
+      mStudyTime: '',
+      seriesData: [],
+      seriesData2: []
     }
+  },
+  created () {
+    /* this.hotel2.push('如家1')
+    this.item.name = '如家1'
+    this.item.type = 'line'
+    this.item.data = [1, 2, 3, 4, 5, 6, 7]
+    this.seriesData2.push(this.item)
+    console.info(this.hotel2)
+    console.info(this.seriesData2) */
   },
   mounted () {
     this.mStudyTimeChart()
@@ -74,8 +95,15 @@ export default {
       var echarts = require('echarts')
       // 基于准备好的dom，初始化echarts实例
       this.mStudyTime = echarts.init(document.getElementById('mStudyTime'))
+      for (let i = 0; i < 7; i++) {
+        const time = new Date(new Date().setDate((new Date().getDate() + i) - 7))
+        const year = time.getFullYear()
+        const month = `0${time.getMonth() + 1}`.slice(-2)
+        const strDate = `0${time.getDate()}`.slice(-2)
+        this.pre7date.push(`${year}-${month}-${strDate}`)
+      }
       // 绘制图表
-      this.mStudyTime.setOption({
+      let op = {
         title: {
           text: 'Stacked Line'
         },
@@ -83,7 +111,7 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+          data: []
         },
         grid: {
           left: '3%',
@@ -99,43 +127,23 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.pre7date
         },
         yAxis: {
           type: 'value'
         },
-        series: [
-          {
-            name: 'Email',
-            type: 'line',
-            stack: 'Total',
-            data: [120, 132, 101, 134, 90, 230, 210]
-          },
-          {
-            name: 'Union Ads',
-            type: 'line',
-            stack: 'Total',
-            data: [220, 182, 191, 234, 290, 330, 310]
-          },
-          {
-            name: 'Video Ads',
-            type: 'line',
-            stack: 'Total',
-            data: [150, 232, 201, 154, 190, 330, 410]
-          },
-          {
-            name: 'Direct',
-            type: 'line',
-            stack: 'Total',
-            data: [320, 332, 301, 334, 390, 330, 320]
-          },
-          {
-            name: 'Search Engine',
-            type: 'line',
-            stack: 'Total',
-            data: [820, 932, 901, 934, 1290, 1330, 1320]
-          }
-        ]
+        series: []
+      }
+      getHotelData().then(res => {
+        this.hotel = Object.keys(res.data)
+        for (let i = 0; i < this.hotel.length; i++) {
+          op.legend.data.push(this.hotel[i])
+          op.series.push({name: this.hotel[i], type: 'line', data: res.data[this.hotel[i]]})
+        }
+        // promise
+        this.mStudyTime.setOption(op)
+        console.info(this.hotel)
+        console.info(this.seriesData)
       })
     }
   }
