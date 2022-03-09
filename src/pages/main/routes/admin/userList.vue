@@ -7,7 +7,7 @@
       <el-container>
         <el-aside width="200px" class="el-aside">
           <el-menu class="el-menu" @open="handleOpen"
-                   @close="handleClose" :default-openeds="openeds" router :default-active="$route.path">
+                   @close="handleClose" router :default-active="$route.path">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-office-building"></i>
@@ -23,6 +23,7 @@
                 <span>订单信息</span>
               </template>
               <el-menu-item index="/order/list">订单列表</el-menu-item>
+              <el-menu-item index="/order/charts">订单分析</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
               <template slot="title">
@@ -79,25 +80,25 @@
               <template slot="header" slot-scope="scope">
                 <el-button round @click="addUser">新增用户</el-button>
                 <el-dialog title="新增用户" :visible.sync="addUserFormVisible" width="40%">
-                  <el-form :model="addUserForm">
-                    <el-form-item label="用户名" :label-width="FormLabelWidth">
-                      <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名"
-                                prefix-icon="el-icon-mobile-phone" :rules="[
+                  <el-form :model="addUserForm" :rules="rules">
+                    <el-form-item label="用户名" prop="name" :label-width="FormLabelWidth" :rules="[
       { required: true, message: '请输入用户名', trigger: 'blur' }
-    ]"></el-input>
+    ]">
+                      <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名"
+                                prefix-icon="el-icon-mobile-phone" ></el-input>
                     </el-form-item>
-                    <el-form-item label="用户密码" :label-width="FormLabelWidth">
-                      <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码"
-                                prefix-icon="el-icon-lock" :rules="[
+                    <el-form-item label="用户密码" prop="pwd" :label-width="FormLabelWidth" :rules="[
       { required: true, message: '请输入密码', trigger: 'blur' }
-    ]"></el-input>
+    ]">
+                      <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码"
+                                prefix-icon="el-icon-lock" ></el-input>
                     </el-form-item>
-                    <el-form-item label="用户邮箱" :label-width="FormLabelWidth">
-                      <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱"
-                                prefix-icon="el-icon-lock" :rules="[
+                    <el-form-item label="用户邮箱" prop="mail" :label-width="FormLabelWidth" :rules="[
       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"></el-input>
+    ]">
+                      <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱"
+                                prefix-icon="el-icon-lock"></el-input>
                     </el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
@@ -170,6 +171,18 @@ export default {
         name: '',
         pwd: '',
         mail: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        pwd: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        mail: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ]
       }
     }
   },
