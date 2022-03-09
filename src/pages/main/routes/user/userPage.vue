@@ -71,56 +71,8 @@
                             <span>{{hotelName1}}</span>
                             <div class="bottom clearfix">
                                 <font size="2">{{hotelAddress1}}</font>
-<!--                                <el-button type="text" class="button" @click="getHotel1">查看详情</el-button>-->
+                                <!--                                <el-button type="text" class="button" @click="getHotel1">查看详情</el-button>-->
                             </div>
-<!--                            <el-dialog :visible.sync="dialogTableVisible1">-->
-<!--                                <el-row :gutter="20">-->
-<!--                                    <el-col :span="12">-->
-<!--                                        <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler1" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">-->
-<!--                                            <bm-marker :position="center" :dragging="false">-->
-<!--                                                <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>-->
-<!--                                            </bm-marker>-->
-<!--                                        </baidu-map>-->
-<!--                                    </el-col>-->
-<!--                                    <el-col :span="12">-->
-<!--                                        <el-table :data="hotelDetail1">-->
-<!--                                            <el-table-column-->
-<!--                                                    prop="photo.photoUrl"-->
-<!--                                                    label="图片"-->
-<!--                                                    width="200" align="center" header-align="center">-->
-<!--                                                <template slot-scope="scope">-->
-<!--                                                    <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">-->
-<!--                                                </template>-->
-<!--                                            </el-table-column>-->
-<!--                                            <el-table-column-->
-<!--                                                    prop="detail.remain"-->
-<!--                                                    label="数量"-->
-<!--                                                    width="100" align="center" header-align="center">-->
-<!--                                            </el-table-column>-->
-<!--                                            <el-table-column-->
-<!--                                                    prop="room.price"-->
-<!--                                                    label="价格"-->
-<!--                                                    width="100" align="center" header-align="center">-->
-<!--                                            </el-table-column>-->
-<!--                                            <el-table-column-->
-<!--                                                    prop="room.roomtype"-->
-<!--                                                    label="房型"-->
-<!--                                                    width="100" align="center" header-align="center">-->
-<!--                                            </el-table-column>-->
-<!--                                            <el-table-column-->
-<!--                                                    label="操作"-->
-<!--                                                    align="center" header-align="center" >-->
-<!--                                                <template slot-scope="scope">-->
-<!--                                                    <el-button-->
-<!--                                                            type="text" @click="getOne(scope.row)">-->
-<!--                                                        预订-->
-<!--                                                    </el-button>-->
-<!--                                                </template>-->
-<!--                                            </el-table-column>-->
-<!--                                        </el-table>-->
-<!--                                    </el-col>-->
-<!--                                </el-row>-->
-<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -131,16 +83,8 @@
                             <span>{{hotelName2}}</span>
                             <div class="bottom clearfix">
                                 <font size="2">{{hotelAddress2}}</font>
-<!--                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>-->
+                                <!--                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>-->
                             </div>
-<!--                            <el-dialog title="hotelName2" :visible.sync="dialogTableVisible2">-->
-<!--                                <el-table :data="roomData">-->
-<!--                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>-->
-<!--                                    <el-table-column property="type" label="房型" width="150"></el-table-column>-->
-<!--                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>-->
-<!--                                    <el-table-column property="price" label="价格"></el-table-column>-->
-<!--                                </el-table>-->
-<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -151,16 +95,8 @@
                             <span>{{hotelName3}}</span>
                             <div class="bottom clearfix">
                                 <font size="2">{{hotelAddress3}}</font>
-<!--                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>-->
+                                <!--                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>-->
                             </div>
-<!--                            <el-dialog title="学生旅社" :visible.sync="dialogTableVisible3">-->
-<!--                                <el-table :data="roomData">-->
-<!--                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>-->
-<!--                                    <el-table-column property="type" label="房型" width="150"></el-table-column>-->
-<!--                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>-->
-<!--                                    <el-table-column property="price" label="价格"></el-table-column>-->
-<!--                                </el-table>-->
-<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -294,6 +230,18 @@ export default {
       }
     }
     return {
+      dataimg: [{
+        src: require('../../../../assets/images/recommend1.jpeg'),
+        txt: this.hotelName1,
+        txt2: '一站式服务'
+      },
+      {
+        src: require('../../../../assets/images/recommend2.jpeg')
+      },
+      {
+        src: require('../../../../assets/images/recommend3.jpeg')
+      }
+      ],
       center: {lng: 0, lat: 0},
       zoom: 3,
       latitude1: 0,
