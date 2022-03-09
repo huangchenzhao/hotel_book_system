@@ -114,16 +114,32 @@
     </resultMap>
     <!--添加了逻辑删除-->
     <select id="getrem" resultMap="RemMap">
-        SELECT *,
-               address.a_id as aid,
-               photo.h_id   as hid
-        FROM hotel
-                 INNER JOIN photo ON photo.h_id = hotel.h_id
-                 INNER JOIN address ON hotel.a_id = address.a_id
-        WHERE photo.r_id is NULL and hotel.is_deleted=0
-        group by hotel.h_id
-        ORDER BY hotel.star DESC
-            LIMIT 3
+        SELECT
+            photo.photo_url,
+            hotel.*,
+            address.`code`,
+            address.province,
+            address.city,
+            address.district,
+            address.detail
+        FROM
+            hotel
+                INNER JOIN photo ON photo.h_id = hotel.h_id AND photo.r_id IS NULL
+                INNER JOIN address ON hotel.a_id = address.a_id
+                INNER JOIN (SELECT
+                                count(userorder.o_id)AS coun,
+                                userorder.h_id
+                            FROM
+                                userorder
+                            GROUP BY
+                                userorder.h_id
+                            ORDER BY
+                                count(userorder.o_id) DESC
+            )AS hotel0 ON hotel0.h_id = hotel.h_id
+        WHERE hotel.is_deleted = 0
+        ORDER BY
+            hotel0.coun DESC
+        LIMIT 3
     </select>
 
     <resultMap id="HotelDetailMap" type="com.example.mybatisplus.model.domain.Hotel">
@@ -269,7 +285,6 @@
                 INNER JOIN address ON hotel.a_id = address.a_id
                 INNER JOIN photo ON photo.h_id = hotel.h_id AND photo.r_id is NULL
                 where hotel.is_deleted=0
-
     </select>
     <resultMap id="SalesMap" type="com.example.mybatisplus.model.domain.Hotel">
         <id column="id" property="Id" />
