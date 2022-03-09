@@ -23,6 +23,7 @@
                                 <span>订单信息</span>
                             </template>
                             <el-menu-item index="/order/list">订单列表</el-menu-item>
+                            <el-menu-item index="/order/charts">订单分析</el-menu-item>
                         </el-submenu>
                         <el-submenu index="3">
                             <template slot="title">

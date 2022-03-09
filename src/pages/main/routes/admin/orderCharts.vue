@@ -35,7 +35,13 @@
                         </el-submenu>
                     </el-menu>
                 </el-aside>
-                <el-main class="el-main">Main</el-main>
+                <el-main class="el-main">
+                    <el-row :gutter="20">
+                        <el-col :span="24">
+                            <div id="mStudyTime" style="width: 100%; height: 550px;"></div>
+                        </el-col>
+                    </el-row>
+                </el-main>
             </el-container>
         </el-container>
     </div>
@@ -44,12 +50,18 @@
 <script>
 import Header from '../../../../components/Header'
 export default {
-  name: 'list',
+  name: 'orderCharts',
   components: {Header},
   data () {
     return {
       openeds: ['1']
     }
+  },
+  mounted () {
+    this.mStudyTimeChart()
+    window.addEventListener('resize', () => {
+      this.mStudyTime.resize()
+    })
   },
   methods: {
     handleOpen (key, keyPath) {
@@ -57,6 +69,108 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    mStudyTimeChart () {
+      var echarts = require('echarts')
+      // 基于准备好的dom，初始化echarts实例
+      this.mStudyTime = echarts.init(document.getElementById('mStudyTime'))
+      // 绘制图表
+      this.mStudyTime.setOption({
+        title: {
+          text: 'Stacked Area Chart'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: 'Email',
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [120, 132, 101, 134, 90, 230, 510]
+          },
+          {
+            name: 'Union Ads',
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name: 'Video Ads',
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name: 'Direct',
+            type: 'line',
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [320, 332, 301, 334, 390, 330, 320]
+          },
+          {
+            name: 'Search Engine',
+            type: 'line',
+            stack: 'Total',
+            label: {
+              show: true,
+              position: 'top'
+            },
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
+          }
+        ]
+      })
     }
   }
 }
@@ -102,5 +216,4 @@ export default {
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
     }
-
 </style>

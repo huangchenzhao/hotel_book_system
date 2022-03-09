@@ -31,3 +31,19 @@ new Vue({
   components: { App, Header, orderList },
   template: '<App/>'
 })
+
+let echarts = require('echarts/lib/echarts')
+
+// 引入折线图等组件
+require('echarts/lib/chart/line') // 折线
+require('echarts/lib/chart/bar') // 柱形
+
+// 引入提示框和title组件，图例
+require('echarts/lib/component/tooltip')
+require('echarts/lib/component/title')
+require('echarts/lib/component/legend')
+require('echarts/lib/component/legendScroll')
+require('echarts/lib/component/toolbox')
+require('echarts/lib/component/grid')
+
+Vue.prototype.$echarts = echarts

@@ -68,19 +68,59 @@
                     <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend1.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
-                            <span>如家连锁酒店</span>
+                            <span>{{hotelName1}}</span>
                             <div class="bottom clearfix">
-                                <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible1 = true">查看详情</el-button>
+                                <font size="2">{{hotelAddress1}}</font>
+<!--                                <el-button type="text" class="button" @click="getHotel1">查看详情</el-button>-->
                             </div>
-                            <el-dialog title="如家连锁酒店" :visible.sync="dialogTableVisible1">
-                                        <el-table :data="roomData">
-                                            <el-table-column property="photo" label="图片" width="250"></el-table-column>
-                                            <el-table-column property="type" label="房型" width="150"></el-table-column>
-                                            <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>
-                                            <el-table-column property="price" label="价格"></el-table-column>
-                                        </el-table>
-                            </el-dialog>
+<!--                            <el-dialog :visible.sync="dialogTableVisible1">-->
+<!--                                <el-row :gutter="20">-->
+<!--                                    <el-col :span="12">-->
+<!--                                        <baidu-map class="bm-view" :center="center" :key="mykey" :zoom="zoom" @ready="handler1" ak="3VcKkDmuaFz8ur9Q6RfLP7GKdVyQq6Kl">-->
+<!--                                            <bm-marker :position="center" :dragging="false">-->
+<!--                                                <bm-label :content="addressName" :labelStyle="{color: 'red', fontSize : '10px'}" :offset="{width: -35, height: 30}"/>-->
+<!--                                            </bm-marker>-->
+<!--                                        </baidu-map>-->
+<!--                                    </el-col>-->
+<!--                                    <el-col :span="12">-->
+<!--                                        <el-table :data="hotelDetail1">-->
+<!--                                            <el-table-column-->
+<!--                                                    prop="photo.photoUrl"-->
+<!--                                                    label="图片"-->
+<!--                                                    width="200" align="center" header-align="center">-->
+<!--                                                <template slot-scope="scope">-->
+<!--                                                    <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">-->
+<!--                                                </template>-->
+<!--                                            </el-table-column>-->
+<!--                                            <el-table-column-->
+<!--                                                    prop="detail.remain"-->
+<!--                                                    label="数量"-->
+<!--                                                    width="100" align="center" header-align="center">-->
+<!--                                            </el-table-column>-->
+<!--                                            <el-table-column-->
+<!--                                                    prop="room.price"-->
+<!--                                                    label="价格"-->
+<!--                                                    width="100" align="center" header-align="center">-->
+<!--                                            </el-table-column>-->
+<!--                                            <el-table-column-->
+<!--                                                    prop="room.roomtype"-->
+<!--                                                    label="房型"-->
+<!--                                                    width="100" align="center" header-align="center">-->
+<!--                                            </el-table-column>-->
+<!--                                            <el-table-column-->
+<!--                                                    label="操作"-->
+<!--                                                    align="center" header-align="center" >-->
+<!--                                                <template slot-scope="scope">-->
+<!--                                                    <el-button-->
+<!--                                                            type="text" @click="getOne(scope.row)">-->
+<!--                                                        预订-->
+<!--                                                    </el-button>-->
+<!--                                                </template>-->
+<!--                                            </el-table-column>-->
+<!--                                        </el-table>-->
+<!--                                    </el-col>-->
+<!--                                </el-row>-->
+<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -88,19 +128,19 @@
                     <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend2.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
-                            <span>希尔顿酒店</span>
+                            <span>{{hotelName2}}</span>
                             <div class="bottom clearfix">
-                                <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>
+                                <font size="2">{{hotelAddress2}}</font>
+<!--                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>-->
                             </div>
-                            <el-dialog title="希尔顿酒店" :visible.sync="dialogTableVisible2">
-                                <el-table :data="roomData">
-                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>
-                                    <el-table-column property="type" label="房型" width="150"></el-table-column>
-                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>
-                                    <el-table-column property="price" label="价格"></el-table-column>
-                                </el-table>
-                            </el-dialog>
+<!--                            <el-dialog title="hotelName2" :visible.sync="dialogTableVisible2">-->
+<!--                                <el-table :data="roomData">-->
+<!--                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>-->
+<!--                                    <el-table-column property="type" label="房型" width="150"></el-table-column>-->
+<!--                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>-->
+<!--                                    <el-table-column property="price" label="价格"></el-table-column>-->
+<!--                                </el-table>-->
+<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -108,19 +148,19 @@
                     <el-card :body-style="{ padding: '0px' }" shadow="always">
                         <img src="../../../../assets/images/recommend3.jpeg" class="image" width="70px" height="400px">
                         <div style="padding: 14px;">
-                            <span>学生旅社</span>
+                            <span>{{hotelName3}}</span>
                             <div class="bottom clearfix">
-                                <font size="2">四川省成都市双流区西航港街道108号</font>
-                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>
+                                <font size="2">{{hotelAddress3}}</font>
+<!--                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>-->
                             </div>
-                            <el-dialog title="学生旅社" :visible.sync="dialogTableVisible3">
-                                <el-table :data="roomData">
-                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>
-                                    <el-table-column property="type" label="房型" width="150"></el-table-column>
-                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>
-                                    <el-table-column property="price" label="价格"></el-table-column>
-                                </el-table>
-                            </el-dialog>
+<!--                            <el-dialog title="学生旅社" :visible.sync="dialogTableVisible3">-->
+<!--                                <el-table :data="roomData">-->
+<!--                                    <el-table-column property="photo" label="图片" width="250"></el-table-column>-->
+<!--                                    <el-table-column property="type" label="房型" width="150"></el-table-column>-->
+<!--                                    <el-table-column property="amount" label="剩余数量" width="125"></el-table-column>-->
+<!--                                    <el-table-column property="price" label="价格"></el-table-column>-->
+<!--                                </el-table>-->
+<!--                            </el-dialog>-->
                         </div>
                     </el-card>
                 </el-col>
@@ -226,7 +266,7 @@
 </template>
 
 <script>
-import {searchHotel, getUserInfo, getTempPhoto, changePassword} from '@/api/api'
+import {searchHotel, getUserInfo, getTempPhoto, changePassword, hotelRecommend} from '@/api/api'
 import Header from '../../../../components/Header'
 import { regionData, CodeToText } from 'element-china-area-data'
 import orderList from './orderList'
@@ -254,6 +294,16 @@ export default {
       }
     }
     return {
+      center: {lng: 0, lat: 0},
+      zoom: 3,
+      latitude1: 0,
+      longitude1: 0,
+      latitude2: 0,
+      longitude2: 0,
+      latitude3: 0,
+      longitude3: 0,
+      addressName: '',
+      hotelDetail1: [],
       rules: {
         oldPwd: [
           { required: true, validator: checkOldPwd, trigger: 'blur' }
@@ -325,7 +375,13 @@ export default {
         oldPwd: '',
         newPwd: '',
         checkPwd: ''
-      }
+      },
+      hotelName1: '',
+      hotelAddress1: '',
+      hotelName2: '',
+      hotelAddress2: '',
+      hotelName3: '',
+      hotelAddress3: ''
     }
   },
   created () {
@@ -345,6 +401,17 @@ export default {
       this.userInfo.password = res.data.password
       this.userInfo.mail = res.data.mail
       this.userInfo.photoUrl = res.data.photoUrl
+    })
+    hotelRecommend().then(res => {
+      this.hotelName1 = res.data[0].name
+      this.hotelAddress1 = res.data[0].address.detail
+      this.hotelName2 = res.data[1].name
+      this.hotelAddress2 = res.data[1].address.detail
+      this.hotelName3 = res.data[2].name
+      this.hotelAddress3 = res.data[2].address.detail
+      this.longitude1 = res.data[0].longitude
+      this.latitude1 = res.data[0].latitude1
+      this.hotelDetail1 = res.data[0]
     })
   },
   methods: {
@@ -371,6 +438,12 @@ export default {
             lowestPrice: res.data[0].room.price}}) */
         this.$router.push({name: 'searchResult', params: {returnData: res.data, userInfo: this.$route.params.userInfo}})
       })
+    },
+    handler1 ({BMap, map}) {
+      console.log(BMap, map)
+      this.center.lng = this.longitude1
+      this.center.lat = this.latitude1
+      this.zoom = 15
     },
     handleAvatarSuccess (res, file) {
       this.imageUrl = URL.createObjectURL(file.raw)

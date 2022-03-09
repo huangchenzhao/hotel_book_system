@@ -51,3 +51,5 @@ export const adminGetOrderList = () => http.GET('/api/userorder/allorder')
 export const adminChangeUserPwd = (obj) => http.GET('/api/user/newpass', obj)
 // 管理员修改酒店某个room的价格
 export const adminChangePrice = (obj) => http.GET('/api/user/alluser', obj)
+// 获取酒店推荐
+export const hotelRecommend = () => http.GET('/api/hotel/recommend')

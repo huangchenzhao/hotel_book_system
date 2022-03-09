@@ -1,6 +1,11 @@
 <template>
 <div>
-    <Header></Header>
+<!--    <Header></Header>-->
+    <el-container class="el-container">
+        <el-header class="el-header" height="100px">
+            <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
+        </el-header>
+        <el-main>
         <el-card class="order-card" style="margin: auto;">
             <div slot="header" class="clearfix">
                 <span>订单详情</span>
@@ -106,6 +111,8 @@
                 </el-row>
             </el-form>
         </el-card>
+        </el-main>
+    </el-container>
 </div>
 </template>
 
@@ -236,6 +243,14 @@ export default {
         font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
         font-size: 20px;
         font-weight: bold;
+    }
+    .el-header {
+        background: url('../../../../assets/images/header.png');
+        text-align: center;
+        color: #dcdfe6;
+        font-family:Arial,Helvetica,sans-serif;
+        font-size: large;
+        font-weight: bolder;
     }
 
 </style>

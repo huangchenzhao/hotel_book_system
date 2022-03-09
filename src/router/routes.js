@@ -62,6 +62,12 @@ const loginPage = [
     name: 'orderList',
     component: () =>
       import(/* webpackChunkName: "Login" */ '../pages/main/routes/admin/orderList')
+  },
+  {
+    path: '/order/charts',
+    name: 'orderCharts',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../pages/main/routes/admin/orderCharts')
   }
 ]
 
