@@ -226,7 +226,7 @@ export default {
       if (this.roomForm.price === '') {
         this.$message.error({message: '价格不能为空噢~', center: true})
       } else {
-        let changedRoom = {rid: this.roomForm.rid, price: this.roomForm.price}
+        let changedRoom = {rId: this.roomForm.rid, price: this.roomForm.price}
         console.info(changedRoom)
         adminChangePrice(changedRoom).then(res => {
           console.info(res.data)
@@ -242,7 +242,11 @@ export default {
     delHotel (myRow) {
       let deletedHotel = {h_id: myRow.hid}
       adminDelHotel(deletedHotel).then(res => {
-        console.info(res.data)
+        this.$message({
+          message: '删除成功~',
+          type: 'success',
+          center: true
+        })
       })
     }
   }

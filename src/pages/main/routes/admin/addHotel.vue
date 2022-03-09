@@ -565,6 +565,7 @@ export default {
         }
         addHotel(newHotel).then(res => {
           console.info(res.data)
+          this.$router.push({name: 'hotelList'})
           this.$message({
             message: '添加酒店成功~',
             type: 'success',

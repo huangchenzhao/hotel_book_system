@@ -85,13 +85,13 @@
       { required: true, message: '请输入用户名', trigger: 'blur' }
     ]">
                       <el-input v-model="addUserForm.name" autocomplete="off" placeholder="请输入用户名"
-                                prefix-icon="el-icon-mobile-phone" ></el-input>
+                                prefix-icon="el-icon-mobile-phone"></el-input>
                     </el-form-item>
                     <el-form-item label="用户密码" prop="pwd" :label-width="FormLabelWidth" :rules="[
       { required: true, message: '请输入密码', trigger: 'blur' }
     ]">
                       <el-input v-model="addUserForm.pwd" autocomplete="off" show-password placeholder="请输入用户密码"
-                                prefix-icon="el-icon-lock" ></el-input>
+                                prefix-icon="el-icon-lock"></el-input>
                     </el-form-item>
                     <el-form-item label="用户邮箱" prop="mail" :label-width="FormLabelWidth" :rules="[
       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
@@ -174,14 +174,14 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
         pwd: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          {required: true, message: '请输入密码', trigger: 'blur'}
         ],
         mail: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          {required: true, message: '请输入邮箱地址', trigger: 'blur'},
+          {type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
         ]
       }
     }
@@ -208,7 +208,11 @@ export default {
     delUser (myRow) {
       let deletedUser = {u_id: myRow.uId}
       adminDelUser(deletedUser).then(res => {
-        console.info(res.data)
+        this.$message({
+          message: '删除成功~',
+          type: 'success',
+          center: true
+        })
       })
     },
     editUser () {
@@ -244,11 +248,27 @@ export default {
       return row.summ == null ? '0' : row.summ
     },
     commitNewUser () {
-      let newUser = {username: this.addUserForm.name, password: this.addUserForm.pwd, mail: this.addUserForm.mail}
-      addUser(newUser).then(res => {
-        console.info(res.data)
-        this.addUserFormVisible = false
-      })
+      if (this.addUserForm.name === '' || this.addUserForm.pwd === '' || this.addUserForm.mail === '') {
+        this.$message.error({message: '用户名/密码/邮箱不能为空~', center: true})
+      } else {
+        let newUser = {username: this.addUserForm.name, password: this.addUserForm.pwd, mail: this.addUserForm.mail}
+        addUser(newUser).then(res => {
+          if (res.data === '用户名已存在') {
+            this.$message.error({message: '用户名已存在~', center: true})
+          } else {
+            if (res.data === '邮箱已存在') {
+              this.$message.error({message: '邮箱已存在~', center: true})
+            } else {
+              this.$message({
+                message: '添加成功~',
+                type: 'success',
+                center: true
+              })
+              this.addUserFormVisible = false
+            }
+          }
+        })
+      }
     }
   }
 }
