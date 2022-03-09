@@ -19,7 +19,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -316,7 +318,7 @@ public class UserController {
     @GetMapping("/salesByWeek")
     @ResponseBody
     public JsonResponse salesByWeek(){
-        List<Userorder> u=userService.salesByWeek();
+        Map<String, Map<LocalDate, Float>> u=userService.salesByWeek();
         return JsonResponse.success(u);
     }
     //管理员修改房间价格

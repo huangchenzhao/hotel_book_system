@@ -7,7 +7,9 @@ import com.example.mybatisplus.model.domain.Userorder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,6 +31,6 @@ public interface UserService extends IService<User>  {
     String sendMail(HttpSession session, String account);
     String addUser(User user);
     void newPass(Long uid, String pass);
-    List<Userorder> salesByWeek();
+    Map<String, Map<LocalDate, Float>> salesByWeek();
     String updatePrice(Long rId, Float price);
 }

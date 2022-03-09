@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.*;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.List;
@@ -291,7 +292,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<Userorder> salesByWeek() {
+    public Map<String, Map<LocalDate, Float>> salesByWeek() {
         Calendar begin = Calendar.getInstance();// 得到一个Calendar的实例
         begin.setTime(java.util.Date.from((LocalDate.now()).atStartOfDay(ZoneOffset.ofHours(8)).toInstant())); // 设置时间为当前时间
         begin.add(Calendar.DATE, -7);// 日期加-7
@@ -299,10 +300,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         end.setTime(java.util.Date.from((LocalDate.now()).atStartOfDay(ZoneOffset.ofHours(8)).toInstant()));
         //获得起止时间
         //查询数据
-        System.out.println(new java.util.Date(begin.getTimeInMillis()));
-        System.out.println(new java.util.Date(end.getTimeInMillis()));
-        List<Userorder> u=userorderMapper.salesByWeek(new java.util.Date(begin.getTimeInMillis()), new java.util.Date(end.getTimeInMillis()));
-        return u;
+        Set<String> hotelDataSet = new HashSet<>();
+        List<Userorder> userorder = userorderMapper.salesByWeek(new Date(begin.getTimeInMillis()),new Date(end.getTimeInMillis()));
+        for(int i=0;i<userorder.size();i++){
+            hotelDataSet.add(userorder.get(i).getHotelName());
+        }
+        Map<String, Map<LocalDate, Float>> hotelDataMap=new HashMap<>();
+        for(String name:hotelDataSet){
+            Map<LocalDate, Float> dayprice=new HashMap<>();
+            for(int i=0;i<7;i++){
+                dayprice.put(((new Date(begin.getTimeInMillis()+i*1000 * 60 * 60 * 24L)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),0.0F);
+            }
+            for(int i=0;i<userorder.size();i++){
+                if(Objects.equals(userorder.get(i).getHotelName(), name)){
+                    dayprice.remove(userorder.get(i).getSalesTime());
+                    dayprice.put(userorder.get(i).getSalesTime(),userorder.get(i).getTotalprice());
+                }
+            }
+            hotelDataMap.put(name,dayprice);
+        }
+        System.out.println(hotelDataMap);
+        return hotelDataMap;
     }
 
     @Override
