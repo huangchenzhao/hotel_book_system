@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
   const whiteList = store.getters['permission/getWhiteList']
   if (whiteList.indexOf(to.name) > -1 || whiteList.indexOf(to.path) > -1) {
     next()
-  } else if (!store.getters['user/getUserId']) {
+  } else {
     store.dispatch('user/fetchUserInfo').then(res => {
       if (res.status) {
         // 权限校验
@@ -37,9 +37,6 @@ router.beforeEach((to, from, next) => {
         }
       }
     })
-  } else {
-    // 权限校验
-    permission(store, routes, to, next)
   }
 })
 router.afterEach(() => {

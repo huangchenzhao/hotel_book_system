@@ -1,9 +1,9 @@
 export default {
   roleTypeMap: {
-    1: {
+    0: {
       roleName: '管理员'
     },
-    2: {
+    1: {
       roleName: '用户'
     }
   }

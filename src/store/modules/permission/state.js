@@ -1,17 +1,18 @@
 export default {
-  whiteList: ['/', 'notFound', 'login', 'forbidden', 'badGateway', 'userPage', 'searchResult', 'userOrder', 'list', 'hotelList', 'addHotel', 'manageHotel', 'userList', 'orderList', 'orderCharts'],
+  whiteList: ['/', 'notFound', 'login', 'forbidden', 'badGateway'],
   permissionMap: {
+    0: {
+      list: ['list'],
+      hotelList: ['hotelList'],
+      addHotel: ['addHotel'],
+      userList: ['userList'],
+      orderList: ['orderList'],
+      orderCharts: ['orderCharts']
+    },
     1: {
-      main: ['*']
-    },
-    2: {
-      main: ['*']
-    },
-    3: {
-      main: ['*']
-    },
-    4: {
-      main: ['*']
+      userPage: ['userPage'],
+      searchResult: ['searchResult'],
+      userOrder: ['userOrder']
     }
   }
 }

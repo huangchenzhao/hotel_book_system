@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import {user, regUser, sendEmail, sendEmailForPassword, resetPwd} from '@/api/api'
+import {user, regUser, sendEmail, sendEmailForPassword, resetPwd, removeSession} from '@/api/api'
 import Header from '../../components/Header'
 const TIME_COUNT = 60
 export default {
@@ -173,6 +173,11 @@ export default {
       count1: '',
       timer1: null
     }
+  },
+  created () {
+    removeSession().then(res => {
+      console.info('已移除session')
+    })
   },
   methods: {
     forgetPwd () {

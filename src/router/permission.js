@@ -19,8 +19,8 @@ function findRoute (to, moduleObj, routeObj) {
 }
 export default (store, routes, to, next) => {
   let userType = store.getters['user/getUserType']
-  if (!userType) {
-    next(new Error('userType字段不能为空'))
+  if (userType === 999) {
+    next({ name: 'forbidden' })
     return false
   }
   let protectedRoutes = store.getters['permission/getPermission'](userType)

@@ -55,3 +55,5 @@ export const adminChangePrice = (obj) => http.GET('/api/user/updatePrice', obj)
 export const hotelRecommend = () => http.GET('/api/hotel/recommend')
 // 获取酒店统计数据
 export const getHotelData = () => http.GET('/api/user/salesByWeek')
+// 用户退出清空session
+export const removeSession = () => http.GET('/api/user/layout')
