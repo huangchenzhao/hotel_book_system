@@ -58,25 +58,13 @@ export default {
       openeds: ['1'],
       pre7date: [],
       hotel: [],
-      hotel2: [],
       item: {
         name: '',
         type: '',
         data: []
       },
-      mStudyTime: '',
-      seriesData: [],
-      seriesData2: []
+      mStudyTime: ''
     }
-  },
-  created () {
-    /* this.hotel2.push('如家1')
-    this.item.name = '如家1'
-    this.item.type = 'line'
-    this.item.data = [1, 2, 3, 4, 5, 6, 7]
-    this.seriesData2.push(this.item)
-    console.info(this.hotel2)
-    console.info(this.seriesData2) */
   },
   mounted () {
     this.mStudyTimeChart()
@@ -142,8 +130,8 @@ export default {
         }
         // promise
         this.mStudyTime.setOption(op)
-        console.info(this.hotel)
-        console.info(this.seriesData)
+        // console.info(this.hotel)
+        // console.info(this.seriesData)
       })
     }
   }
