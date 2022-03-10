@@ -5,8 +5,34 @@
             <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
         </el-header>
         <el-main>
-    <el-tabs type="border-card">
+            <el-tabs type="border-card">
         <el-tab-pane label="首页">
+            <el-carousel :interval="4000" type="card" height="380px">
+                <el-carousel-item>
+                    <div class="item">
+                        <div class="item__content">
+                            {{hotelName1}}
+                        </div>
+                        <img class="item__image" src="../../../../assets/images/recommend1.jpeg" alt="" />
+                    </div>
+                </el-carousel-item>
+                <el-carousel-item>
+                    <div class="item">
+                        <div class="item__content">
+                            {{hotelName2}}
+                        </div>
+                        <img class="item__image" src="../../../../assets/images/recommend2.jpeg" alt="" />
+                    </div>
+                </el-carousel-item>
+                <el-carousel-item>
+                    <div class="item">
+                        <div class="item__content">
+                            {{hotelName3}}
+                        </div>
+                        <img class="item__image" src="../../../../assets/images/recommend3.jpeg" alt="" />
+                    </div>
+                </el-carousel-item>
+            </el-carousel>
             <el-form ref="select-form" :model="selectForm" label-width="200px">
                 <el-row>
                     <el-col :span="10">
@@ -63,44 +89,44 @@
                     </el-col>
                 </el-row>
             </el-form>
-            <el-row type="flex" justify="space-around">
-                <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }" shadow="always">
-                        <img src="../../../../assets/images/recommend1.jpeg" class="image" width="70px" height="400px">
-                        <div style="padding: 14px;">
-                            <span>{{hotelName1}}</span>
-                            <div class="bottom clearfix">
-                                <font size="2">{{hotelAddress1}}</font>
-                                <!--                                <el-button type="text" class="button" @click="getHotel1">查看详情</el-button>-->
-                            </div>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }" shadow="always">
-                        <img src="../../../../assets/images/recommend2.jpeg" class="image" width="70px" height="400px">
-                        <div style="padding: 14px;">
-                            <span>{{hotelName2}}</span>
-                            <div class="bottom clearfix">
-                                <font size="2">{{hotelAddress2}}</font>
-                                <!--                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>-->
-                            </div>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="6">
-                    <el-card :body-style="{ padding: '0px' }" shadow="always">
-                        <img src="../../../../assets/images/recommend3.jpeg" class="image" width="70px" height="400px">
-                        <div style="padding: 14px;">
-                            <span>{{hotelName3}}</span>
-                            <div class="bottom clearfix">
-                                <font size="2">{{hotelAddress3}}</font>
-                                <!--                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>-->
-                            </div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+<!--            <el-row type="flex" justify="space-around">-->
+<!--                <el-col :span="6">-->
+<!--                    <el-card :body-style="{ padding: '0px' }" shadow="always">-->
+<!--                        <img src="../../../../assets/images/recommend1.jpeg" class="image" width="70px" height="400px">-->
+<!--                        <div style="padding: 14px;">-->
+<!--                            <span>{{hotelName1}}</span>-->
+<!--                            <div class="bottom clearfix">-->
+<!--                                <font size="2">{{hotelAddress1}}</font>-->
+<!--                                &lt;!&ndash;                                <el-button type="text" class="button" @click="getHotel1">查看详情</el-button>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </el-card>-->
+<!--                </el-col>-->
+<!--                <el-col :span="6">-->
+<!--                    <el-card :body-style="{ padding: '0px' }" shadow="always">-->
+<!--                        <img src="../../../../assets/images/recommend2.jpeg" class="image" width="70px" height="400px">-->
+<!--                        <div style="padding: 14px;">-->
+<!--                            <span>{{hotelName2}}</span>-->
+<!--                            <div class="bottom clearfix">-->
+<!--                                <font size="2">{{hotelAddress2}}</font>-->
+<!--                                &lt;!&ndash;                                <el-button type="text" class="button" @click="dialogTableVisible2 = true">查看详情</el-button>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </el-card>-->
+<!--                </el-col>-->
+<!--                <el-col :span="6">-->
+<!--                    <el-card :body-style="{ padding: '0px' }" shadow="always">-->
+<!--                        <img src="../../../../assets/images/recommend3.jpeg" class="image" width="70px" height="400px">-->
+<!--                        <div style="padding: 14px;">-->
+<!--                            <span>{{hotelName3}}</span>-->
+<!--                            <div class="bottom clearfix">-->
+<!--                                <font size="2">{{hotelAddress3}}</font>-->
+<!--                                &lt;!&ndash;                                <el-button type="text" class="button" @click="dialogTableVisible3 = true">查看详情</el-button>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </el-card>-->
+<!--                </el-col>-->
+<!--            </el-row>-->
         </el-tab-pane>
         <el-tab-pane label="我的账户" :key="mykey">
             <el-card class="user-card" style="margin: auto">
@@ -196,6 +222,22 @@
             <orderList></orderList>
         </el-tab-pane>
     </el-tabs>
+            <div class="loginOut">
+                <div v-if="userInfo.username">
+                    <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
+                    <el-popconfirm
+                            title="确定退出登录吗">
+                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                    </el-popconfirm>
+                </div>
+                <div v-else>
+                    <span class="m-r-10">未检测到登录状态，请先登录</span>
+                    <el-popconfirm
+                            title="确定退出登录吗">
+                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                    </el-popconfirm>
+                </div>
+            </div>
         </el-main>
     </el-container>
 </div>
@@ -506,5 +548,11 @@ export default {
         font-family:Arial,Helvetica,sans-serif;
         font-size: large;
         font-weight: bolder;
+    }
+    .loginOut{
+        position: absolute;right:25px;top:123px;
+        color: #6b9bce;
+        font-weight: 600;
+        font-size: 14px;
     }
 </style>

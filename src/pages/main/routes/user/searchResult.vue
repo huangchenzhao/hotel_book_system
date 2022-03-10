@@ -6,7 +6,7 @@
             <h2 style="margin-top: 2.5%">微旅——您身边的酒店预订系统</h2>
         </el-header>
         <el-main>
-    <el-tabs type="border-card">
+            <el-tabs type="border-card">
         <el-tab-pane label="搜索结果">
             <el-table
                     :data="hotel.slice((currentPage-1)*pageSize,currentPage*pageSize)"
@@ -208,6 +208,22 @@
             <orderList></orderList>
         </el-tab-pane>
     </el-tabs>
+            <div class="loginOut">
+                <div v-if="userInfo.username">
+                    <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
+                    <el-popconfirm
+                            title="确定退出登录吗">
+                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                    </el-popconfirm>
+                </div>
+                <div v-else>
+                    <span class="m-r-10">未检测到登录状态，请先登录</span>
+                    <el-popconfirm
+                            title="确定退出登录吗">
+                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                    </el-popconfirm>
+                </div>
+            </div>
         </el-main>
     </el-container>
 </div>
@@ -424,5 +440,11 @@ export default {
         font-family:Arial,Helvetica,sans-serif;
         font-size: large;
         font-weight: bolder;
+    }
+    .loginOut{
+        position: absolute;right:25px;top:123px;
+        color: #6b9bce;
+        font-weight: 600;
+        font-size: 14px;
     }
 </style>
