@@ -32,6 +32,14 @@
                             <el-menu-item index="/user/list">用户列表</el-menu-item>
                         </el-submenu>
                     </el-menu>
+                    <div class="loginOut">
+                        <div>
+                            <el-popconfirm
+                                    title="确定退出登录吗" @confirm="logOut">
+                                <el-button slot="reference" icon="el-icon-bell">登出</el-button>
+                            </el-popconfirm>
+                        </div>
+                    </div>
                 </el-aside>
                 <el-main class="el-main">
                     <el-table
@@ -62,13 +70,13 @@
                                 label="预订次数"
                                 :formatter="counttFormat"
                                 sortable
-                                width="150" align="center" header-align="center" >
+                                width="130" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="star"
                                 label="星级"
                                 sortable
-                                width="200" align="center" header-align="center" >
+                                width="150" align="center" header-align="center" >
                             <template slot-scope="scope" >
                                 <el-rate v-model="scope.row.star" :allow-half="true" show-score disabled text-color="#ff9900"></el-rate>
                             </template>
@@ -79,7 +87,7 @@
                             <template slot-scope="scope">
                                 <el-popconfirm
                                         title="确定删除这家酒店吗?" @confirm="delHotel(scope.row)">
-                                    <el-button slot="reference" type="primary" icon="el-icon-delete"></el-button>
+                                    <el-button slot="reference" type="primary" icon="el-icon-delete">删除</el-button>
                                 </el-popconfirm>
                                 <el-button
                                         type="primary" icon="el-icon-search" @click="handleClick(scope.row)">
@@ -190,6 +198,9 @@ export default {
     })
   },
   methods: {
+    logOut () {
+      this.$router.push({name: 'login'})
+    },
     handleCurrentChange (currentPage) {
       this.currentPage = currentPage
     },
@@ -264,7 +275,7 @@ export default {
     .el-aside {
         background-color: #336699;
         text-align: center;
-        line-height: 200px;
+        /*line-height: 200px;*/
         height:88vh;
     }
     .el-submenu {
@@ -290,5 +301,8 @@ export default {
 
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
+    }
+    .loginOut {
+        padding-top: 5px;
     }
 </style>

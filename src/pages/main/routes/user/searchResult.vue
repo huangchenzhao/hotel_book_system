@@ -39,7 +39,7 @@
                 </el-table-column>
               <el-table-column
                   prop="star"
-                  label="得分"
+                  label="星级"
                   sortable
                   width="200" align="center" header-align="center" >
                   <template slot-scope="scope" >
