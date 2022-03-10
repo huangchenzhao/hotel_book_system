@@ -35,7 +35,7 @@
                         label="状态"
                         width="100" align="center" header-align="center">
                 <template slot-scope="scope">
-                <el-tag type="success">
+                <el-tag :type="scope.row.state === 1?'success':'danger'">
                   {{stateTag[scope.row.state]}}
               </el-tag>
                 </template>
