@@ -32,6 +32,14 @@
               <el-menu-item index="/user/list">用户列表</el-menu-item>
             </el-submenu>
           </el-menu>
+          <div class="loginOut">
+            <div>
+              <el-popconfirm
+                      title="确定退出登录吗" @confirm="logOut">
+                <el-button slot="reference" icon="el-icon-bell">登出</el-button>
+              </el-popconfirm>
+            </div>
+          </div>
         </el-aside>
         <el-main class="el-main">
           <el-form :model="hotelForm" :rules="rules" ref="ruleForm" class="hotelForm" :label-position="labelPosition">
@@ -545,6 +553,9 @@ export default {
     }
   },
   methods: {
+    logOut () {
+      this.$router.push({name: 'login'})
+    },
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
     },
@@ -743,7 +754,7 @@ export default {
 .el-aside {
   background-color: #336699;
   text-align: center;
-  line-height: 200px;
+  /*line-height: 200px;*/
   height: 135vh;
 }
 
@@ -764,18 +775,21 @@ export default {
   color: #333;
 }
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
+/*.el-container:nth-child(5) .el-aside,*/
+/*.el-container:nth-child(6) .el-aside {*/
+/*  line-height: 260px;*/
+/*}*/
 
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
+/*.el-container:nth-child(7) .el-aside {*/
+/*  line-height: 320px;*/
+/*}*/
 
 .bm-view {
   width: 100%;
   height: 300px;
 }
-
+.loginOut {
+  /*top: 100px;*/
+  padding-top: 5px;
+}
 </style>

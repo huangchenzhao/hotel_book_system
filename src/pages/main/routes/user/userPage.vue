@@ -7,7 +7,7 @@
         <el-main>
             <el-tabs type="border-card">
         <el-tab-pane label="首页">
-            <el-carousel :interval="4000" type="card" height="380px">
+            <el-carousel :interval="4000" type="card" height="390px">
                 <el-carousel-item>
                     <div class="item">
                         <div class="item__content">
@@ -554,5 +554,12 @@ export default {
         color: #6b9bce;
         font-weight: 600;
         font-size: 14px;
+    }
+    .item__content{
+        color: #364041;
+        font-weight: 600;
+        font-size: 20px;
+        -webkit-text-stroke: 1px #253d41;
+        -webkit-text-fill-color: transparent;
     }
 </style>

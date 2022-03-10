@@ -32,21 +32,28 @@
                             <el-menu-item index="/user/list">用户列表</el-menu-item>
                         </el-submenu>
                     </el-menu>
+                    <div class="loginOut">
+                        <div>
+                            <el-popconfirm
+                                    title="确定退出登录吗" @confirm="logOut">
+                                <el-button slot="reference" icon="el-icon-bell">登出</el-button>
+                            </el-popconfirm>
+                        </div>
+                    </div>
                 </el-aside>
                 <el-main class="el-main">
-                    <el-table
+                    <el-table class="table" id="table"
                             :data="order.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                            style="width: 100%"
-                            >
+                            style="width: 100%">
                         <el-table-column
                                 prop="createdTime"
                                 label="创建时间"
-                                width="100" align="center" header-align="center" >
+                                width="100" align="center" header-align="center" sortable>
                         </el-table-column>
                         <el-table-column
                                 prop="hotel.name"
                                 label="酒店名称"
-                                width="100" align="center" header-align="center" >
+                                width="120" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="room.roomtype"
@@ -67,7 +74,7 @@
                         <el-table-column
                                 prop="state"
                                 label="状态"
-                                width="70" align="center" header-align="center">
+                                width="90" align="center" header-align="center">
                             <template slot-scope="scope">
                                 <el-tag :type="scope.row.state === 1?'success':'danger'">
                                     {{stateTag[scope.row.state]}}
@@ -92,7 +99,7 @@
                         <el-table-column
                                 prop="idcard"
                                 label="入住人身份证号"
-                                align="center" header-align="center">
+                                align="center" header-align="center" >
                         </el-table-column>
                     </el-table>
                     <el-col :span="24" class="toolbar" style="text-align:center">
@@ -112,6 +119,7 @@
 <script>
 import Header from '../../../../components/Header'
 import {adminGetOrderList} from '@/api/api'
+
 export default {
   name: 'orderList',
   components: {Header},
@@ -134,6 +142,9 @@ export default {
     })
   },
   methods: {
+    logOut () {
+      this.$router.push({name: 'login'})
+    },
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
     },
@@ -163,7 +174,7 @@ export default {
     .el-aside {
         background-color: #336699;
         text-align: center;
-        line-height: 200px;
+        /*line-height: 200px;*/
         height:90vh;
     }
     .el-submenu {
@@ -189,6 +200,9 @@ export default {
 
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
+    }
+    .loginOut {
+        padding-top: 5px;
     }
 
 </style>
