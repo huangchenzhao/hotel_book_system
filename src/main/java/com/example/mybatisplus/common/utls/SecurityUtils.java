@@ -34,10 +34,10 @@ public class SecurityUtils {
         //简单改写原函数让他不报错
         if (userInfo == null) {
             userInfo = new User();
-            userInfo.setUsername("模拟用户");
-            userInfoDTO.setId(1L);
-            userInfoDTO.setName("模拟用户");
-            userInfoDTO.setUserType(1L);
+            userInfo.setUsername("非正常用户");
+            userInfoDTO.setId(999L);
+            userInfoDTO.setName("非正常用户");
+            userInfoDTO.setUserType(999L);
         }else{
             //调用user类的对应函数获得参数
             userInfoDTO.setId(userInfo.getuId());
