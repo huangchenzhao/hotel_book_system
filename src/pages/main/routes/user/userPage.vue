@@ -226,15 +226,15 @@
                 <div v-if="userInfo.username">
                     <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
                     <el-popconfirm
-                            title="确定退出登录吗">
-                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                            title="确定退出登录吗" @confirm="logOut">
+                        <el-button slot="reference">登出</el-button>
                     </el-popconfirm>
                 </div>
                 <div v-else>
                     <span class="m-r-10">未检测到登录状态，请先登录</span>
                     <el-popconfirm
-                            title="确定退出登录吗">
-                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                            title="确定退出登录吗" @confirm="logOut">
+                        <el-button slot="reference">登出</el-button>
                     </el-popconfirm>
                 </div>
             </div>
@@ -412,6 +412,10 @@ export default {
       }
       console.info(loc)
       console.info(this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1])
+    },
+    logOut () {
+      console.info('hhhhhhh')
+      this.$router.push({name: 'login'})
     },
     onSubmit () {
       let myHotel = {name: this.selectForm.hotelName, checkin: this.selectForm.mydate[0], checkout: this.selectForm.mydate[1], roomtype: this.selectForm.room, code: this.selectForm.selectedOptions[this.selectForm.selectedOptions.length - 1]}

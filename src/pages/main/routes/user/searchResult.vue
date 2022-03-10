@@ -212,15 +212,15 @@
                 <div v-if="userInfo.username">
                     <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
                     <el-popconfirm
-                            title="确定退出登录吗">
-                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                            title="确定退出登录吗" @confirm="logOut">
+                        <el-button slot="reference">登出</el-button>
                     </el-popconfirm>
                 </div>
                 <div v-else>
                     <span class="m-r-10">未检测到登录状态，请先登录</span>
                     <el-popconfirm
-                            title="确定退出登录吗">
-                        <el-button slot="reference" @onConfirm="logOut">登出</el-button>
+                            title="确定退出登录吗" @confirm="logOut">
+                        <el-button slot="reference">登出</el-button>
                     </el-popconfirm>
                 </div>
             </div>
@@ -326,6 +326,10 @@ export default {
         this.returnDetail = res.data
       })
       this.mykey += 1
+    },
+    logOut () {
+      console.info('hhhhhhh')
+      this.$router.push({name: 'login'})
     },
     getOne (row) {
       let myReserve = {roomId: row.room.rid}
