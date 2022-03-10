@@ -342,7 +342,7 @@ public class UserController {
     //登出时清除session
     @GetMapping("/layout")
     @ResponseBody
-    public JsonResponse layout((HttpServletRequest request){
+    public JsonResponse layout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.invalidate();
         return JsonResponse.success(null);
