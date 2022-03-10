@@ -37,7 +37,7 @@
                     <el-table
                             :data="order.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                             style="width: 100%"
-                            max-height="510">
+                            >
                         <el-table-column
                                 prop="createdTime"
                                 label="创建时间"
@@ -56,18 +56,18 @@
                         <el-table-column
                                 prop="quantity"
                                 label="数量"
-                                width="100" align="center" header-align="center">
+                                width="70" align="center" header-align="center">
                         </el-table-column>
                         <el-table-column
                                 prop="totalprice"
                                 label="总价格"
                                 sortable
-                                width="100" align="center" header-align="center" >
+                                width="90" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="state"
                                 label="状态"
-                                width="100" align="center" header-align="center">
+                                width="70" align="center" header-align="center">
                             <template slot-scope="scope">
                                 <el-tag type="success">
                                     {{stateTag[scope.row.state]}}
@@ -87,12 +87,12 @@
                         <el-table-column
                                 prop="phonenumber"
                                 label="入住人联系方式"
-                                align="center" header-align="center" width="130">
+                                align="center" header-align="center" width="120">
                         </el-table-column>
                         <el-table-column
                                 prop="idcard"
                                 label="入住人身份证号"
-                                align="center" header-align="center" >
+                                align="center" header-align="center">
                         </el-table-column>
                     </el-table>
                     <el-col :span="24" class="toolbar" style="text-align:center">
@@ -120,7 +120,7 @@ export default {
       openeds: ['1'],
       order: [],
       currentPage: 1,
-      pageSize: 4,
+      pageSize: 5,
       stateTag: {
         0: '未完成',
         1: '已完成'
@@ -164,7 +164,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:135vh;
+        height:90vh;
     }
     .el-submenu {
         background-color: #FFFFCC;
