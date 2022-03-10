@@ -35,8 +35,16 @@
                 </el-aside>
                 <el-main class="el-main">
                     <el-row :gutter="20">
+                        <el-col :span="12">
+                            <div id="pie" style="width: 100%; height: 400px;"></div>
+                        </el-col>
+                        <el-col :span="12">
+                            <div id="bar" style="width: 100%; height: 400px;"></div>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
                         <el-col :span="24">
-                            <div id="mStudyTime" style="width: 100%; height: 550px;"></div>
+                            <div id="mStudyTime" style="width: 100%; height: 400px;"></div>
                         </el-col>
                     </el-row>
                 </el-main>
@@ -61,11 +69,15 @@ export default {
         type: '',
         data: []
       },
-      mStudyTime: ''
+      mStudyTime: '',
+      mPie: '',
+      myBar: ''
     }
   },
   mounted () {
     this.mStudyTimeChart()
+    this.pie()
+    this.mBar()
     window.addEventListener('resize', () => {
       this.mStudyTime.resize()
     })
@@ -77,10 +89,10 @@ export default {
     handleClose (key, keyPath) {
       console.log(key, keyPath)
     },
-    mStudyTimeChart () {
+    mBar () {
       var echarts = require('echarts')
       // 基于准备好的dom，初始化echarts实例
-      this.mStudyTime = echarts.init(document.getElementById('mStudyTime'))
+      this.myBar = echarts.init(document.getElementById('bar'))
       for (let i = 0; i < 7; i++) {
         const time = new Date(new Date().setDate((new Date().getDate() + i) - 7))
         const year = time.getFullYear()
@@ -88,6 +100,101 @@ export default {
         const strDate = `0${time.getDate()}`.slice(-2)
         this.pre7date.push(`${year}-${month}-${strDate}`)
       }
+      // 绘制图表
+      let op3 = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {},
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: this.pre7date
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: []
+      }
+      getHotelData().then(res => {
+        this.hotel = Object.keys(res.data)
+        for (let i = 0; i < this.hotel.length; i++) {
+          op3.series.push({name: this.hotel[i], type: 'bar', emphasis: {focus: 'series'}, data: res.data[this.hotel[i]]})
+        }
+        // promise
+        this.myBar.setOption(op3)
+        // console.info(this.hotel)
+        // console.info(this.seriesData)
+      })
+    },
+    pie () {
+      var echarts = require('echarts')
+      // 基于准备好的dom，初始化echarts实例
+      this.mPie = echarts.init(document.getElementById('pie'))
+      let op2 = {
+        title: {
+          text: '近一周各酒店营业额饼图',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: '50%',
+            data: [],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      }
+      getHotelData().then(res => {
+        this.hotel = Object.keys(res.data)
+        console.info(res.data[this.hotel[0]])
+        console.info(res.data[this.hotel[0]][1])
+        // console.info(this.hotel)
+        let hData = new Array(this.hotel.length).fill(0)
+        for (let i = 0; i < this.hotel.length; i++) {
+          for (let j = 0; j < 7; j++) {
+            hData[i] += res.data[this.hotel[i]][j]
+          }
+        }
+        console.info(hData)
+        for (let i = 0; i < this.hotel.length; i++) {
+          op2.series[0].data.push({value: hData[i], name: this.hotel[i]})
+        }
+        // promise
+        this.mPie.setOption(op2)
+        // console.info(this.seriesData)
+      })
+    },
+    mStudyTimeChart () {
+      var echarts = require('echarts')
+      // 基于准备好的dom，初始化echarts实例
+      this.mStudyTime = echarts.init(document.getElementById('mStudyTime'))
       // 绘制图表
       let op = {
         title: {
@@ -150,7 +257,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:90vh;
+        height:110vh;
     }
     .el-submenu {
         background-color: #FFFFCC;

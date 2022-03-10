@@ -265,7 +265,7 @@ export default {
         background-color: #336699;
         text-align: center;
         line-height: 200px;
-        height:90vh;
+        height:88vh;
     }
     .el-submenu {
         background-color: #FFFFCC;
