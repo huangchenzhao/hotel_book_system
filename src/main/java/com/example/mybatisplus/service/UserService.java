@@ -31,6 +31,6 @@ public interface UserService extends IService<User>  {
     String sendMail(HttpSession session, String account);
     String addUser(User user);
     void newPass(Long uid, String pass);
-    Map<String, Map<LocalDate, Float>> salesByWeek();
+    Map<String, List<Float>> salesByWeek();
     String updatePrice(Long rId, Float price);
 }

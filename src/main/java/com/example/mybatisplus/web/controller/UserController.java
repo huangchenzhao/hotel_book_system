@@ -326,7 +326,7 @@ public class UserController {
     @GetMapping("/salesByWeek")
     @ResponseBody
     public JsonResponse salesByWeek(){
-        Map<String, Map<LocalDate, Float>> u=userService.salesByWeek();
+        Map<String, List<Float>> u=userService.salesByWeek();
         return JsonResponse.success(u);
     }
     //管理员修改房间价格
