@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatisplus.mapper.UserMapper;
 import com.example.mybatisplus.model.domain.Hotelinfo;
 import com.example.mybatisplus.model.domain.Userorder;
+import com.example.mybatisplus.model.dto.UserInfoDTO;
 import com.example.mybatisplus.service.HotelService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.mybatisplus.common.utls.SecurityUtils.getUserInfo;
+import static com.example.mybatisplus.common.utls.SessionUtils.saveCurrentUserInfo;
 
 
 /**
@@ -101,9 +105,13 @@ public class UserController {
     public JsonResponse login(HttpServletRequest request, User a) {
         User user = userService.login(a);
         if (user != null) {
+            //调用函数存储user数据
+            //不影响原本设置的session所以原本函数不做修改
+            saveCurrentUserInfo(user);
             HttpSession session = request.getSession();
             session.setAttribute("uId", user.getuId());
         }
+        //UserInfoDTO userinfo=getUserInfo();
         return JsonResponse.success(user);
     }
 
