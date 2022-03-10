@@ -15,7 +15,6 @@
               </template>
               <el-menu-item index="/hotel/list">酒店列表</el-menu-item>
               <el-menu-item index="/hotel/add">增加酒店</el-menu-item>
-              <el-menu-item index="/hotel/manage">酒店管理</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">
@@ -31,7 +30,6 @@
                 <span>用户信息</span>
               </template>
               <el-menu-item index="/user/list">用户列表</el-menu-item>
-              <el-menu-item index="3-2">用户管理</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>

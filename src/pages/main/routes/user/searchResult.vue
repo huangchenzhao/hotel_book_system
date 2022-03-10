@@ -141,6 +141,30 @@
     <el-button type="primary" @click="changePhoto">确 定</el-button>
   </span>
                         </el-dialog>
+                        <el-button @click="centerDialogVisible1 = true">修改密码</el-button>
+                        <el-dialog
+                                title="修改密码"
+                                :visible.sync="centerDialogVisible1"
+                                width="40%"
+                                center>
+                            <span>
+                                <el-form :model="pwdForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="pwdForm" :label-position="right">
+  <el-form-item label="原密码" prop="oldPwd">
+    <el-input type="password" v-model="pwdForm.oldPwd" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="新密码" prop="newPwd">
+    <el-input type="password" v-model="pwdForm.newPwd" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="确认密码" prop="checkPwd">
+    <el-input type="password" v-model="pwdForm.checkPwd" autocomplete="off"></el-input>
+  </el-form-item>
+                                </el-form>
+                            </span>
+                            <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="submitPwd">确 定</el-button>
+  </span>
+                        </el-dialog>
                     </template>
                     <el-descriptions-item>
                         <template slot="label">
@@ -192,13 +216,32 @@
 <script>
 import Header from '../../../../components/Header'
 import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-import {getDetail, getUserInfo, getTempPhoto, reserve} from '@/api/api'
+import {getDetail, getUserInfo, getTempPhoto, reserve, changePassword} from '@/api/api'
 import orderList from './orderList'
 
 export default {
   name: 'searchResult',
   components: {Header, BaiduMap, orderList},
-  data () {
+  data: function () {
+    var checkOldPwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入原密码'))
+      } else {
+        if (this.pwdForm.oldPwd !== this.userInfo.password) {
+          callback(new Error('请输入正确的原密码'))
+        }
+        callback()
+      }
+    }
+    var checkNewPwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.pwdForm.newPwd) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       center: {lng: 0, lat: 0},
       zoom: 3,
@@ -224,7 +267,24 @@ export default {
         photoUrl: '',
         mail: ''
       },
-      reserveReturn: []
+      reserveReturn: [],
+      centerDialogVisible1: false,
+      pwdForm: {
+        oldPwd: '',
+        newPwd: '',
+        checkPwd: ''
+      },
+      rules: {
+        oldPwd: [
+          { required: true, validator: checkOldPwd, trigger: 'blur' }
+        ],
+        newPwd: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        checkPwd: [
+          { required: true, validator: checkNewPwd, trigger: 'blur' }
+        ]
+      }
     }
   },
   created () {
@@ -298,6 +358,18 @@ export default {
         this.mykeyPhoto += 1
         console.info('100ms后执行')
       }, 100)
+    },
+    submitPwd () {
+      let myPwd = {oldpaw: this.pwdForm.oldPwd, newpaw: this.pwdForm.newPwd}
+      changePassword(myPwd).then(res => {
+        console.info(res.data)
+        this.$message({
+          message: '修改成功',
+          type: 'success',
+          center: true
+        })
+        this.$router.push({name: 'login'})
+      })
     }
   }
 }
