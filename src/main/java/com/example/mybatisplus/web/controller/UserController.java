@@ -337,5 +337,15 @@ public class UserController {
     public JsonResponse updatePrice(Long rId,Float price){
         return JsonResponse.success(userService.updatePrice(rId,price));
     }
+
+
+    //登出时清除session
+    @GetMapping("/layout")
+    @ResponseBody
+    public JsonResponse layout((HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return JsonResponse.success(null);
+    }
 }
 
