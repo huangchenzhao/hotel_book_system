@@ -33,7 +33,7 @@
                     </div>
                 </el-carousel-item>
             </el-carousel>
-            <el-form ref="select-form" :model="selectForm" label-width="200px">
+            <el-form ref="selectForm" :model="selectForm" label-width="200px">
                 <el-row>
                     <el-col :span="10">
                         <el-form-item label="酒店名称" prop="hotelName">
@@ -80,11 +80,10 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-row>
-                    <el-col span="12" offset="7">
-                        <el-form-item>
+                <el-row >
+                    <el-col :span="4" :offset="8">
+                        <el-form-item class="el-form-item">
                             <el-button type="primary" @click="onSubmit">确定</el-button>
-                            <el-button>取消</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -559,11 +558,12 @@ export default {
         font-weight: 600;
         font-size: 14px;
     }
-    .item__content{
+    .item__content {
         color: #364041;
         font-weight: 600;
         font-size: 20px;
         -webkit-text-stroke: 1px #253d41;
         -webkit-text-fill-color: transparent;
     }
+
 </style>

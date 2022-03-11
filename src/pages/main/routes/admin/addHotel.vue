@@ -132,7 +132,7 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item label="房间价格" prop="price1">
-                  <el-input-number v-model="hotelForm.price1" :precision="2" :step="10" :max="5000"></el-input-number>
+                  <el-input-number v-model="hotelForm.price1" :precision="2" :step="10" :max="5000" :min="100"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -171,7 +171,7 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item label="房间价格" prop="price2">
-                  <el-input-number v-model="hotelForm.price2" :precision="2" :step="10" :max="5000"></el-input-number>
+                  <el-input-number v-model="hotelForm.price2" :precision="2" :step="10" :max="5000" :min="100"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -210,7 +210,7 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item label="房间价格" prop="price3">
-                  <el-input-number v-model="hotelForm.price3" :precision="2" :step="10" :max="5000"></el-input-number>
+                  <el-input-number v-model="hotelForm.price3" :precision="2" :step="10" :max="5000" :min="100"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -249,7 +249,7 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item label="房间价格" prop="price4">
-                  <el-input-number v-model="hotelForm.price4" :precision="2" :step="10" :max="5000"></el-input-number>
+                  <el-input-number v-model="hotelForm.price4" :precision="2" :step="10" :max="5000" :min="100"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -288,7 +288,7 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item label="房间价格" prop="price5">
-                  <el-input-number v-model="hotelForm.price5" :precision="2" :step="10" :max="5000"></el-input-number>
+                  <el-input-number v-model="hotelForm.price5" :precision="2" :step="10" :max="5000" :min="100"></el-input-number>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -305,10 +305,9 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row :gutter="20">
-              <el-col :span="12" :offset="9">
+            <el-row >
+              <el-col :span="4" :offset="10">
                 <el-button type="primary" @click="hotelSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
               </el-col>
             </el-row>
           </el-form>
@@ -407,9 +406,6 @@ export default {
         ],
         address: [
           {required: true, message: '请填写具体地址，如：\'西航港街道101号\'', trigger: 'blur'}
-        ],
-        room1: [
-          {required: true, message: '请选择房型', trigger: 'blur'}
         ]
       },
       province_lonlat: {

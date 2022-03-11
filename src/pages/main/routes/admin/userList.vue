@@ -103,7 +103,7 @@
       { required: true, message: '请输入邮箱地址', trigger: 'blur' },
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ]">
-                      <el-input v-model="addUserForm.mail" autocomplete="off" show-password placeholder="请输入用户邮箱"
+                      <el-input v-model="addUserForm.mail" autocomplete="off" placeholder="请输入用户邮箱"
                                 prefix-icon="el-icon-lock"></el-input>
                     </el-form-item>
                   </el-form>
