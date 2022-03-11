@@ -30,8 +30,8 @@
                                 </el-form-item>
                             </div></el-col>
                         </el-row>
-                        <el-row type="flex" justify="center">
-                            <el-col :span="4" >
+                        <el-row >
+                            <el-col :span="4" :offset="11">
                                 <el-link icon="el-icon-edit" :disabled="this.loginForm.radio==='0'" @click="centerDialogVisible=true">忘记密码</el-link>
                             </el-col>
                         </el-row>
@@ -42,18 +42,18 @@
                                 center :modal-append-to-body='false'>
                             <span>
                                 <el-form :model="getPwdForm" label-width="80px">
-                                    <el-row type="flex" justify="center">
-  <el-col :span="20" :offset="2">
+<!--                                    <el-row type="flex" justify="center">-->
+<!--  <el-col :span="20" :offset="2">-->
       <el-form-item label="邮箱" prop="mail">
     <el-input type="text" v-model="getPwdForm.mail" style="width: 93%" autocomplete="off" placeholder="请输入邮箱" prefix-icon="el-icon-document-checked"></el-input>
   </el-form-item>
-  </el-col>
-</el-row>
-                                    <el-row type="flex" justify="center">
-  <el-col :span="20" :offset="2">
+<!--  </el-col>-->
+<!--</el-row>-->
+<!--                                    <el-row type="flex" justify="center">-->
+<!--  <el-col :span="18" :offset="2">-->
       <div>
           <el-form-item label="验证码" prop="check">
-                                    <el-input type="text" max="6" v-model="getPwdForm.check" style="width: 55%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                    <el-input type="text" max="6" v-model="getPwdForm.check" style="width: 60%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                     </el-input>
                                     <el-button icon="el-icon-mobile-phone" @click="pwdSend" type="success" :disabled="disabled=!show1" >
                                         <span v-show="show1">获取验证码</span>
@@ -61,15 +61,15 @@
                                     </el-button>
               </el-form-item>
                                 </div>
-  </el-col>
-</el-row>
-                                    <el-row type="flex" justify="center">
-  <el-col :span="20" :offset="2">
+<!--  </el-col>-->
+<!--</el-row>-->
+<!--                                    <el-row type="flex" justify="center">-->
+<!--  <el-col :span="20" :offset="2">-->
       <el-form-item label="新密码" prop="pwd">
     <el-input type="text" v-model="getPwdForm.pwd" style="width: 93%" autocomplete="off" placeholder="请输入密码" prefix-icon="el-icon-document-checked"></el-input>
   </el-form-item>
-  </el-col>
-</el-row>
+<!--  </el-col>-->
+<!--</el-row>-->
                                 </el-form>
                             </span>
                             <span slot="footer" class="dialog-footer">
@@ -115,7 +115,7 @@
                             <el-form-item label="验证码" :label-width="formLabelWidth" prop="regCheck" :rules="[
       { required: true, message: '请输入验证码', trigger: 'blur' }
     ]">
-                                            <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 75%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
+                                            <el-input type="text" max="6" v-model="regForm.regCheck" style="width: 73.5%" autocomplete="off" placeholder="请输入验证码" prefix-icon="el-icon-document-checked">
                                             </el-input>
                                             <el-button icon="el-icon-mobile-phone" @click="send" type="success" :disabled="disabled=!show" >
                                                 <span v-show="show">获取验证码</span>
