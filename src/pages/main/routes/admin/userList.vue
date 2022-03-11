@@ -262,18 +262,22 @@ export default {
       } else {
         let newUser = {username: this.addUserForm.name, password: this.addUserForm.pwd, mail: this.addUserForm.mail}
         addUser(newUser).then(res => {
-          if (res.data === '用户名已存在') {
+          if (res.data === '该用户名已存在') {
             this.$message.error({message: '用户名已存在~', center: true})
           } else {
             if (res.data === '邮箱已存在') {
-              this.$message.error({message: '邮箱已存在~', center: true})
+              this.$message.error({message: '该邮箱已注册过~', center: true})
             } else {
-              this.$message({
-                message: '添加成功~',
-                type: 'success',
-                center: true
-              })
-              this.addUserFormVisible = false
+              if (res.data === '添加失败') {
+                this.$message.error({message: '用户已存在~', center: true})
+              } else {
+                this.$message({
+                  message: '添加成功~',
+                  type: 'success',
+                  center: true
+                })
+                this.addUserFormVisible = false
+              }
             }
           }
         })

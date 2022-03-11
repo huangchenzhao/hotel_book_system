@@ -37,7 +37,7 @@ export default (store, routes, to, next) => {
     return false
   }
   if (!protectedRoutes.hasOwnProperty(moduleName)) {
-    next(new Error('路由保护验证错误：protectedRoutes对象中没有找到对应的key'))
+    next({ name: 'forbidden' })
     return false
   }
   if (!Array.isArray(protectedRoutes[moduleName])) {

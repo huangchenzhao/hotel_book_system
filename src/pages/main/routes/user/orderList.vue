@@ -199,7 +199,6 @@ export default {
       this.centerDialogVisible1 = true
     },
     commentComplete () {
-      alert(this.orderId)
       let myComment = {orderId: this.orderId, comments: this.comment}
       writeComment(myComment).then(res => {
         this.centerDialogVisible = false
