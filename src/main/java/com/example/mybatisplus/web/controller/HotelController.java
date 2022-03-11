@@ -2,6 +2,8 @@ package com.example.mybatisplus.web.controller;
 
 import com.example.mybatisplus.model.domain.Hotelinfo;
 import com.example.mybatisplus.model.domain.Room;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
@@ -14,9 +16,12 @@ import com.example.mybatisplus.model.domain.Hotel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 /**
@@ -93,17 +98,30 @@ public class HotelController {
     //首先找出酒店的所有房型，其次找到从入住时间到退房时间这段时间内该房型剩余量最少的数量，此数量作为该房型的最小剩余量
     //最后将酒店不同房型的最小剩余量相加，作为酒店房间剩余量返回
     //如果用户输入了房型则只计算对应房型
+
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd" ,timezone="GMT+8")
+    private static Date checkIn;
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd" ,timezone="GMT+8")
+    private static Date checkOut;
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public JsonResponse search(HttpServletRequest request, @RequestParam(value = "name", required = false) String hotelName, @RequestParam(value = "checkin", required = false) Date checkIn,
-                               @RequestParam(value = "checkout", required = false) Date checkOut, @RequestParam(value = "code", required = false) Integer code,
+    public JsonResponse search(HttpServletRequest request, @RequestParam(value = "name", required = false) String hotelName, @RequestParam(value = "checkin", required = false)@DateTimeFormat( pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8") Date checkIn,
+                               @RequestParam(value = "checkout", required = false)@DateTimeFormat( pattern = "yyyy-MM-dd")
+                               @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss" ,timezone="GMT+8")Date checkOut, @RequestParam(value = "code", required = false) Integer code,
                                @RequestParam(value = "roomtype", required = false) String roomType) throws Exception {
 //        hotelService.save();
+
         HttpSession session = request.getSession();
         session.setAttribute("checkin", checkIn);
         session.setAttribute("checkout", checkOut);
+        System.out.println(checkIn);
+        System.out.println(checkOut);
         List<Hotel> hotel1 = hotelService.searchResult(hotelName, checkIn, checkOut, code, roomType);
         return JsonResponse.success(hotel1);
+//        return null;
     }
 
     //酒店推荐

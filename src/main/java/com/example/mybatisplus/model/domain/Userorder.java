@@ -8,11 +8,13 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -50,6 +52,8 @@ public class Userorder extends Model<Userorder> {
 
     private String phonenumber;
 
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd" ,timezone="GMT+8")
     private Date createdTime;
 
     @TableField(exist = false)
