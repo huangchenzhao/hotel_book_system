@@ -128,7 +128,7 @@ export default {
       openeds: ['1'],
       order: [],
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 7,
       stateTag: {
         0: '未完成',
         1: '已完成'

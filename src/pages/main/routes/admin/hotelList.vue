@@ -180,7 +180,7 @@ export default {
   data () {
     return {
       hotel: [],
-      pageSize: 4,
+      pageSize: 3,
       currentPage: 1,
       returnDetail: [],
       dialogVisible: false,

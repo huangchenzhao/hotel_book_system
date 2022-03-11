@@ -145,7 +145,7 @@ export default {
     return {
       order: [],
       currentPage: 1,
-      pageSize: 6,
+      pageSize: 5,
       centerDialogVisible: false,
       comment: '',
       centerDialogVisible1: false,

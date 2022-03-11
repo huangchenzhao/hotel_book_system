@@ -163,7 +163,7 @@ export default {
     return {
       openeds: ['1'],
       user: [],
-      pageSize: 4,
+      pageSize: 3,
       currentPage: 1,
       dialogFormVisible: false,
       userForm: {
