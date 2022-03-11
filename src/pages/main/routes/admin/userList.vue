@@ -222,6 +222,13 @@ export default {
           type: 'success',
           center: true
         })
+        setTimeout(() => {
+          adminGetUserList().then(res => {
+            this.user = res.data
+            console.info(res.data)
+          })
+          console.info('50ms后执行')
+        }, 50)
       })
     },
     editUser () {
@@ -237,6 +244,13 @@ export default {
             center: true
           })
           this.dialogFormVisible = false
+          setTimeout(() => {
+            adminGetUserList().then(res => {
+              this.user = res.data
+              console.info(res.data)
+            })
+            console.info('50ms后执行')
+          }, 50)
         })
       }
     },
@@ -277,6 +291,13 @@ export default {
                   center: true
                 })
                 this.addUserFormVisible = false
+                setTimeout(() => {
+                  adminGetUserList().then(res => {
+                    this.user = res.data
+                    console.info(res.data)
+                  })
+                  console.info('50ms后执行')
+                }, 50)
               }
             }
           }

@@ -185,6 +185,7 @@ export default {
       returnDetail: [],
       dialogVisible: false,
       priceDialog: false,
+      tempHid: 0,
       roomForm: {
         rid: 0,
         price: 0
@@ -215,6 +216,7 @@ export default {
     },
     handleClick (myRow) {
       this.dialogVisible = true
+      this.tempHid = myRow.hid
       let myDetail = {hid: myRow.hid}
       adminGetDetail(myDetail).then(res => {
         this.returnDetail = res.data
@@ -245,6 +247,13 @@ export default {
             center: true
           })
           this.priceDialog = false
+          setTimeout(() => {
+            let myDetail = {hid: this.tempHid}
+            adminGetDetail(myDetail).then(res => {
+              this.returnDetail = res.data
+            })
+            console.info('50ms后执行')
+          }, 50)
         })
       }
     },
@@ -256,6 +265,13 @@ export default {
           type: 'success',
           center: true
         })
+        setTimeout(() => {
+          adminGetHotelList().then(res => {
+            this.hotel = res.data
+            console.info(res.data)
+          })
+          console.info('50ms后执行')
+        }, 50)
       })
     }
   }
