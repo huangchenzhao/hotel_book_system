@@ -270,6 +270,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 } catch (Exception e) {
                     return "数据库错误";
                 }
+                //添加用户默认头像
+                user.setPhotoUrl("./image/202203/-352ab266285b4dd28e22dafe5c1b2e9f.jpeg");
                 user.setUsertype(1);
                 saveOrUpdate(user);
             }
