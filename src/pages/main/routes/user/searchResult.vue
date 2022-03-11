@@ -29,7 +29,7 @@
               <el-table-column
                         prop="address.detail"
                         label="详细地址"
-                        width="300" align="center" header-align="center">
+                        width="250" align="center" header-align="center">
                 </el-table-column>
                 <el-table-column
                         prop="room.price"
@@ -213,14 +213,14 @@
                     <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
                     <el-popconfirm
                             title="确定退出登录吗" @confirm="logOut">
-                        <el-button slot="reference">登出</el-button>
+                        <el-button slot="reference" size="mini">登出</el-button>
                     </el-popconfirm>
                 </div>
                 <div v-else>
                     <span class="m-r-10">未检测到登录状态，请先登录</span>
                     <el-popconfirm
                             title="确定退出登录吗" @confirm="logOut">
-                        <el-button slot="reference">登出</el-button>
+                        <el-button slot="reference" size="mini">登出</el-button>
                     </el-popconfirm>
                 </div>
             </div>

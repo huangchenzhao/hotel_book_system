@@ -81,7 +81,7 @@
                     </el-col>
                 </el-row>
                 <el-row >
-                    <el-col :span="4" :offset="8">
+                    <el-col :span="2" :offset="8">
                         <el-form-item class="el-form-item">
                             <el-button type="primary" @click="onSubmit">确定</el-button>
                         </el-form-item>
@@ -226,14 +226,14 @@
                     <span class="m-r-10">{{"欢迎您 "+userInfo.username}}</span>
                     <el-popconfirm
                             title="确定退出登录吗" @confirm="logOut">
-                        <el-button slot="reference">登出</el-button>
+                        <el-button slot="reference" size="mini">登出</el-button>
                     </el-popconfirm>
                 </div>
                 <div v-else>
                     <span class="m-r-10">未检测到登录状态，请先登录</span>
                     <el-popconfirm
                             title="确定退出登录吗" @confirm="logOut">
-                        <el-button slot="reference">登出</el-button>
+                        <el-button slot="reference" size="mini">登出</el-button>
                     </el-popconfirm>
                 </div>
             </div>

@@ -751,7 +751,7 @@ export default {
   background-color: #336699;
   text-align: center;
   /*line-height: 200px;*/
-  height: 135vh;
+  height: 171vh;
 }
 
 .el-submenu {

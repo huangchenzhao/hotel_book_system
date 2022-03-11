@@ -113,17 +113,23 @@ export default {
       }
       // 绘制图表
       let op3 = {
+        title: {
+          text: '近一周各酒店营业额柱形图',
+          left: 'center'
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             type: 'shadow'
           }
         },
-        legend: {},
+        legend: {
+          y: 'bottom'
+        },
         grid: {
           left: '3%',
           right: '4%',
-          bottom: '3%',
+          bottom: '15%',
           containLabel: true
         },
         xAxis: [
@@ -163,8 +169,7 @@ export default {
           trigger: 'item'
         },
         legend: {
-          orient: 'vertical',
-          left: 'left'
+          y: 'bottom'
         },
         series: [
           {
@@ -209,19 +214,22 @@ export default {
       // 绘制图表
       let op = {
         title: {
-          text: '近一周各酒店营业额折线统计图'
+          text: '近一周各酒店营业额折线统计图',
+          left: 'center'
         },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
+          y: 'bottom',
           data: []
         },
         grid: {
           left: '3%',
           right: '4%',
-          bottom: '3%',
-          containLabel: true
+          bottom: '15%',
+          y2: '10%'
+          // containLabel: true
         },
         toolbox: {
           feature: {
@@ -268,7 +276,7 @@ export default {
         background-color: #336699;
         text-align: center;
         /*line-height: 200px;*/
-        height:110vh;
+        height:140vh;
     }
     .el-submenu {
         background-color: #FFFFCC;

@@ -79,8 +79,7 @@
                         <el-dialog
                           title="订单详情"
                           :visible.sync="centerDialogVisible1"
-                          width="50%"
-                          center>
+                          width="50%" center>
                           <el-descriptions direction="vertical" :column="3" border>
                             <el-descriptions-item>
                               <template slot="label">

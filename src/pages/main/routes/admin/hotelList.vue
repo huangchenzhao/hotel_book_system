@@ -50,12 +50,12 @@
                                 prop="name"
                                 label="名称"
                                 sortable
-                                width="150" align="center" header-align="center" >
+                                width="130" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="photo.photoUrl"
                                 label="图片"
-                                width="250" align="center" header-align="center" >
+                                width="200" align="center" header-align="center" >
                             <template slot-scope="scope">
                                 <img :src="scope.row.photo.photoUrl" alt="" width="90" height="90">
                             </template>
@@ -70,13 +70,13 @@
                                 label="预订次数"
                                 :formatter="counttFormat"
                                 sortable
-                                width="130" align="center" header-align="center" >
+                                width="120" align="center" header-align="center" >
                         </el-table-column>
                         <el-table-column
                                 prop="star"
                                 label="星级"
                                 sortable
-                                width="150" align="center" header-align="center" >
+                                width="120" align="center" header-align="center" >
                             <template slot-scope="scope" >
                                 <el-rate v-model="scope.row.star" :allow-half="true" show-score disabled text-color="#ff9900"></el-rate>
                             </template>
@@ -276,7 +276,7 @@ export default {
         background-color: #336699;
         text-align: center;
         /*line-height: 200px;*/
-        height:88vh;
+        height:100vh;
     }
     .el-submenu {
         background-color: #FFFFCC;
