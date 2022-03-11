@@ -1,3 +1,4 @@
+/*
 package com.example.mybatisplus;
 
 import com.example.mybatisplus.mapper.HotelMapper;
@@ -117,7 +118,8 @@ class MybatisplusApplicationTests {
         System.out.println(userController.addUser(user));
         //System.out.println(userController.alluser());
     }
-    /*@Test
+    */
+/*@Test
     void test6(){
         //插入房间
         List<String> room=new ArrayList<>();
@@ -136,5 +138,7 @@ class MybatisplusApplicationTests {
 
             }
         }
-    }*/
+    }*//*
+
 }
+*/
