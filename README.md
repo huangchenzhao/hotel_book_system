@@ -22,6 +22,10 @@
 - git clone -b front https://github.com/huangchenzhao/hotel_book_system.git
 - 以上两个命令分别拷贝后端源码和前端源码
 
+#### 功能
+1. 两种角色，用户和管理员
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158507320-e5a99817-07c4-4686-a02b-d0801907fcad.png">
+
 #### 使用说明
 ##### 后端配置
 1.  拉取后端代码后，首先配置mysql数据库，注意，mysql的版本最好为5.6，若mysql为5.7及以上版本，请按链接网站中配置mysql的sql模式。https://stackoverflow.com/questions/41887460/select-list-is-not-in-group-by-clause-and-contains-nonaggregated-column-inc
@@ -40,12 +44,5 @@
 3.  岳平勇
 4.  谷子昕
 
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#### 说明
+本项目仅为大学本科期间的实训项目，因为时间仓促，并没有进行算法优化。
