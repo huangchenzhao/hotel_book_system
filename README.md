@@ -25,6 +25,9 @@
 #### 功能
 1. 两种角色，用户和管理员
 <img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158507320-e5a99817-07c4-4686-a02b-d0801907fcad.png">
+2. 首页
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158508483-0800dc41-b247-4696-a131-8bf3e516581a.png">
+
 
 #### 使用说明
 ##### 后端配置
