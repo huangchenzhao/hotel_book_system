@@ -57,9 +57,12 @@
 #### 参与贡献
 
 1.  姬茗瑞
-2.  黄晨钊 github id: huangchenzhao
-3.  岳平勇
-4.  谷子昕 github id: guzixin
+- github id: roooo-Jming
+3.  黄晨钊
+- github id: huangchenzhao
+5.  岳平勇
+6.  谷子昕 
+- github id: guzixin
 
 #### 说明
 本项目仅为大学本科期间的实训项目，因为时间仓促，并没有进行算法优化。开源仅供学习交流，如有问题请联系18292166117@163.com
