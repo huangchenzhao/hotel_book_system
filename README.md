@@ -11,7 +11,9 @@
 
 #### 项目结构
 本项目是前后端分离项目
+
 后端框架为：SpringBoot + MyBatis-Plus + Mysql
+
 前端框架为：Vue + Element UI + Echarts UI + BaiduMap api
 
 #### 使用教程
