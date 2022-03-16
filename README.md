@@ -56,13 +56,14 @@
 
 #### 参与贡献
 
-1.  姬茗瑞
-- github id: roooo-Jming
-3.  黄晨钊
-- github id: huangchenzhao
-5.  岳平勇
-6.  谷子昕 
-- github id: guzixin
+- 姬茗瑞
+  - github id: roooo-Jming
+- 黄晨钊
+  - github id: huangchenzhao
+- 岳平勇
+- 谷子昕 
+  - github id: guzixin
+- 感谢大家的付出，由于此github项目由gitlab的url导入，因此contributors的显示会有问题，显示一个空白的账户，特将所有贡献者的github id标明
 
 #### 说明
 本项目仅为大学本科期间的实训项目，因为时间仓促，并没有进行算法优化。开源仅供学习交流，如有问题请联系18292166117@163.com
