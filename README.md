@@ -27,6 +27,20 @@
 <img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158507320-e5a99817-07c4-4686-a02b-d0801907fcad.png">
 2. 首页
 <img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158508483-0800dc41-b247-4696-a131-8bf3e516581a.png">
+3. 酒店搜索结果
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158509411-9e5118cd-da4e-4d73-a610-198344fe37a6.png">
+4. 酒店详情
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158509444-a7e277c4-a63d-4bbc-ba61-a16be97d18db.png">
+5. 用户下单
+<img width="453" alt="image" src="https://user-images.githubusercontent.com/69411580/158509480-9eb7a23a-e821-41c8-9328-3c7cf5af358e.png">
+6. 账户信息
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158509825-fb77e152-242d-4298-9335-87660d5a1baf.png">
+7. 我的订单
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158509855-53b5bc0d-e9b5-4d9a-a1c4-8f5c1789831b.png">
+8. 管理员查看酒店
+<img width="453" alt="image" src="https://user-images.githubusercontent.com/69411580/158509900-a4e0e872-e2e3-47e5-9e89-f781813c50eb.png">
+9. 订单分析
+<img width="454" alt="image" src="https://user-images.githubusercontent.com/69411580/158509946-e5d3e4a8-48cc-43c5-829a-eebca07cea89.png">
 
 
 #### 使用说明
